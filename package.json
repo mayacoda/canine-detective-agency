@@ -1,0 +1,9 @@
+{
+  "name": "canine-detective-agency",
+  "version": "1.0.0",
+  "description": "A murder mystery game with dogs",
+  "main": "index.js",
+  "repository": "https://github.com/mayacoda/canine-detective-agency.git",
+  "author": "Maya Nedeljkovich <maya.nedeljko@gmail.com>",
+  "license": "MIT"
+}
