@@ -2,6 +2,7 @@ import { Game } from 'phaser'
 import { StartScene } from './scenes/StartScene'
 import { SceneName } from './scenes/scene-name'
 import { ShopScene } from './scenes/ShopScene'
+import SimpleControlsPlugin from './plugins/SimpleControlsPlugin'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 const config: GameConfig = {
@@ -17,6 +18,18 @@ const config: GameConfig = {
   parent: 'canine_detective_agency',
   dom: {
     createContainer: true
+  },
+  plugins: {
+    scene: [
+      { key: 'simple-controls', plugin: SimpleControlsPlugin, mapping: 'controls' }
+    ]
+  },
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: true
+    }
   },
   scene: StartScene
 }
