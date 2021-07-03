@@ -7,6 +7,7 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
   right: boolean
   down: boolean
   left: boolean
+  hasInput: boolean
   private events: Phaser.Events.EventEmitter
   private input?: Phaser.Input.InputPlugin
 
@@ -16,6 +17,7 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
     this.right = false
     this.down = false
     this.left = false
+    this.hasInput = false
     this.events = new Phaser.Events.EventEmitter()
   }
 
@@ -24,7 +26,6 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
     if (!this.input) {
       this.input = this.scene.input
     }
-
 
     this.cursors = this.input.keyboard.createCursorKeys()
 
@@ -51,6 +52,8 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
     this.right = cursors.right.isDown
     this.down = cursors.down.isDown
     this.left = cursors.left.isDown
+
+    this.hasInput = this.up || this.right || this.down || this.left
   }
 
   shutdown() {

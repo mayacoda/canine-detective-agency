@@ -3821,10 +3821,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-phaser@^3.55.2:
-  version "3.55.2"
-  resolved "https://registry.yarnpkg.com/phaser/-/phaser-3.55.2.tgz#c1e2e9e70de7085502885e06f46b7eb4bd95e29a"
-  integrity sha512-amKXsbb2Ht29dGPKvt1edq3yGGYKtq8373GpJYGKPNPnneYY6MtVTOgjHDuZwtmUyK4v86FugkT3hzW/N4tjxQ==
+"phaser@git://github.com/mayacoda/phaser.git#with-build":
+  version "3.56.0"
+  resolved "git://github.com/mayacoda/phaser.git#b15564d5845deb43c4e09fe79592f58a39a4fed6"
   dependencies:
     eventemitter3 "^4.0.7"
     path "^0.12.7"

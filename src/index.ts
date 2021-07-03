@@ -1,8 +1,9 @@
 import { Game } from 'phaser'
-import { StartScene } from './scenes/StartScene'
 import { SceneName } from './scenes/scene-name'
 import { ShopScene } from './scenes/ShopScene'
 import SimpleControlsPlugin from './plugins/SimpleControlsPlugin'
+import { TownScene } from './scenes/TownScene'
+import { ResidenceScene } from './scenes/ResidenceScene'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 const config: GameConfig = {
@@ -12,8 +13,8 @@ const config: GameConfig = {
     mode: Phaser.Scale.FIT,
     parent: 'phaser-example',
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 800,
-    height: 600
+    width: 1600,
+    height: 1200
   },
   parent: 'canine_detective_agency',
   dom: {
@@ -25,19 +26,20 @@ const config: GameConfig = {
     ]
   },
   physics: {
-    default: 'arcade',
-    arcade: {
+    default: 'matter',
+    matter: {
       gravity: { y: 0 },
       debug: true
     }
   },
-  scene: StartScene
+  scene: [TownScene]
 }
 
 
 function initGame() {
   const game = new Game(config)
   game.scene.add(SceneName.Shop, ShopScene)
+  game.scene.add(SceneName.Residence, ResidenceScene)
 }
 
 initGame()
