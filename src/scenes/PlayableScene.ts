@@ -50,11 +50,10 @@ export class PlayableScene extends Scene {
 
       this.matter.overlap(this.player, this.doors, (a: MatterBody, b: MatterBody) => {
         const door = 'gameObject' in b && b.gameObject.getData('doorTo')
-        console.log('overlapping!!', door)
         if (door) {
           this.scene.start(door, { fromDoor: this.scene.key })
         } else {
-          console.log('Door is missing "doorTo" property!')
+          console.warn('Door is missing "doorTo" property!')
         }
       })
     }
@@ -81,7 +80,6 @@ export class PlayableScene extends Scene {
   }
 
   private setUpGroundLayer(tileset: Phaser.Tilemaps.Tileset) {
-    console.log('creating ground layer')
     const ground = this.tileMap.createLayer('Ground', tileset)
     ground.setCollisionByProperty({ collides: true })
 
@@ -104,7 +102,7 @@ export class PlayableScene extends Scene {
         this.player = new Player(this, x, y + 64)
         return
       } else {
-        console.log(`Expected to find spawn point for ${ config.fromDoor }`)
+        console.warn(`Expected to find spawn point for ${ config.fromDoor }`)
       }
     }
 
