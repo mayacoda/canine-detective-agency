@@ -2,31 +2,27 @@ import { Scene } from 'phaser'
 import { PlayableScene } from '../scenes/PlayableScene'
 import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
 
-export class Player extends Phaser.Physics.Arcade.Sprite {
+export class Player extends Phaser.Physics.Matter.Image {
   scene!: PlayableScene
-  speed: number = 130
+  speed: number = 10
 
   constructor(scene: PlayableScene, x: number, y: number) {
-    super(scene, x, y, 'player')
-    scene.physics.world.enable(this)
+    super(scene.matter.world, x, y, 'player')
+    this.setCircle(this.width / 3)
     scene.add.existing(this)
-    this.depth = 10
-    this.setCollideWorldBounds(true)
+    this.scene.cameras.main.startFollow(this, true)
   }
 
   update(controls: SimpleControlsPlugin) {
-    this.body.velocity.y = 0
-    this.body.velocity.x = 0
-
     if (controls.up) {
-      this.body.velocity.y -= this.speed
+      this.y -= this.speed
     } else if (controls.down) {
-      this.body.velocity.y += this.speed
+      this.y += this.speed
     }
     if (controls.left) {
-      this.body.velocity.x -= this.speed
+      this.x -= this.speed
     } else if (controls.right) {
-      this.body.velocity.x += this.speed
+      this.x += this.speed
     }
   }
 }
