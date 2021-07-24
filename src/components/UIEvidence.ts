@@ -46,9 +46,12 @@ export class UIEvidence extends LitElement {
 
       .navigation {
         margin-top: var(--spacer-6);
+        margin-left: var(--spacer-6);
+        padding: 0;
         list-style: none;
         width: 250px;
         flex-grow: 0;
+        flex-shrink: 0;
       }
 
       .navigation li {
@@ -57,6 +60,11 @@ export class UIEvidence extends LitElement {
 
       .navigation li span {
         text-transform: capitalize;
+        font-family: var(--heading-font-family);
+      }
+
+      .close-button span {
+        font-family: var(--heading-font-family);
       }
 
       .evidence-screen {
@@ -71,7 +79,6 @@ export class UIEvidence extends LitElement {
   }
 
   _changeScreen(screen: EvidenceScreen) {
-    console.log('changing screen to', screen)
     this._activeScreen = screen
   }
 
@@ -104,18 +111,18 @@ export class UIEvidence extends LitElement {
     return html`
         <div class="ui-evidence">
             <ul class="navigation">
-                ${ this._screens.map(scene => html`
+                ${ this._screens.map(screen => html`
                     <li>
                         <dog-link-button
-                                class="block align-left ${ this._activeScreen === scene ? 'active' : '' }"
-                                @click="${ () => this._changeScreen(scene) }">
-                            <span>${ scene }</span></dog-link-button>
+                                class="block align-left ${ this._activeScreen === screen ? 'active' : '' }"
+                                @click="${ () => this._activeScreen = screen }">
+                            <span>${ screen }</span></dog-link-button>
                     </li>`) }
             </ul>
             <div class="evidence-screen">
                 ${ evidenceScreen }
             </div>
-            <dog-button class="close-button outline" @click="${ this._close }">𝖷</dog-button>
+            <dog-link-button class="close-button outline" @click="${ this._close }"><span>x</span></dog-link-button>
         </div>
     `
   }

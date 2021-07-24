@@ -11,8 +11,8 @@ html {
   --secondary: #9ad0f1;
   --warning: #b33939;
   --background-color: #fff;
-  --font-family: Roboto;
-
+  --font-family: 'Open Sans', sans-serif;
+  --heading-font-family: 'Special Elite', cursive;
 
   --spacer-0: 0px;
   --spacer-1: 2px;
@@ -25,4 +25,8 @@ html {
   --font-size-small: 1.4rem;
   --font-size-medium: 1.8rem;
   --font-size-large: 2.4rem;
+}
+
+* {
+  font-family: var(--font-family);
 }

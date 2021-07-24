@@ -1,6 +1,6 @@
 import { customElement } from 'lit/decorators'
-import { html } from 'lit'
-import { property } from 'lit/decorators.js'
+import { css, html } from 'lit'
+import { property, state } from 'lit/decorators.js'
 import { Photo } from '../../game-data/game-data-interface'
 import { EvidenceScreen } from './EvidenceScreen'
 
@@ -9,13 +9,44 @@ export class PhotosScreen extends EvidenceScreen {
   @property()
   photos!: Photo[]
 
+  @state()
+  activePhoto: Photo | null = null
+
+  static get styles() {
+    return [
+      super.styles, css`
+        .scroll-zone {
+          margin-top: var(--spacer-6);
+        }
+      `
+    ]
+  }
+
   render() {
     return html`
-        <div class="container">
-            ${ this.photos.map(photo => html`
-                <li><img src="${ photo.imageUrl }" alt="${ photo.description }"/> --
-                    ${ photo.description }
-                </li>`) }
-        </div>`
+        ${ this.activePhoto === null ? html`
+            <div class="container">
+                <ul class="list">
+                    ${ this.photos.map(photo => html`
+                        <li class="card" @click="${ () => this.activePhoto = photo }">
+                            <img class="image" src="${ photo.imageUrl }"
+                                 alt="${ photo.description }"/>
+                            <h4>${ photo.description }</h4>
+                        </li>`) }
+                </ul>
+            </div>` : html`
+            <div class="detail-view">
+                <div class="scroll-zone">
+                    <img src="${ this.activePhoto.imageUrl }"
+                         alt="${ this.activePhoto.description }">
+                    <h3>${ this.activePhoto.description }</h3>
+                </div>
+                <dog-button class="outline back-button" @click="${ () => this.activePhoto = null }">
+                    <-- Back
+                </dog-button>
+            </div>
+        ` }
+
+    `
   }
 }

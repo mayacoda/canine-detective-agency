@@ -11,8 +11,9 @@ export class Button extends LitElement {
         background: var(--primary);
         font-size: var(--font-size-medium);
         cursor: pointer;
-        padding: var(--spacer-3) 24px;
+        padding: var(--spacer-4) 24px;
         border-radius: var(--spacer-3);
+        font-family: var(--heading-font-family);
       }
       
       :host(.outline) button {

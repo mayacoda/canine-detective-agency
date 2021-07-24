@@ -59,11 +59,10 @@ export class UIContainer extends LitElement {
             <dog-ui-settings class="overlay"></dog-ui-settings>` : '' }
         <div class="container">
             <div class="navigation">
-                <button @click="${ () => this._evidenceVisible = true }">Evidence</button>
-                <button>Solve</button>
-                <button>Settings</button>
+                <dog-button @click="${ () => this._evidenceVisible = true }">Evidence</dog-button>
+                <dog-button>Solve</dog-button>
+                <dog-button>Settings</dog-button>
             </div>
-
         </div>
     `
   }
