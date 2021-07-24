@@ -3,3 +3,30 @@ body {
   margin: 0;
   padding: 0;
 }
+
+html {
+  --primary: #a14b0a;
+  --primary-dark: #782f07;
+  --text-color: #333;
+  --secondary: #9ad0f1;
+  --warning: #b33939;
+  --background-color: #fff;
+  --font-family: 'Open Sans', sans-serif;
+  --heading-font-family: 'Special Elite', cursive;
+
+  --spacer-0: 0px;
+  --spacer-1: 2px;
+  --spacer-2: 4px;
+  --spacer-3: 8px;
+  --spacer-4: 16px;
+  --spacer-5: 32px;
+  --spacer-6: 64px;
+
+  --font-size-small: 1.4rem;
+  --font-size-medium: 1.8rem;
+  --font-size-large: 2.4rem;
+}
+
+* {
+  font-family: var(--font-family);
+}

@@ -9,7 +9,7 @@ export class UIContainer extends LitElement {
   gameData!: GameData
 
   @state()
-  private _evidenceVisible = false
+  private _evidenceVisible = true
   @state()
   private _settingsVisible = false
 
@@ -33,7 +33,8 @@ export class UIContainer extends LitElement {
 
       .overlay {
         display: flex;
-        background: rgba(54, 50, 50, 0.55);
+        backdrop-filter: blur(6px) brightness(70%);
+        background: rgba(54, 50, 50, 0.77);
         z-index: 4;
       }
 
@@ -58,11 +59,10 @@ export class UIContainer extends LitElement {
             <dog-ui-settings class="overlay"></dog-ui-settings>` : '' }
         <div class="container">
             <div class="navigation">
-                <button @click="${ () => this._evidenceVisible = true }">Evidence</button>
-                <button>Solve</button>
-                <button>Settings</button>
+                <dog-button @click="${ () => this._evidenceVisible = true }">Evidence</dog-button>
+                <dog-button>Solve</dog-button>
+                <dog-button>Settings</dog-button>
             </div>
-
         </div>
     `
   }

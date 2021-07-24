@@ -19,13 +19,72 @@ export const demoGameData: GameData = {
           }
         ],
         location: 'Raven Manor - Kitchen'
+      },
+      {
+        dialog: [
+          {
+            speaker: 'Maria',
+            text: 'oh it was so horrible! I can\'t unsee what I saw, her sprawled on the floor like that. It was heartbreaking...'
+          },
+          {
+            speaker: 'Max',
+            text: 'Do you remember when you found the body?'
+          },
+          {
+            speaker: 'Maria',
+            text: 'Sometime after dinner, it can\'t have been too long because I had just finished doing the dishes...'
+          }
+        ],
+        location: 'Raven Manor - Library'
       }
-    ]
+    ],
+    ranger: [
+      {
+        dialog: [
+          {
+            speaker: 'Maria',
+            text: 'oh it was so horrible! I can\'t unsee what I saw, her sprawled on the floor like that. It was heartbreaking...'
+          },
+          {
+            speaker: 'Max',
+            text: 'Do you remember when you found the body?'
+          },
+          {
+            speaker: 'Maria',
+            text: 'Sometime after dinner, it can\'t have been too long because I had just finished doing the dishes...'
+          }
+        ],
+        location: 'Raven Manor - Kitchen'
+      },
+      {
+        dialog: [
+          {
+            speaker: 'Maria',
+            text: 'oh it was so horrible! I can\'t unsee what I saw, her sprawled on the floor like that. It was heartbreaking...'
+          },
+          {
+            speaker: 'Max',
+            text: 'Do you remember when you found the body?'
+          },
+          {
+            speaker: 'Maria',
+            text: 'Sometime after dinner, it can\'t have been too long because I had just finished doing the dishes...'
+          }
+        ],
+        location: 'Raven Manor - Library'
+      }
+    ],
+    candice: [],
+    richard: [],
+    'Dr. Charlie': [],
+    Ginger: []
+
   },
   observations: [
     {
       location: 'Raven Manor - Office',
-      description: 'Jane\'s will has recently been updated'
+      description: 'Jane\'s will has recently been updated',
+      imageUrl: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.standardlegal.com%2Fstore%2Fimages%2FSLN%2FLW-Doc-1.png&f=1&nofb=1'
     }
   ],
   photos: [
@@ -35,6 +94,6 @@ export const demoGameData: GameData = {
     }
   ],
   documents: [
-    { content: 'good-bye <em>cruel</em> world', name: 'Jane\'s will' }
+    { content: 'good-bye <em>cruel</em> <strong>world</strong>', name: 'Jane\'s will' }
   ]
 }

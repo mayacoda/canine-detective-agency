@@ -4,9 +4,11 @@ type NPCName = string
 
 type HTMLString = string
 
+export type Interviews = Record<NPCName, InterviewRecord[]>
+
 // fetched per game from server
 export interface GameData {
-  interviews: Record<NPCName, InterviewRecord[]>
+  interviews: Interviews
   documents: Document[]
   photos: Photo[]
   observations: Observation[]
