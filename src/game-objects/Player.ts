@@ -28,5 +28,5 @@ export class Player extends Phaser.Physics.Matter.Image {
 }
 
 export function loadPlayerAssets(scene: Scene) {
-  scene.load.image('player', 'images/player-temp.png')
+  scene.load.image('player', 'images/shepherd.png')
 }
