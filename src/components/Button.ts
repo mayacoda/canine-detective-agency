@@ -28,6 +28,11 @@ export class Button extends LitElement {
       :host(.outline) button:hover {
         color: var(--primary)
       } 
+      
+      :host(.inverse) button {
+        color: var(--text-color);
+        background: var(--background-color);
+      }
 
       :host(.large) button {
         font-size: var(--font-size-large);
@@ -35,6 +40,10 @@ export class Button extends LitElement {
 
       :host(.small) button {
         font-size: var(--font-size-small);
+      }
+      
+      :host(.smaller) button {
+        font-size: var(--font-size-smaller);
       }
     `
   }

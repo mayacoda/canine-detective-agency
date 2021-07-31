@@ -19,7 +19,7 @@ export class UIScene extends Scene {
       x,
       y,
       this.uiContainer,
-      'display: flex; width: 100%; height: 100%; z-index: 3;'
+      'display: flex; width: 100%; height: 100%; z-index: 10;'
     )
   }
 

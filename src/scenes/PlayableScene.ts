@@ -3,6 +3,7 @@ import { SceneName } from './scene-name'
 import { loadPlayerAssets, Player } from '../game-objects/Player'
 import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
 import { getPhaserCentroid, Verts } from '../utils/geometry-utils'
+import { loadNPCAssets, NPC } from '../game-objects/NPC'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -14,11 +15,12 @@ function getTiledProperty(obj: TiledObject, name: string): any {
 
 export class PlayableScene extends Scene {
   controls!: SimpleControlsPlugin
-  protected player!: Player
+  player!: Player
   protected tileMap!: Tilemap
 
   private groundLayer!: TilemapLayer
   private doors: MatterBody[] = []
+  private NPCs: NPC[] = []
 
   constructor(sceneName: SceneName) {
     super(sceneName)
@@ -26,10 +28,10 @@ export class PlayableScene extends Scene {
 
   preload() {
     this.load.image('tileset', 'tilemaps/isometric-grid.png')
-    this.load.image('house', 'tilemaps/house.png')
 
     this.load.tilemapTiledJSON(this.scene.key, `tilemaps/${ this.scene.key }.json`)
     loadPlayerAssets(this)
+    loadNPCAssets(this)
   }
 
   create(config: { fromDoor?: string }) {
@@ -39,9 +41,14 @@ export class PlayableScene extends Scene {
     const tileset = this.tileMap.addTilesetImage('procreate-test-2', 'tileset')
     this.setUpGroundLayer(tileset)
     this.setUpDoors()
+    this.setUpObjects()
+    this.setUpNPCs()
+
     this.spawnPlayer(config)
 
-    this.setUpColliders()
+    // workaround to get UI scene HTML to always render above PlayableScene HTML
+    // this.scene.get('UI').scene.restart()
+    // this.scene.setActive(true)
   }
 
   update(time: number, delta: number) {
@@ -60,6 +67,8 @@ export class PlayableScene extends Scene {
       })
 
       this.player.setDepth(this.player.y)
+
+      this.NPCs.forEach(npc => npc.update())
     }
   }
 
@@ -88,7 +97,7 @@ export class PlayableScene extends Scene {
     return { data, gameObject }
   }
 
-  private setUpColliders() {
+  private setUpObjects() {
     this.tileMap.getObjectLayer('Colliders')?.objects.forEach(object => {
       if (object.type === 'collider') {
         let { data, gameObject } = this.createPolygon(object)
@@ -116,6 +125,17 @@ export class PlayableScene extends Scene {
 
     this.groundLayer = ground
     this.matter.world.convertTilemapLayer(ground)
+  }
+
+  private setUpNPCs() {
+    this.tileMap.getObjectLayer('Characters')?.objects.map(object => {
+      let x = (object.x ?? 0) + (object.width ?? 0) / 2
+      let y = (object.y ?? 0) - (object.height ?? 0) / 2 + 64
+
+      const dialogPosition = getTiledProperty(object, 'dialogPosition')
+
+      this.NPCs.push(new NPC(this, object.name, x, y, dialogPosition))
+    })
   }
 
   private spawnPlayer(config: { fromDoor?: string }) {

@@ -13,10 +13,6 @@ export class UIContainer extends LitElement {
   @state()
   private _settingsVisible = false
 
-  constructor() {
-    super()
-  }
-
   static get styles() {
     return css`
       .container, .overlay {

@@ -1,6 +1,6 @@
 // this will be the evidence that the player has already uncovered
 
-type NPCName = string
+export type NPCName = string
 
 type HTMLString = string
 
