@@ -12,11 +12,11 @@ export class EvidenceScreen extends LitElement {
       }
       
       h1 {
-        font-size: 3rem;
+        font-size: var(--font-size-larger);
       }
 
       h2 {
-        font-size: var(--font-size-large)
+        font-size: var(--font-size-large);
       }
       
       h3 {

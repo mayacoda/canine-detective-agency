@@ -279,6 +279,35 @@
         }, 
         {
          "draworder":"topdown",
+         "id":11,
+         "name":"Characters",
+         "objects":[
+                {
+                 "gid":167,
+                 "height":181,
+                 "id":35,
+                 "name":"charlie",
+                 "properties":[
+                        {
+                         "name":"dialogPosition",
+                         "type":"string",
+                         "value":"left"
+                        }],
+                 "rotation":0,
+                 "type":"character",
+                 "visible":true,
+                 "width":160,
+                 "x":1918,
+                 "y":759
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":3,
          "name":"Spawn Points",
          "objects":[
@@ -336,8 +365,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":11,
- "nextobjectid":32,
+ "nextlayerid":12,
+ "nextobjectid":36,
  "orientation":"staggered",
  "renderorder":"right-down",
  "staggeraxis":"y",
@@ -429,7 +458,7 @@
          "margin":0,
          "name":"collection-of-images",
          "spacing":0,
-         "tilecount":1,
+         "tilecount":2,
          "tileheight":943,
          "tiles":[
                 {
@@ -437,6 +466,12 @@
                  "image":"house.png",
                  "imageheight":943,
                  "imagewidth":980
+                }, 
+                {
+                 "id":1,
+                 "image":"..\/images\/charlie.png",
+                 "imageheight":181,
+                 "imagewidth":160
                 }],
          "tilewidth":980
         }],

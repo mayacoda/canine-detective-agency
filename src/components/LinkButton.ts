@@ -12,8 +12,9 @@ export class LinkButton extends LitElement {
         outline: none;
         font-size: var(--font-size-medium);
         cursor: pointer;
+        display: inline-block;
       }
-      
+
       button:hover {
         color: var(--primary)
       }
@@ -31,13 +32,25 @@ export class LinkButton extends LitElement {
       :host(.small) button {
         font-size: var(--font-size-small);
       }
-      
+
+      :host(.smaller) button {
+        font-size: var(--font-size-smaller);
+      }
+
       :host(.block) button {
         width: 100%;
       }
-      
+
       :host(.align-left) button {
         text-align: left;
+      }
+
+      :host(.align-right) button {
+        text-align: right;
+      }
+
+      :host(.inverse) button {
+        color: var(--background-color);
       }
     `
   }
