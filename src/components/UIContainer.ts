@@ -9,7 +9,7 @@ export class UIContainer extends LitElement {
   gameData!: GameData
 
   @state()
-  private _evidenceVisible = true
+  private _evidenceVisible = false
   @state()
   private _settingsVisible = false
 
@@ -61,7 +61,6 @@ export class UIContainer extends LitElement {
             <div class="navigation">
                 <dog-button @click="${ () => this._evidenceVisible = true }">Evidence</dog-button>
                 <dog-button>Solve</dog-button>
-                <dog-button>Settings</dog-button>
             </div>
         </div>
     `

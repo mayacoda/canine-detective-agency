@@ -1,30 +1,49 @@
 export type Verts = { x: number, y: number }
 
-export function getPolygonCentroid(verts: Verts[]) {
-  const tmpVerts = [...verts]
-  let first = tmpVerts[0]
-  let last = tmpVerts[tmpVerts.length - 1]
+function add(vectorA: Verts, vectorB: Verts, output?: Verts) {
+  if (!output) output = { x: 0, y: 0 }
+  output.x = vectorA.x + vectorB.x
+  output.y = vectorA.y + vectorB.y
+  return output
+}
 
-  if (first.x != last.x || first.y != last.y) tmpVerts.push(first)
+function mult(vector: Verts, scalar: number) {
+  return { x: vector.x * scalar, y: vector.y * scalar }
+}
 
-  let twiceArea = 0
-  let x = 0
-  let y = 0
-  let nPts = tmpVerts.length
-  let p1
-  let p2
-  let f
+function div(vector: Verts, scalar: number) {
+  return { x: vector.x / scalar, y: vector.y / scalar }
+}
 
-  for (let i = 0, j = nPts - 1; i < nPts; j = i++) {
-    p1 = tmpVerts[i]
-    p2 = tmpVerts[j]
-    f = p1.x * p2.y - p2.x * p1.y
-    twiceArea += f
-    x += (p1.x + p2.x) * f
-    y += (p1.y + p2.y) * f
+function calcArea(vertices: Verts[], signed: boolean) {
+  let area = 0
+  let j = vertices.length - 1
+
+  for (let i = 0; i < vertices.length; i++) {
+    area += (vertices[j].x - vertices[i].x) * (vertices[j].y + vertices[i].y)
+    j = i
   }
 
-  f = twiceArea * 3
-  return { x: x / f, y: y / f }
+  if (signed)
+    return area / 2
+
+  return Math.abs(area) / 2
+}
+
+export function getPhaserCentroid(vertices: Verts[]) {
+  let area = calcArea(vertices, true)
+  let centre = { x: 0, y: 0 }
+  let cross
+  let temp
+  let j
+
+  for (let i = 0; i < vertices.length; i++) {
+    j = (i + 1) % vertices.length
+    cross = (vertices[i].x * vertices[j].y) - (vertices[i].y * vertices[j].x)
+    temp = mult(add(vertices[i], vertices[j]), cross)
+    centre = add(centre, temp)
+  }
+
+  return div(centre, 6 * area)
 }
 
