@@ -1,8 +1,8 @@
 import { customElement } from 'lit/decorators'
 import { css, html } from 'lit'
 import { property, state } from 'lit/decorators.js'
-import { Observation } from '../../game-data/game-data-interface'
 import { EvidenceScreen } from './EvidenceScreen'
+import { Observation } from '../../../interface/game-data-interface'
 
 @customElement('dog-observations-screen')
 export class ObservationsScreen extends EvidenceScreen {

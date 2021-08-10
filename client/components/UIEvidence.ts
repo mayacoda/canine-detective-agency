@@ -1,13 +1,13 @@
 import { customElement } from 'lit/decorators'
 import { css, html, LitElement } from 'lit'
 import { property, state } from 'lit/decorators.js'
-import { GameData } from '../game-data/game-data-interface'
 import './LinkButton'
 import './Button'
 import './evidence/InterviewsScreen'
 import './evidence/ObservationsScreen'
 import './evidence/PhotosScreen'
 import './evidence/DocumentsScreen'
+import { GameData } from '../../interface/game-data-interface'
 
 type EvidenceScreen = 'interviews' | 'observations' | 'photos' | 'documents'
 
@@ -83,7 +83,13 @@ export class UIEvidence extends LitElement {
   }
 
   render() {
-    if (!this.gameData) return
+    if (!this.gameData) return html`
+        <div class="ui-evidence">
+            Nothing to see here...
+            <dog-link-button class="close-button outline" @click="${ this._close }"><span>x</span>
+            </dog-link-button>
+        </div>
+    `
 
     let evidenceScreen = html``
 
@@ -122,7 +128,8 @@ export class UIEvidence extends LitElement {
             <div class="evidence-screen">
                 ${ evidenceScreen }
             </div>
-            <dog-link-button class="close-button outline" @click="${ this._close }"><span>x</span></dog-link-button>
+            <dog-link-button class="close-button outline" @click="${ this._close }"><span>x</span>
+            </dog-link-button>
         </div>
     `
   }

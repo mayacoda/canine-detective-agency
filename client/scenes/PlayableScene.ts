@@ -2,8 +2,10 @@ import { Scene } from 'phaser'
 import { SceneName } from './scene-name'
 import { loadPlayerAssets, Player } from '../game-objects/Player'
 import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
-import { getPhaserCentroid, Verts } from '../utils/geometry-utils'
+import { getPhaserCentroid } from '../utils/geometry-utils'
 import { loadNPCAssets, NPC } from '../game-objects/NPC'
+import { Vec2 } from '../../interface/geometry-interface'
+import { GameStateManager } from '../game-state/game-state-management'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -16,6 +18,7 @@ function getTiledProperty(obj: TiledObject, name: string): any {
 export class PlayableScene extends Scene {
   controls!: SimpleControlsPlugin
   player!: Player
+  gameStateManager!: GameStateManager
   protected tileMap!: Tilemap
 
   private groundLayer!: TilemapLayer
@@ -34,7 +37,8 @@ export class PlayableScene extends Scene {
     loadNPCAssets(this)
   }
 
-  create(config: { fromDoor?: string }) {
+  create(config: { fromDoor?: string, gameStateManager: GameStateManager }) {
+    this.gameStateManager = config.gameStateManager
     this.controls.start()
 
     this.tileMap = this.make.tilemap({ key: this.scene.key })
@@ -88,7 +92,7 @@ export class PlayableScene extends Scene {
   }
 
   private createPolygon(doorObj: Phaser.Types.Tilemaps.TiledObject) {
-    const center = getPhaserCentroid(doorObj.polygon as Verts[])
+    const center = getPhaserCentroid(doorObj.polygon as Vec2[])
     let data = doorObj.polygon
     let x = doorObj.x ?? 0
     let y = doorObj.y ?? 0

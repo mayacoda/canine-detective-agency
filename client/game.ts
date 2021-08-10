@@ -5,6 +5,7 @@ import SimpleControlsPlugin from './plugins/SimpleControlsPlugin'
 import { TownScene } from './scenes/TownScene'
 import { ResidenceScene } from './scenes/ResidenceScene'
 import { UIScene } from './scenes/UIScene'
+import { GameStateManager } from './game-state/game-state-management'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 const config: GameConfig = {
@@ -39,12 +40,16 @@ const config: GameConfig = {
 
 function initGame() {
   const game = new Game(config)
-  game.scene.add('UI', UIScene, true)
+  const gameStateManager = new GameStateManager()
+
+  game.scene.add('UI', UIScene, true, { gameStateManager })
 
   // game scenes
-  game.scene.add(SceneName.Town, TownScene, true)
-  game.scene.add(SceneName.Shop, ShopScene)
-  game.scene.add(SceneName.Residence, ResidenceScene)
+  game.scene.add(SceneName.Town, TownScene, true, { gameStateManager })
+  game.scene.add(SceneName.Shop, ShopScene, false, { gameStateManager })
+  game.scene.add(SceneName.Residence, ResidenceScene, false, { gameStateManager })
+
+  gameStateManager.listen()
 }
 
 initGame()

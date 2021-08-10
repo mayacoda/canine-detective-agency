@@ -1,4 +1,4 @@
-import { Dialog } from './dialog-interface'
+import { Dialog } from '../dialog-interface'
 
 export const demoDialog: Record<string, Dialog> = {
   charlie: {

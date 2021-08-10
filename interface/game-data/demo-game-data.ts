@@ -1,4 +1,4 @@
-import { GameData } from './game-data-interface'
+import { GameData } from '../game-data-interface'
 
 export const demoGameData: GameData = {
   interviews: {

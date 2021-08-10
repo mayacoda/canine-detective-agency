@@ -1,21 +1,21 @@
-export type Verts = { x: number, y: number }
+import { Vec2 } from '../../interface/geometry-interface'
 
-function add(vectorA: Verts, vectorB: Verts, output?: Verts) {
+function add(vectorA: Vec2, vectorB: Vec2, output?: Vec2) {
   if (!output) output = { x: 0, y: 0 }
   output.x = vectorA.x + vectorB.x
   output.y = vectorA.y + vectorB.y
   return output
 }
 
-function mult(vector: Verts, scalar: number) {
+function mult(vector: Vec2, scalar: number) {
   return { x: vector.x * scalar, y: vector.y * scalar }
 }
 
-function div(vector: Verts, scalar: number) {
+function div(vector: Vec2, scalar: number) {
   return { x: vector.x / scalar, y: vector.y / scalar }
 }
 
-function calcArea(vertices: Verts[], signed: boolean) {
+function calcArea(vertices: Vec2[], signed: boolean) {
   let area = 0
   let j = vertices.length - 1
 
@@ -30,7 +30,7 @@ function calcArea(vertices: Verts[], signed: boolean) {
   return Math.abs(area) / 2
 }
 
-export function getPhaserCentroid(vertices: Verts[]) {
+export function getPhaserCentroid(vertices: Vec2[]) {
   let area = calcArea(vertices, true)
   let centre = { x: 0, y: 0 }
   let cross

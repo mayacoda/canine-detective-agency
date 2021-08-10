@@ -2,7 +2,7 @@ import { customElement } from 'lit/decorators'
 import { html } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html'
 import { property, state } from 'lit/decorators.js'
-import { Document } from '../../game-data/game-data-interface'
+import { Document } from '../../../interface/game-data-interface'
 import { EvidenceScreen } from './EvidenceScreen'
 
 @customElement('dog-documents-screen')
