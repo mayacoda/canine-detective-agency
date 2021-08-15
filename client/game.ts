@@ -5,7 +5,7 @@ import SimpleControlsPlugin from './plugins/SimpleControlsPlugin'
 import { TownScene } from './scenes/TownScene'
 import { ResidenceScene } from './scenes/ResidenceScene'
 import { UIScene } from './scenes/UIScene'
-import { GameStateManager } from './game-state/game-state-management'
+import { GameStateManager } from './game-state/game-state-manager'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 const config: GameConfig = {

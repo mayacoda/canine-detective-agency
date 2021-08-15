@@ -15,8 +15,8 @@ export interface GameData {
 }
 
 export interface InterviewRecord {
-  dialog: Statement[],
-  location: string,
+  dialog: Statement[], // todo introduce the same branchId system here for easier checking?
+  location?: string, //todo do I really need this right now?
 }
 
 export interface Statement {

@@ -1,6 +1,6 @@
 import { Scene } from 'phaser'
 import { UIContainer } from '../components/UIContainer'
-import { GameStateManager } from '../game-state/game-state-management'
+import { GameStateManager } from '../game-state/game-state-manager'
 
 export class UIScene extends Scene {
   private uiContainerGameObject!: Phaser.GameObjects.DOMElement

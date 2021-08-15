@@ -5,7 +5,7 @@ import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
 import { getPhaserCentroid } from '../utils/geometry-utils'
 import { loadNPCAssets, NPC } from '../game-objects/NPC'
 import { Vec2 } from '../../interface/geometry-interface'
-import { GameStateManager } from '../game-state/game-state-management'
+import { GameStateManager } from '../game-state/game-state-manager'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody

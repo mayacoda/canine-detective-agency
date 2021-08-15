@@ -9,11 +9,12 @@ export type EventType = 'update'
 export class GameStateManager {
   listeners: Record<EventType, Handler[]> = { update: [] }
   socket!: Socket
-  private _state: GameState | null = null
 
   constructor() {
     this.socket = io('ws://localhost:3000', { transports: [ 'websocket' ] })
   }
+
+  private _state: GameState | null = null
 
   get state() {
     return this._state
@@ -22,12 +23,8 @@ export class GameStateManager {
   listen() {
     this.socket.on('update', (data: GameState) => {
       this._state = data
-      this.update(this._state)
+      this.propagateUpdate(this._state)
     })
-  }
-
-  private update(state: GameState) {
-    this.listeners.update.forEach(listener => listener(state))
   }
 
   addListener(event: EventType, handler: Handler) {
@@ -48,7 +45,6 @@ export class GameStateManager {
       this.socket.emit('request', { type: 'dialog', data: { id } })
 
       this.socket.on('dialog', (data: { id: string, dialog: Dialog }) => {
-        console.log('got the even from backend', data)
         if (data.id === id) {
           resolve(data.dialog)
         }
@@ -56,7 +52,21 @@ export class GameStateManager {
     })
   }
 
+  updateDialog(dialogId: string, branchId: string) {
+    this.socket.emit('updateState', {
+      type: 'interview',
+      data: {
+        dialogId, branchId
+      }
+    })
+  }
+
   requestEvidence(id: string) {
     this.socket.emit('request', { type: 'evidence', data: { id } })
   }
+
+  private propagateUpdate(state: GameState) {
+    this.listeners.update.forEach(listener => listener(state))
+  }
+
 }
