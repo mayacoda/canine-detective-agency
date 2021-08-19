@@ -5,7 +5,6 @@ import { Dialog } from '../../interface/dialog-interface'
 export type Handler = (state: GameState) => void
 export type EventType = 'update'
 
-
 export class GameStateManager {
   listeners: Record<EventType, Handler[]> = { update: [] }
   socket!: Socket

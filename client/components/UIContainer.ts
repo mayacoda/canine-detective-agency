@@ -1,12 +1,12 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import './UIEvidence'
-import { GameData } from '../../interface/game-data-interface'
+import { ResolvedGameData } from '../../interface/game-data-interface'
 
 @customElement('dog-ui-container')
 export class UIContainer extends LitElement {
   @property()
-  gameData!: GameData
+  gameData!: ResolvedGameData
 
   @state()
   private _evidenceVisible = false

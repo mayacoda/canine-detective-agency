@@ -33,5 +33,25 @@ export const demoDialog: Record<string, Dialog> = {
     ],
     start: 'first',
     speaker: 'Dr. Charlie'
+  },
+  maria: {
+    branches: [
+      {
+        id: 'first',
+        dialog: [ 'oh it was so horrible! I can\'t unsee what I saw, her sprawled on the floor like that. It was heartbreaking...' ],
+        fork: [
+          {
+            to: 'second',
+            text: 'Do you remember when you found the body?'
+          }
+        ]
+      },
+      {
+        id: 'second',
+        dialog: [ 'Sometime after dinner, it can\'t have been too long because I had just finished doing the dishes...' ]
+      }
+    ],
+    start: 'first',
+    speaker: 'Maria'
   }
 }

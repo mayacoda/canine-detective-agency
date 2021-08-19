@@ -1,6 +1,5 @@
 import { GameState } from '../../interface/game-state-interface'
 import { Immutable } from '../../interface/types'
-import { InterviewRecord } from '../../interface/game-data-interface'
 
 export class ServerStateManager {
   private state: GameState
@@ -21,7 +20,7 @@ export class ServerStateManager {
   }
 
   updateInterviewRecord(dialogId: string,
-                        updatedInterviewRecord: InterviewRecord[]) {
+                        updatedInterviewRecord: string[]) {
     this.state.gameData.interviews[dialogId] = updatedInterviewRecord
     this.stateUpdateCallback(this.state)
     console.log('updated new state', this.state)

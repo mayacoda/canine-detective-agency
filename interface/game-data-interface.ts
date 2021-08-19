@@ -6,16 +6,30 @@ type HTMLString = string
 
 export type Interviews = Record<NPCName, InterviewRecord[]>
 
-// fetched per game from server
-export interface GameData {
-  interviews: Interviews
+// resolved when sending to the frontend
+export interface ResolvedGameData {
+  interviews: Interview[]
   documents: Document[]
   photos: Photo[]
   observations: Observation[]
 }
 
+// stored in database and fetched per game from server
+export interface GameData {
+  interviews: Record<NPCName, string[]>
+  documents: Document[]
+  photos: Photo[]
+  observations: Observation[]
+}
+
+export interface Interview {
+  speaker: string
+  location?: string // todo NPCs will probably not move locations
+  statements: Statement[]
+}
+
 export interface InterviewRecord {
-  dialog: Statement[], // todo introduce the same branchId system here for easier checking?
+  dialog: Statement[],
   location?: string, //todo do I really need this right now?
 }
 

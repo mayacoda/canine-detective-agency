@@ -1,7 +1,5 @@
 import { Socket } from 'socket.io'
 import { ServerStateManager } from './server-state-manager'
-import { resolveInterviewByBranchId } from '../../interface/dialog-manager'
-import { InterviewRecord } from '../../interface/game-data-interface'
 
 export const handleInterviewUpdate = (socket: Socket,
                                       stateManager: ServerStateManager,
@@ -10,18 +8,16 @@ export const handleInterviewUpdate = (socket: Socket,
                                         dialogId
                                       }: { branchId: string, dialogId: string }) => {
 
-  const newRecord = resolveInterviewByBranchId(dialogId, branchId)
-  let existingRecords = stateManager.getState().gameData.interviews[dialogId]
-  if (!existingRecords) {
+  let existingBranches = stateManager.getState().gameData.interviews[dialogId]
+  if (!existingBranches) {
     console.log(`Could not find existing interview records for "${ dialogId }", creating new ones`)
-    existingRecords = []
+    existingBranches = []
   }
-  // todo: check here for the branchId instead
-  if (existingRecords.includes(newRecord)) return
+  if (existingBranches.includes(branchId)) return
 
-  const updatedInterviewRecord = [ ...existingRecords, newRecord ]
+  const updatedBranches = [ ...existingBranches, branchId ]
 
-  stateManager.updateInterviewRecord(dialogId, updatedInterviewRecord as InterviewRecord[])
+  stateManager.updateInterviewRecord(dialogId, updatedBranches)
 }
 
 export const handleDocumentUpdate = (socket: Socket,

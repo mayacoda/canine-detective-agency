@@ -10,6 +10,7 @@ import {
   handleObservationUpdate,
   handlePhotoUpdate
 } from './update-handler'
+import { resolveGameState } from '../../client/game-state/resolve-game-state'
 
 const { Server } = require('socket.io')
 const io = new Server(3000)
@@ -25,7 +26,7 @@ function createDummyState(): GameState {
 
 io.on('connection', (socket: Socket) => {
   const stateManager = new ServerStateManager(createDummyState(), (newState) => {
-    socket.emit('update', newState)
+    socket.emit('update', resolveGameState(newState))
   })
 
   socket.on('request', socketRequestHandler.bind(null, socket))

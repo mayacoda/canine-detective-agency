@@ -73,6 +73,8 @@ export class DialogBox extends LitElement {
   _switchToBranch(to: string) {
     this._branchId = to
     this._dialogIndex = 0
+
+    this.dispatchEvent(new CustomEvent('dialog-branch', { detail: to }))
   }
 
   update(change: PropertyValues) {
