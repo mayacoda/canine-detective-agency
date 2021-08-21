@@ -5,7 +5,7 @@ import GameObject = Phaser.GameObjects.GameObject
 
 export class NPC extends Phaser.Physics.Matter.Image {
   scene!: PlayableScene
-  npcName!: string
+  npcName: string
   dialogBoxGameObject: GameObject | null = null
 
   constructor(scene: PlayableScene,
@@ -42,7 +42,7 @@ export class NPC extends Phaser.Physics.Matter.Image {
             this.scene.gameStateManager.updateDialog(this.npcName, dialog.start)
           }
         })
-        
+
         dialogBox.addEventListener('close', () => {
           this.removeDialogBoxGameObject()
         })

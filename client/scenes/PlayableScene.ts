@@ -3,9 +3,11 @@ import { SceneName } from './scene-name'
 import { loadPlayerAssets, Player } from '../game-objects/Player'
 import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
 import { getPhaserCentroid } from '../utils/geometry-utils'
-import { loadNPCAssets, NPC } from '../game-objects/NPC'
+import { NPC } from '../game-objects/NPC'
 import { Vec2 } from '../../interface/geometry-interface'
 import { GameStateManager } from '../game-state/game-state-manager'
+import { InteractiveItem } from '../game-objects/InteractiveItem'
+import { preloadFunctions } from './preload-functions'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -13,6 +15,12 @@ import TiledObject = Phaser.Types.Tilemaps.TiledObject
 
 function getTiledProperty(obj: TiledObject, name: string): any {
   return (obj.properties as { name: string, value: any }[] || []).find(prop => prop.name === name)?.value ?? null
+}
+
+function getPosition(object: Phaser.Types.Tilemaps.TiledObject) {
+  let x = (object.x ?? 0) + (object.width ?? 0) / 2
+  let y = (object.y ?? 0) - (object.height ?? 0) / 2 + 64
+  return { x, y }
 }
 
 export class PlayableScene extends Scene {
@@ -24,17 +32,15 @@ export class PlayableScene extends Scene {
   private groundLayer!: TilemapLayer
   private doors: MatterBody[] = []
   private NPCs: NPC[] = []
+  private items: InteractiveItem[] = []
 
   constructor(sceneName: SceneName) {
     super(sceneName)
   }
 
   preload() {
-    this.load.image('tileset', 'tilemaps/isometric-grid.png')
-
-    this.load.tilemapTiledJSON(this.scene.key, `tilemaps/${ this.scene.key }.json`)
+    preloadFunctions[this.scene.key](this)
     loadPlayerAssets(this)
-    loadNPCAssets(this)
   }
 
   create(config: { fromDoor?: string, gameStateManager: GameStateManager }) {
@@ -42,11 +48,12 @@ export class PlayableScene extends Scene {
     this.controls.start()
 
     this.tileMap = this.make.tilemap({ key: this.scene.key })
-    const tileset = this.tileMap.addTilesetImage('procreate-test-2', 'tileset')
+    const tileset = this.tileMap.addTilesetImage('procreate-test-2', 'isometric-grid')
     this.setUpGroundLayer(tileset)
     this.setUpDoors()
     this.setUpObjects()
     this.setUpNPCs()
+    this.setUpItems()
 
     this.spawnPlayer(config)
 
@@ -116,8 +123,7 @@ export class PlayableScene extends Scene {
     })
 
     this.tileMap.getObjectLayer('Images')?.objects.map(object => {
-      let x = (object.x ?? 0) + (object.width ?? 0) / 2
-      let y = (object.y ?? 0) - (object.height ?? 0) / 2 + 64
+      const { x, y } = getPosition(object)
       const image = this.add.image(x, y, object.name)
       image.setDepth(image.y)
     })
@@ -133,12 +139,20 @@ export class PlayableScene extends Scene {
 
   private setUpNPCs() {
     this.tileMap.getObjectLayer('Characters')?.objects.map(object => {
-      let x = (object.x ?? 0) + (object.width ?? 0) / 2
-      let y = (object.y ?? 0) - (object.height ?? 0) / 2 + 64
+      const { x, y } = getPosition(object)
 
       const dialogPosition = getTiledProperty(object, 'dialogPosition')
 
       this.NPCs.push(new NPC(this, object.name, x, y, dialogPosition))
+    })
+  }
+
+  private setUpItems() {
+    this.tileMap.getObjectLayer('Items')?.objects.map(object => {
+      let { x, y } = getPosition(object)
+      const id = getTiledProperty(object, 'id')
+      const image = getTiledProperty(object, 'image')
+      this.items.push(new InteractiveItem(this, x, y, id, image))
     })
   }
 
