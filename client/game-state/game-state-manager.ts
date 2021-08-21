@@ -1,8 +1,9 @@
 import io, { Socket } from 'socket.io-client'
-import { GameState } from '../../interface/game-state-interface'
+import { GameState, ResolvedGameState } from '../../interface/game-state-interface'
 import { Dialog } from '../../interface/dialog-interface'
+import { getUUID } from '../utils/uuid'
 
-export type Handler = (state: GameState) => void
+export type Handler = (state: ResolvedGameState) => void
 export type EventType = 'update'
 
 export class GameStateManager {
@@ -13,14 +14,14 @@ export class GameStateManager {
     this.socket = io('ws://localhost:3000', { transports: [ 'websocket' ] })
   }
 
-  private _state: GameState | null = null
+  private _state: ResolvedGameState | null = null
 
   get state() {
     return this._state
   }
 
   listen() {
-    this.socket.on('update', (data: GameState) => {
+    this.socket.on('update', (data: ResolvedGameState) => {
       this._state = data
       this.propagateUpdate(this._state)
     })
@@ -41,10 +42,11 @@ export class GameStateManager {
 
   requestDialog(id: string): Promise<Dialog | null> {
     return new Promise((resolve) => {
-      this.socket.emit('request', { type: 'dialog', data: { id } })
+      const uuid = getUUID()
+      this.socket.emit('request', { type: 'dialog', data: { id, uuid } })
 
-      this.socket.on('dialog', (data: { id: string, dialog: Dialog }) => {
-        if (data.id === id) {
+      this.socket.on('dialog', (data: { id: string, dialog: Dialog, uuid: string }) => {
+        if (data.uuid === uuid) {
           resolve(data.dialog)
         }
       })
@@ -64,7 +66,7 @@ export class GameStateManager {
     this.socket.emit('request', { type: 'evidence', data: { id } })
   }
 
-  private propagateUpdate(state: GameState) {
+  private propagateUpdate(state: ResolvedGameState) {
     this.listeners.update.forEach(listener => listener(state))
   }
 

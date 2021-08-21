@@ -36,7 +36,7 @@ io.on('connection', (socket: Socket) => {
 const socketRequestHandler = (socket: Socket, request: SocketRequest) => {
   switch (request.type) {
     case 'dialog':
-      handleDialogRequest(socket, request.data.id)
+      handleDialogRequest(socket, request.data)
       break
   }
 }

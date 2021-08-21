@@ -6,12 +6,12 @@ interface SocketRequestBase {
 
 export interface DialogSocketRequest extends SocketRequestBase {
   type: 'dialog'
-  data: { id: string }
+  data: { id: string, uuid: string }
 }
 
 export interface EvidenceSocketRequest extends SocketRequestBase {
   type: 'evidence'
-  data: { id: string }
+  data: { id: string, uuid: string }
 }
 
 export type SocketRequest = DialogSocketRequest | EvidenceSocketRequest
