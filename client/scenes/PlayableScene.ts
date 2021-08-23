@@ -9,6 +9,8 @@ import { GameStateManager } from '../game-state/game-state-manager'
 import { InteractiveItem } from '../game-objects/InteractiveItem'
 import { preloadFunctions } from './preload-functions'
 import { ObservationItem } from '../game-objects/ObservationItem'
+import { DocumentItem } from '../game-objects/DocumentItem'
+import { PhotoItem } from '../game-objects/PhotoItem'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -159,7 +161,11 @@ export class PlayableScene extends Scene {
           this.items.push(new ObservationItem(this, x, y, id, image))
           break
         case 'document':
+          this.items.push(new DocumentItem(this, x, y, id, image))
+          break
         case 'photo':
+          this.items.push(new PhotoItem(this, x, y, id, image))
+          break
         default:
           this.items.push(new InteractiveItem(this, x, y, id, image))
       }
