@@ -1,12 +1,10 @@
-import { Socket } from 'socket.io'
 import { ServerStateManager } from './server-state-manager'
 
-export const handleInterviewUpdate = (socket: Socket,
-                                      stateManager: ServerStateManager,
+export const handleInterviewUpdate = (stateManager: ServerStateManager,
                                       {
                                         branchId,
                                         dialogId
-                                      }: { branchId: string, dialogId: string }) => {
+                                      }: { branchId: string; dialogId: string }) => {
 
   let existingBranches = stateManager.getState().gameData.interviews[dialogId]
   if (!existingBranches) {
@@ -20,19 +18,17 @@ export const handleInterviewUpdate = (socket: Socket,
   stateManager.updateInterviewRecord(dialogId, updatedBranches)
 }
 
-export const handleDocumentUpdate = (socket: Socket,
-                                     stateManager: ServerStateManager,
+export const handleDocumentUpdate = (stateManager: ServerStateManager,
                                      data: any) => {
 
 }
 
-export const handlePhotoUpdate = (socket: Socket, stateManager: ServerStateManager, data: any) => {
+export const handlePhotoUpdate = (stateManager: ServerStateManager, data: any) => {
 
 }
 
 
-export const handleObservationUpdate = (socket: Socket,
-                                        stateManager: ServerStateManager,
+export const handleObservationUpdate = (stateManager: ServerStateManager,
                                         data: any) => {
-
+  stateManager.updateObservation(data.id)
 }

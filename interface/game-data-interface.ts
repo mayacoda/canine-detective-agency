@@ -4,10 +4,8 @@ export type NPCName = string
 
 type HTMLString = string
 
-export type Interviews = Record<NPCName, InterviewRecord[]>
-
 // resolved when sending to the frontend
-export interface ResolvedGameData {
+export interface ClientSideGameData {
   interviews: Interview[]
   documents: Document[]
   photos: Photo[]
@@ -15,11 +13,11 @@ export interface ResolvedGameData {
 }
 
 // stored in database and fetched per game from server
-export interface GameData {
+export interface ServerSideGameData {
   interviews: Record<NPCName, string[]>
-  documents: Document[]
-  photos: Photo[]
-  observations: Observation[]
+  documents: string[]
+  photos: string[]
+  observations: string[]
 }
 
 export interface Interview {

@@ -1,17 +1,26 @@
-import io, { Socket } from 'socket.io-client'
-import { GameState, ResolvedGameState } from '../../interface/game-state-interface'
+import io from 'socket.io-client'
+import { ResolvedGameState } from '../../interface/game-state-interface'
 import { Dialog } from '../../interface/dialog-interface'
 import { getUUID } from '../utils/uuid'
+import { SocketWrapper } from './SocketWrapper'
+import {
+  ClientDataRequest,
+  EvidenceType,
+  ServerDataResponse
+} from '../../interface/socket-interfaces'
+import { assert } from '../utils/assert'
+import { Document, Photo } from '../../interface/game-data-interface'
 
 export type Handler = (state: ResolvedGameState) => void
 export type EventType = 'update'
 
 export class GameStateManager {
   listeners: Record<EventType, Handler[]> = { update: [] }
-  socket!: Socket
+  socketWrapper: SocketWrapper
 
   constructor() {
-    this.socket = io('ws://localhost:3000', { transports: [ 'websocket' ] })
+    const socket = io('ws://localhost:3000', { transports: [ 'websocket' ] })
+    this.socketWrapper = new SocketWrapper(socket)
   }
 
   private _state: ResolvedGameState | null = null
@@ -21,7 +30,7 @@ export class GameStateManager {
   }
 
   listen() {
-    this.socket.on('update', (data: ResolvedGameState) => {
+    this.socketWrapper.onUpdate((data: ResolvedGameState) => {
       this._state = data
       this.propagateUpdate(this._state)
     })
@@ -36,34 +45,88 @@ export class GameStateManager {
     this.listeners[event].splice(index, 1)
   }
 
-  mutate(state: GameState) {
-    this.socket.emit('mutate', state)
-  }
+  private async requestData(evidenceType: EvidenceType, id: string) {
+    const request: ClientDataRequest = {
+      type: 'data',
+      evidenceType,
+      data: { id, uuid: getUUID() }
+    }
 
-  requestDialog(id: string): Promise<Dialog | null> {
-    return new Promise((resolve) => {
-      const uuid = getUUID()
-      this.socket.emit('request', { type: 'dialog', data: { id, uuid } })
+    return await new Promise((resolve) => {
+      this.socketWrapper.emitRequest(request)
 
-      this.socket.on('dialog', (data: { id: string, dialog: Dialog, uuid: string }) => {
-        if (data.uuid === uuid) {
-          resolve(data.dialog)
+      this.socketWrapper.onResponse((response) => {
+        if (response.data.uuid === request.data.uuid) {
+          resolve(response)
         }
       })
-    })
+    }) as ServerDataResponse
+  }
+
+  async requestDialog(id: string): Promise<Dialog | null> {
+    const evidenceType = 'interview'
+    const response = await this.requestData(evidenceType, id)
+    assert(response.evidenceType === evidenceType)
+
+    return response.data.dialog ?? null
   }
 
   updateDialog(dialogId: string, branchId: string) {
-    this.socket.emit('updateState', {
-      type: 'interview',
+    this.socketWrapper.emitStateUpdate({
+      type: 'update',
+      evidenceType: 'interview',
       data: {
         dialogId, branchId
       }
     })
   }
 
-  requestEvidence(id: string) {
-    this.socket.emit('request', { type: 'evidence', data: { id } })
+  async requestObservation(id: string) {
+    const evidenceType = 'observation'
+    const response = await this.requestData(evidenceType, id)
+    assert(response.evidenceType === evidenceType)
+
+    return response.data.observation
+  }
+
+  updateObservation(id: string) {
+    this.socketWrapper.emitStateUpdate({
+      type: 'update',
+      evidenceType: 'observation',
+      data: { id }
+    })
+  }
+
+  async requestPhoto(id: string): Promise<Photo | null> {
+    const evidenceType = 'photo'
+    const response = await this.requestData(evidenceType, id)
+    assert(response.evidenceType === evidenceType)
+
+    return response.data.photo ?? null
+  }
+
+  updatePhoto(id: string) {
+    this.socketWrapper.emitStateUpdate({
+      type: 'update',
+      evidenceType: 'photo',
+      data: { id }
+    })
+  }
+
+  async requestDocument(id: string): Promise<Document | null> {
+    const evidenceType = 'document'
+    const response = await this.requestData(evidenceType, id)
+    assert(response.evidenceType === evidenceType)
+
+    return response.data.document ?? null
+  }
+
+  updateDocument(id: string) {
+    this.socketWrapper.emitStateUpdate({
+      type: 'update',
+      evidenceType: 'photo',
+      data: { id }
+    })
   }
 
   private propagateUpdate(state: ResolvedGameState) {

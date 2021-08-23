@@ -7,14 +7,14 @@ import './evidence/InterviewsScreen'
 import './evidence/ObservationsScreen'
 import './evidence/PhotosScreen'
 import './evidence/DocumentsScreen'
-import { ResolvedGameData } from '../../interface/game-data-interface'
+import { ClientSideGameData } from '../../interface/game-data-interface'
 
 type EvidenceScreen = 'interviews' | 'observations' | 'photos' | 'documents'
 
 @customElement('dog-ui-evidence')
 export class UIEvidence extends LitElement {
   @property()
-  gameData!: ResolvedGameData
+  gameData!: ClientSideGameData
 
   @state()
   _activeScreen!: EvidenceScreen

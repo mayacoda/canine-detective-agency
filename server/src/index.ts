@@ -1,7 +1,12 @@
 import { GameState } from '../../interface/game-state-interface'
-import { SocketRequest, SocketUpdate } from '../../interface/socket-interfaces'
-import { Socket } from 'socket.io'
-import { handleDialogRequest } from './request-handlers'
+import { ClientDataRequest, ClientUpdateRequest } from '../../interface/socket-interfaces'
+import { Server, Socket } from 'socket.io'
+import {
+  handleDialogRequest,
+  handleDocumentRequest,
+  handleObservationRequest,
+  handlePhotoRequest
+} from './request-handlers'
 import { demoGameData } from '../../interface/game-data/demo-game-data'
 import { ServerStateManager } from './server-state-manager'
 import {
@@ -12,7 +17,6 @@ import {
 } from './update-handler'
 import { resolveGameState } from '../../client/game-state/resolve-game-state'
 
-const { Server } = require('socket.io')
 const io = new Server(3000)
 
 
@@ -30,33 +34,41 @@ io.on('connection', (socket: Socket) => {
   })
 
   socket.on('request', socketRequestHandler.bind(null, socket))
-  socket.on('updateState', socketUpdateHandler.bind(null, socket, stateManager))
+  socket.on('updateState', socketUpdateHandler.bind(null, stateManager))
 })
 
-const socketRequestHandler = (socket: Socket, request: SocketRequest) => {
-  switch (request.type) {
-    case 'dialog':
+const socketRequestHandler = (socket: Socket, request: ClientDataRequest) => {
+  switch (request.evidenceType) {
+    case 'interview':
       handleDialogRequest(socket, request.data)
+      break
+    case 'observation':
+      handleObservationRequest(socket, request.data)
+      break
+    case 'document':
+      handleDocumentRequest(socket, request.data)
+      break
+    case 'photo':
+      handlePhotoRequest(socket, request.data)
       break
   }
 }
 
 
-const socketUpdateHandler = (socket: Socket,
-                             stateManager: ServerStateManager,
-                             update: SocketUpdate) => {
-  switch (update.type) {
+const socketUpdateHandler = (stateManager: ServerStateManager,
+                             update: ClientUpdateRequest) => {
+  switch (update.evidenceType) {
     case 'interview':
-      handleInterviewUpdate(socket, stateManager, update.data)
+      handleInterviewUpdate(stateManager, update.data)
       break
     case 'document':
-      handleDocumentUpdate(socket, stateManager, update.data)
+      handleDocumentUpdate(stateManager, update.data)
       break
     case 'photo':
-      handlePhotoUpdate(socket, stateManager, update.data)
+      handlePhotoUpdate(stateManager, update.data)
       break
     case 'observation':
-      handleObservationUpdate(socket, stateManager, update.data)
+      handleObservationUpdate(stateManager, update.data)
       break
 
   }

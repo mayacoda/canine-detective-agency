@@ -1,25 +1,18 @@
-import { GameData } from '../game-data-interface'
+import { ServerSideGameData } from '../game-data-interface'
 
-export const demoGameData: GameData = {
+export const demoGameData: ServerSideGameData = {
   interviews: {
     maria: [
       'first', 'second'
     ]
   },
   observations: [
-    {
-      location: 'Raven Manor - Office',
-      description: 'Jane\'s will has recently been updated',
-      imageUrl: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.standardlegal.com%2Fstore%2Fimages%2FSLN%2FLW-Doc-1.png&f=1&nofb=1'
-    }
+    'will-update'
   ],
   photos: [
-    {
-      description: 'Jane in her youth',
-      imageUrl: 'https://www.allaboutbirds.org/guide/assets/photo/59858041-480px.jpg'
-    }
+    'young-jane'
   ],
   documents: [
-    { content: 'good-bye <em>cruel</em> <strong>world</strong>', name: 'Jane\'s will' }
+    'janes-will'
   ]
 }

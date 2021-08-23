@@ -8,13 +8,13 @@ export class InteractiveItem extends Phaser.GameObjects.Sprite {
     super(scene, x, y, image)
     this.id = id
     scene.add.existing(this)
-    this.registerListeners()
     this.setInteractive()
   }
 
-  private registerListeners() {
+  protected registerListeners(callback: () => void) {
     this.on('pointerup', () => {
       console.log('clicking on the thing')
+      callback()
     })
   }
 }

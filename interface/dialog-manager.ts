@@ -27,7 +27,7 @@ export const resolveInterviewByBranchId = (dialogId: string, branchId: string): 
   if (branchStatements === null) throw new Error(`could not find dialog branchId "${ branchId }"`)
 
   // todo: when multiplayer, make sure this is the player's name instead
-  const question = branchQuestion ? { text: branchQuestion, speaker: 'you' } : undefined
+  const question = branchQuestion ? { text: branchQuestion, speaker: 'Detective' } : undefined
   const answers = branchStatements.map(text => ({ text, speaker: dialog.speaker }))
 
   const interviewDialog = []

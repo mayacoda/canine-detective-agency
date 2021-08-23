@@ -21,8 +21,16 @@ export class ServerStateManager {
 
   updateInterviewRecord(dialogId: string,
                         updatedInterviewRecord: string[]) {
-    this.state.gameData.interviews[dialogId] = updatedInterviewRecord
-    this.stateUpdateCallback(this.state)
-    console.log('updated new state', this.state)
+    if (this.state.gameData.interviews[dialogId].length !== updatedInterviewRecord.length) {
+      this.state.gameData.interviews[dialogId] = updatedInterviewRecord
+      this.stateUpdateCallback(this.state)
+    }
+  }
+
+  updateObservation(id: string) {
+    if (!this.state.gameData.observations.includes(id)) {
+      this.state.gameData.observations.push(id)
+      this.stateUpdateCallback(this.state)
+    }
   }
 }

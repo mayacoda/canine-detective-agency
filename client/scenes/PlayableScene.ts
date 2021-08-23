@@ -8,6 +8,7 @@ import { Vec2 } from '../../interface/geometry-interface'
 import { GameStateManager } from '../game-state/game-state-manager'
 import { InteractiveItem } from '../game-objects/InteractiveItem'
 import { preloadFunctions } from './preload-functions'
+import { ObservationItem } from '../game-objects/ObservationItem'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -152,7 +153,16 @@ export class PlayableScene extends Scene {
       let { x, y } = getPosition(object)
       const id = getTiledProperty(object, 'id')
       const image = getTiledProperty(object, 'image')
-      this.items.push(new InteractiveItem(this, x, y, id, image))
+      const type = object.type
+      switch (type) {
+        case 'observation':
+          this.items.push(new ObservationItem(this, x, y, id, image))
+          break
+        case 'document':
+        case 'photo':
+        default:
+          this.items.push(new InteractiveItem(this, x, y, id, image))
+      }
     })
   }
 

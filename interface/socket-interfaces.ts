@@ -1,53 +1,123 @@
-type SocketRequestType = 'dialog' | 'evidence'
+import { Dialog } from './dialog-interface'
+import { Document, Observation, Photo } from './game-data-interface'
 
-interface SocketRequestBase {
-  type: SocketRequestType
+export type EvidenceType = 'interview' | 'document' | 'photo' | 'observation'
+
+/**
+ * Requests sent from the client to the server
+ */
+interface ClientDataRequestBase {
+  type: 'data'
+  evidenceType: EvidenceType
 }
 
-export interface DialogSocketRequest extends SocketRequestBase {
-  type: 'dialog'
+export interface InterviewDataRequest extends ClientDataRequestBase {
+  evidenceType: 'interview'
   data: { id: string, uuid: string }
 }
 
-export interface EvidenceSocketRequest extends SocketRequestBase {
-  type: 'evidence'
+export interface DocumentDataRequest extends ClientDataRequestBase {
+  evidenceType: 'document'
   data: { id: string, uuid: string }
 }
 
-export type SocketRequest = DialogSocketRequest | EvidenceSocketRequest
-
-
-type SocketUpdateType = 'interview' | 'document' | 'photo' | 'observation'
-
-interface SocketUpdateBase {
-  type: SocketUpdateType
+export interface PhotoDataRequest extends ClientDataRequestBase {
+  evidenceType: 'photo'
+  data: { id: string, uuid: string }
 }
 
-export interface InterviewSocketUpdate extends SocketUpdateBase {
-  type: 'interview',
+export interface ObservationDataRequest extends ClientDataRequestBase {
+  evidenceType: 'observation'
+  data: { id: string, uuid: string }
+}
+
+export type ClientDataRequest =
+  InterviewDataRequest
+  | DocumentDataRequest
+  | PhotoDataRequest
+  | ObservationDataRequest
+
+
+interface ClientUpdateRequestBase {
+  type: 'update'
+  evidenceType: EvidenceType
+}
+
+export interface InterviewUpdateRequest extends ClientUpdateRequestBase {
+  evidenceType: 'interview',
   data: {
     dialogId: string,
     branchId: string
   }
 }
 
-export interface DocumentSocketUpdate extends SocketUpdateBase {
-  type: 'document',
+export interface DocumentUpdateRequest extends ClientUpdateRequestBase {
+  evidenceType: 'document',
   data: any
 }
 
-export interface PhotoSocketUpdate extends SocketUpdateBase {
-  type: 'photo',
+export interface PhotoUpdateRequest extends ClientUpdateRequestBase {
+  evidenceType: 'photo',
   data: any
 }
 
-export interface ObservationSocketUpdate extends SocketUpdateBase {
-  type: 'observation',
-  data: any
+export interface ObservationUpdateRequest extends ClientUpdateRequestBase {
+  evidenceType: 'observation',
+  data: {
+    id: string
+  }
 }
 
-export type SocketUpdate =
-  InterviewSocketUpdate
-  | DocumentSocketUpdate
-  | PhotoSocketUpdate
-  | ObservationSocketUpdate
+export type ClientUpdateRequest =
+  InterviewUpdateRequest
+  | DocumentUpdateRequest
+  | PhotoUpdateRequest
+  | ObservationUpdateRequest
+
+
+interface ServerDataResponseBase {
+  type: 'data'
+  evidenceType: EvidenceType
+}
+
+export interface InterviewDataResponse extends ServerDataResponseBase {
+  evidenceType: 'interview',
+  data: {
+    id: string
+    dialog: Dialog
+    uuid: string
+  }
+}
+
+export interface ObservationDataResponse extends ServerDataResponseBase {
+  evidenceType: 'observation',
+  data: {
+    id: string
+    uuid: string
+    observation: Observation
+  }
+}
+
+export interface PhotoDataResponse extends ServerDataResponseBase {
+  evidenceType: 'photo',
+  data: {
+    id: string
+    uuid: string
+    photo: Photo
+  }
+}
+
+export interface DocumentDataResponse extends ServerDataResponseBase {
+  evidenceType: 'document',
+  data: {
+    id: string
+    uuid: string
+    document: Document
+  }
+}
+
+export type ServerDataResponse =
+  InterviewDataResponse
+  | ObservationDataResponse
+  | PhotoDataResponse
+  | DocumentDataResponse

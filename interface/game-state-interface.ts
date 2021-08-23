@@ -1,4 +1,4 @@
-import { GameData, ResolvedGameData } from './game-data-interface'
+import { ClientSideGameData, ServerSideGameData } from './game-data-interface'
 import { Vec2 } from './geometry-interface'
 
 export type Player = {
@@ -8,13 +8,13 @@ export type Player = {
 }
 
 export interface GameState {
-  gameData: GameData
+  gameData: ServerSideGameData
   players: Player[]
   currentPlayer: string // todo will probably not be part of the backend's game state, but will be filled in by socket
 }
 
 export interface ResolvedGameState {
-  gameData: ResolvedGameData
+  gameData: ClientSideGameData
   players: Player[]
   currentPlayer: string
 }
