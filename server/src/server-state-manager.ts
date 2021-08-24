@@ -21,7 +21,7 @@ export class ServerStateManager {
 
   updateInterviewRecord(dialogId: string,
                         updatedInterviewRecord: string[]) {
-    if (this.state.gameData.interviews[dialogId].length !== updatedInterviewRecord.length) {
+    if (this.state.gameData.interviews[dialogId]?.length !== updatedInterviewRecord.length) {
       this.state.gameData.interviews[dialogId] = updatedInterviewRecord
       this.stateUpdateCallback(this.state)
     }
