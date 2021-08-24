@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"shop.json"
-        }
-    },
  "height":16,
  "infinite":false,
  "layers":[
@@ -75,6 +67,50 @@
         }, 
         {
          "draworder":"topdown",
+         "id":7,
+         "name":"Images",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"Colliders",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "name":"Characters",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":8,
+         "name":"Items",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":4,
          "name":"Spawn Points",
          "objects":[
@@ -102,13 +138,13 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
+ "nextlayerid":11,
  "nextobjectid":3,
  "orientation":"staggered",
  "renderorder":"right-down",
  "staggeraxis":"y",
  "staggerindex":"odd",
- "tiledversion":"1.7.0",
+ "tiledversion":"1.7.2",
  "tileheight":64,
  "tilesets":[
         {
@@ -120,7 +156,7 @@
          "margin":0,
          "name":"procreate-test-2",
          "spacing":0,
-         "tilecount":165,
+         "tilecount":21,
          "tileheight":128,
          "tiles":[
                 {

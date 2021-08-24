@@ -11,7 +11,8 @@
         "start-server": "nodemon --watch './server/**/*.ts' --exec 'ts-node' './server/src/index.ts'",
         "watch-images": "nodemon --watch './client/assets' --exec 'node' './scripts/load-images.js'",
         "build": "parcel build client/index.html --no-source-maps && node ./scripts/load-images.js",
-        "build-server": "cd ./server && tsc"
+        "build-server": "cd ./server && tsc",
+        "test": "jest"
     },
     "dependencies": {
         "lit": "^2.0.0-rc.2",
@@ -27,12 +28,15 @@
         "dist"
     ],
     "devDependencies": {
+        "@types/jest": "^27.0.1",
         "@types/node": "^16.4.10",
+        "jest": "^27.0.6",
         "nodemon": "^2.0.12",
         "parcel-bundler": "^1.12.5",
         "parcel-plugin-clean-easy": "^1.0.2",
         "parcel-plugin-static-files-copy": "^2.6.0",
         "sass": "^1.35.2",
+        "ts-jest": "^27.0.5",
         "ts-node": "^10.1.0",
         "typescript": "^4.3.4"
     },

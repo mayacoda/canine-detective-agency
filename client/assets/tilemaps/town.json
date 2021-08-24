@@ -167,6 +167,12 @@
                  "height":943,
                  "id":30,
                  "name":"house",
+                 "properties":[
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"house"
+                        }],
                  "rotation":0,
                  "type":"image",
                  "visible":true,
@@ -191,12 +197,12 @@
                  "name":"manor-1",
                  "polygon":[
                         {
-                         "x":-6.4796942362334,
-                         "y":6.37366096957396
+                         "x":-6.47969,
+                         "y":6.37366
                         }, 
                         {
-                         "x":-5.6917607695525,
-                         "y":-302.163529903806
+                         "x":-5.69176,
+                         "y":-302.164
                         }, 
                         {
                          "x":620,
@@ -284,6 +290,16 @@
                          "name":"dialogPosition",
                          "type":"string",
                          "value":"left"
+                        }, 
+                        {
+                         "name":"id",
+                         "type":"string",
+                         "value":"charlie"
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"charlie"
                         }],
                  "rotation":0,
                  "type":"character",
@@ -323,8 +339,8 @@
                  "type":"observation",
                  "visible":true,
                  "width":64,
-                 "x":1410.70277677,
-                 "y":759.979035869846
+                 "x":1410.7,
+                 "y":759.979
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -392,7 +408,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":39,
+ "nextobjectid":40,
  "orientation":"staggered",
  "renderorder":"right-down",
  "staggeraxis":"y",
