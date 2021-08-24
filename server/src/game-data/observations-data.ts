@@ -1,6 +1,6 @@
-import { Observation } from '../game-data-interface'
+import { Observation } from '../../../interface/game-data-interface'
 
-export const demoObservations: Record<string, Observation> = {
+export const observationsData: Record<string, Observation> = {
   example: {
     description: 'this is a mysterious ball in the middle of the square',
     location: 'middle of the square'

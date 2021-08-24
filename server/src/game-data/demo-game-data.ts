@@ -1,4 +1,4 @@
-import { ServerSideGameData } from '../game-data-interface'
+import { ServerSideGameData } from '../../../interface/game-data-interface'
 
 export const demoGameData: ServerSideGameData = {
   interviews: {

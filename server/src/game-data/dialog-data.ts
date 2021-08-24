@@ -1,6 +1,6 @@
-import { Dialog } from '../dialog-interface'
+import { Dialog } from '../../../interface/dialog-interface'
 
-export const demoDialog: Record<string, Dialog> = {
+export const dialogData: Record<string, Dialog> = {
   charlie: {
     branches: [
       {

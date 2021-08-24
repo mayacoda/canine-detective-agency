@@ -7,7 +7,6 @@ import {
   handleObservationRequest,
   handlePhotoRequest
 } from './request-handlers'
-import { demoGameData } from '../../interface/game-data/demo-game-data'
 import { ServerStateManager } from './server-state-manager'
 import {
   handleDocumentUpdate,
@@ -16,6 +15,7 @@ import {
   handlePhotoUpdate
 } from './update-handler'
 import { resolveGameState } from '../../client/game-state/resolve-game-state'
+import { demoGameData } from './game-data/demo-game-data'
 
 const io = new Server(3000)
 

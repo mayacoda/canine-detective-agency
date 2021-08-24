@@ -1,10 +1,10 @@
-import { Dialog } from './dialog-interface'
-import { demoDialog } from './game-data/demo-dialog'
-import { Statement } from './game-data-interface'
+import { dialogData } from '../game-data/dialog-data'
+import { Dialog } from '../../../interface/dialog-interface'
+import { Statement } from '../../../interface/game-data-interface'
 
 export const getDialogById = (id: string): Dialog => {
   // todo temporarily returning demo dialog, should return actual game dialog
-  return demoDialog[id]
+  return dialogData[id]
 }
 
 export const resolveInterviewByBranchId = (dialogId: string, branchId: string): Statement[] => {

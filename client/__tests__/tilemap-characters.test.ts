@@ -6,7 +6,7 @@ import {
   TiledTileMap
 } from './test-utils'
 import { assert } from '../utils/assert'
-import { demoDialog } from '../../interface/game-data/demo-dialog'
+import { dialogData } from '../../server/src/game-data/dialog-data'
 
 describe('each tile map Characters layer', () => {
   let tileMaps: TiledTileMap[] = []
@@ -48,7 +48,7 @@ describe('each tile map Characters layer', () => {
         )
 
         assert(
-          demoDialog[idProperty],
+          dialogData[idProperty],
           `${ map.tileMapName } has character "${ character.name }" without corresponding dialog`
         )
       }

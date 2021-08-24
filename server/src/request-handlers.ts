@@ -1,5 +1,4 @@
 import { Socket } from 'socket.io'
-import { getDialogById } from '../../interface/dialog-manager'
 import {
   DocumentDataRequest,
   DocumentDataResponse,
@@ -11,9 +10,11 @@ import {
   PhotoDataResponse,
   ServerDataResponse
 } from '../../interface/socket-interfaces'
-import { getObservationById } from '../../interface/observation-manager'
-import { getDocumentById } from '../../interface/document-manager'
-import { getPhotoById } from '../../interface/photo-manager'
+import { getObservationById } from './game-data-managers/observation-manager'
+import { getDocumentById } from './game-data-managers/document-manager'
+import { getPhotoById } from './game-data-managers/photo-manager'
+import { getDialogById } from './game-data-managers/dialog-manager'
+
 
 function emitDataResponse(socket: Socket, data: ServerDataResponse) {
   socket.emit('response', data)

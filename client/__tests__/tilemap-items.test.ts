@@ -6,9 +6,9 @@ import {
   TiledTileMap
 } from './test-utils'
 import { assert } from '../utils/assert'
-import { demoPhotos } from '../../interface/game-data/demo-photos'
-import { demoDocuments } from '../../interface/game-data/demo-documents'
-import { demoObservations } from '../../interface/game-data/demo-observations'
+import { photosData } from '../../server/src/game-data/photos-data'
+import { documentsData } from '../../server/src/game-data/documents-data'
+import { observationsData } from '../../server/src/game-data/observations-data'
 
 describe('each tile map Items layer', () => {
   let tileMaps: TiledTileMap[] = []
@@ -63,13 +63,13 @@ describe('each tile map Items layer', () => {
 
         switch (type) {
           case 'photo':
-            description = demoPhotos[idProperty]
+            description = photosData[idProperty]
             break
           case 'document':
-            description = demoDocuments[idProperty]
+            description = documentsData[idProperty]
             break
           case 'observation':
-            description = demoObservations[idProperty]
+            description = observationsData[idProperty]
             break
         }
 
