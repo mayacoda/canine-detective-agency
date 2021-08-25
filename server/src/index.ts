@@ -17,7 +17,7 @@ import {
 import { resolveGameState } from '../../client/game-state/resolve-game-state'
 import { demoGameData } from './game-data/demo-game-data'
 
-const io = new Server(3000)
+const io = new Server(parseInt(process.env.PORT) || 3000)
 
 
 function createDummyState(): GameState {
