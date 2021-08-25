@@ -28,6 +28,9 @@
     "parcelCleanPaths": [
         "dist"
     ],
+    "engines": {
+        "node": "16.6.0"
+    },
     "devDependencies": {
         "@types/jest": "^27.0.1",
         "@types/node": "^16.4.10",
