@@ -1,12 +1,9 @@
-import { ClientSideGameData, ServerSideGameData } from '../../interface/game-data-interface'
-import { GameState, ResolvedGameState } from '../../interface/game-state-interface'
-import {
-  getDialogById,
-  resolveInterviewByBranchId
-} from '../../server/src/game-data-managers/dialog-manager'
-import { getDocumentById } from '../../server/src/game-data-managers/document-manager'
-import { getPhotoById } from '../../server/src/game-data-managers/photo-manager'
-import { getObservationById } from '../../server/src/game-data-managers/observation-manager'
+import { ClientSideGameData, ServerSideGameData } from '../../../interface/game-data-interface'
+import { getDialogById, resolveInterviewByBranchId } from '../game-data-managers/dialog-manager'
+import { getDocumentById } from '../game-data-managers/document-manager'
+import { getPhotoById } from '../game-data-managers/photo-manager'
+import { getObservationById } from '../game-data-managers/observation-manager'
+import { GameState, ResolvedGameState } from '../../../interface/game-state-interface'
 
 export const resolveGameData = (data: ServerSideGameData): ClientSideGameData => {
   return {
