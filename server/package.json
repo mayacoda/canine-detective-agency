@@ -14,7 +14,8 @@
     },
     "scripts": {
         "build": "esbuild ./src/index.ts --bundle --outfile=index.js --platform=node --target=node16.6",
-        "start": "nodemon --watch './**/*.ts' --exec 'ts-node' './src/index.ts'"
+        "start-server": "nodemon --watch './**/*.ts' --exec 'ts-node' './src/index.ts'",
+        "start": "node index.js"
     },
     "dependencies": {
         "socket.io": "^4.1.3"
