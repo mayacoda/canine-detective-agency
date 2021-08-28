@@ -14,8 +14,8 @@ import {
   handleObservationUpdate,
   handlePhotoUpdate
 } from './update-handler'
-import { resolveGameState } from '../../client/game-state/resolve-game-state'
 import { demoGameData } from './game-data/demo-game-data'
+import { resolveGameState } from './game-data/resolve-game-state'
 
 const io = new Server(parseInt(process.env.PORT) || 3000)
 

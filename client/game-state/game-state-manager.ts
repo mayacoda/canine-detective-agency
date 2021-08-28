@@ -20,7 +20,7 @@ export class GameStateManager {
 
   constructor() {
     const socket = io(
-      'https://canine-detective-agency.herokuapp.com/',
+      process.env.SERVER_URL ?? 'ws://localhost:3000',
       { transports: [ 'websocket' ] }
     )
     this.socketWrapper = new SocketWrapper(socket)

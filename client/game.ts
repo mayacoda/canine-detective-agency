@@ -6,7 +6,10 @@ import { TownScene } from './scenes/TownScene'
 import { ResidenceScene } from './scenes/ResidenceScene'
 import { UIScene } from './scenes/UIScene'
 import { GameStateManager } from './game-state/game-state-manager'
+import dotenv from 'dotenv'
 import GameConfig = Phaser.Types.Core.GameConfig
+
+dotenv.config()
 
 const config: GameConfig = {
   type: Phaser.AUTO,
