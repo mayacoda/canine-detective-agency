@@ -100,12 +100,12 @@ export class GameStateManager {
     })
   }
 
-  async requestPhoto(id: string): Promise<Photo | null> {
+  async requestPhoto(id: string): Promise<Photo> {
     const evidenceType = 'photo'
     const response = await this.requestData(evidenceType, id)
     assert(response.evidenceType === evidenceType)
 
-    return response.data.photo ?? null
+    return response.data.photo
   }
 
   updatePhoto(id: string) {
@@ -116,12 +116,12 @@ export class GameStateManager {
     })
   }
 
-  async requestDocument(id: string): Promise<Document | null> {
+  async requestDocument(id: string): Promise<Document> {
     const evidenceType = 'document'
     const response = await this.requestData(evidenceType, id)
     assert(response.evidenceType === evidenceType)
 
-    return response.data.document ?? null
+    return response.data.document
   }
 
   updateDocument(id: string) {
