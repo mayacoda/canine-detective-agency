@@ -8,6 +8,9 @@ export class UIContainer extends LitElement {
   @property()
   gameData?: ClientSideGameData
 
+  @property()
+  roomId?: string
+
   @state()
   private _evidenceVisible = false
   @state()
@@ -34,14 +37,26 @@ export class UIContainer extends LitElement {
         z-index: 4;
       }
 
-      .navigation {
+      .actions {
         padding: 20px;
         grid-column-end: end;
         grid-row-end: end;
       }
 
-      .navigation button {
+      .actions button {
         font-size: 2em
+      }
+
+      .header {
+        font-size: var(--font-size-medium);
+        margin-left: var(--spacer-5);
+      }
+
+      .highlight {
+        color: var(--background-color);
+        background-color: var(--primary-color);
+        border-radius: 4px;
+        padding: 0 12px;
       }
     `
   }
@@ -54,9 +69,12 @@ export class UIContainer extends LitElement {
         ${ this._settingsVisible ? html`
             <dog-ui-settings class="overlay"></dog-ui-settings>` : '' }
         <div class="container">
-            <div class="navigation">
+            <div class="actions">
                 <dog-button @click="${ () => this._evidenceVisible = true }">Evidence</dog-button>
                 <dog-button>Solve</dog-button>
+            </div>
+            <div class="header">
+                <h3>Room: <span class="highlight">${ this.roomId }</span></h3>
             </div>
         </div>
     `

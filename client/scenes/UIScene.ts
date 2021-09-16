@@ -24,7 +24,8 @@ export class UIScene extends Scene {
 
     const gameStateManager = config.gameStateManager
     this.uiContainer.gameData = gameStateManager.state?.gameData
-    
+    this.uiContainer.roomId = gameStateManager.state?.roomId
+
     gameStateManager.addListener('update', state => {
       this.uiContainer.gameData = state.gameData
     })
