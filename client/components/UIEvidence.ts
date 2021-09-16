@@ -14,7 +14,7 @@ type EvidenceScreen = 'interviews' | 'observations' | 'photos' | 'documents'
 @customElement('dog-ui-evidence')
 export class UIEvidence extends LitElement {
   @property()
-  gameData!: ClientSideGameData
+  gameData?: ClientSideGameData
 
   @state()
   _activeScreen!: EvidenceScreen

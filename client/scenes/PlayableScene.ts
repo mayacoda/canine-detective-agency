@@ -47,6 +47,7 @@ export class PlayableScene extends Scene {
   }
 
   create(config: { fromDoor?: string, gameStateManager: GameStateManager }) {
+    console.log('creating a playable scene')
     this.gameStateManager = config.gameStateManager
     this.controls.start()
 
@@ -74,7 +75,10 @@ export class PlayableScene extends Scene {
       this.matter.overlap(this.player, this.doors, (a: MatterBody, b: MatterBody) => {
         const door = 'gameObject' in b && b.gameObject.getData('doorTo')
         if (door) {
-          this.scene.start(door, { fromDoor: this.scene.key })
+          this.scene.start(
+            door,
+            { fromDoor: this.scene.key, gameStateManager: this.gameStateManager }
+          )
         } else {
           console.warn('Door is missing "doorTo" property!')
         }
@@ -144,9 +148,8 @@ export class PlayableScene extends Scene {
     this.tileMap.getObjectLayer('Characters')?.objects.map(object => {
       const { x, y } = getPosition(object)
 
-      const dialogPosition = getTiledProperty(object, 'dialogPosition')
-
-      this.NPCs.push(new NPC(this, object.name, x, y, dialogPosition))
+      // todo clean up the NPCs when moving between scenes
+      this.NPCs.push(new NPC(this, object.name, x, y))
     })
   }
 

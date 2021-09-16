@@ -3,11 +3,13 @@ import { ResolvedGameState } from '../../interface/game-state-interface'
 import {
   ClientDataRequest,
   ClientUpdateRequest,
+  JoinRoomRequest,
   ServerDataResponse,
+  StartGameRequest,
 } from '../../interface/socket-interfaces'
 
 export class SocketWrapper {
-  private socket: Socket
+  private socket: Socket // todo add type for this that has only enumerated events in on and emit
 
   constructor(socket: Socket) {
     this.socket = socket
@@ -33,4 +35,31 @@ export class SocketWrapper {
     this.socket.emit('updateState', stateUpdate)
   }
 
+  emitJoinRoom(joinRoomRequest: JoinRoomRequest) {
+    this.socket.emit('joinRoom', joinRoomRequest)
+  }
+
+  emitCreateRoom() {
+    this.socket.emit('createRoom')
+  }
+
+  onRoomId(callback: (roomId: string) => void) {
+    this.socket.on('roomId', callback)
+  }
+
+  onPlayerId(callback: (playerId: string) => void) {
+    this.socket.on('playerId', callback)
+  }
+
+  onUnknownRoom(callback: () => void) {
+    this.socket.on('unknownRoom', callback)
+  }
+
+  onTooManyPlayers(callback: () => void) {
+    this.socket.on('tooManyPlayers', callback)
+  }
+
+  emitStartGame(startGameRequest: StartGameRequest) {
+    this.socket.emit('startGame', startGameRequest)
+  }
 }

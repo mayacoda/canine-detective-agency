@@ -1,14 +1,17 @@
 import { GameState } from '../../interface/game-state-interface'
 import { Immutable } from '../../interface/types'
+import { PlayerData } from '../../interface/socket-interfaces'
+
 
 export class ServerStateManager {
   private state: GameState
   private readonly stateUpdateCallback: (state: GameState) => void
+  private playerNameMap: Record<string, PlayerData> = {}
 
   constructor(state: GameState, stateUpdateCallback: (state: GameState) => void) {
     this.state = state
     this.stateUpdateCallback = stateUpdateCallback
-    this.stateUpdateCallback(this.state)
+    // this.stateUpdateCallback(this.state)
   }
 
   updateState(newState: GameState) {
@@ -17,6 +20,10 @@ export class ServerStateManager {
 
   getState(): Immutable<GameState> {
     return this.state
+  }
+
+  setPlayerData(playerId: string, playerData: PlayerData) {
+    this.playerNameMap[playerId] = playerData
   }
 
   updateInterviewRecord(dialogId: string,
@@ -33,4 +40,6 @@ export class ServerStateManager {
       this.stateUpdateCallback(this.state)
     }
   }
+
+  //todo add updating of photos and documents
 }

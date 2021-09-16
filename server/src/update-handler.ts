@@ -20,11 +20,11 @@ export const handleInterviewUpdate = (stateManager: ServerStateManager,
 
 export const handleDocumentUpdate = (stateManager: ServerStateManager,
                                      data: any) => {
-
+//@todo handle updating document
 }
 
 export const handlePhotoUpdate = (stateManager: ServerStateManager, data: any) => {
-
+//@todo handle updating photo
 }
 
 

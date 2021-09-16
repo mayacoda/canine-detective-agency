@@ -6,7 +6,7 @@ import { ClientSideGameData } from '../../interface/game-data-interface'
 @customElement('dog-ui-container')
 export class UIContainer extends LitElement {
   @property()
-  gameData!: ClientSideGameData
+  gameData?: ClientSideGameData
 
   @state()
   private _evidenceVisible = false

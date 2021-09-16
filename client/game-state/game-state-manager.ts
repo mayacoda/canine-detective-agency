@@ -6,16 +6,23 @@ import { SocketWrapper } from './SocketWrapper'
 import {
   ClientDataRequest,
   EvidenceType,
-  ServerDataResponse
+  PlayerData,
+  ServerDataResponse,
+  ServerResponseEvent
 } from '../../interface/socket-interfaces'
 import { assert } from '../utils/assert'
 import { Document, Photo } from '../../interface/game-data-interface'
 
-export type Handler = (state: ResolvedGameState) => void
-export type EventType = 'update'
+export type Handler = (data?: any) => void
 
 export class GameStateManager {
-  listeners: Record<EventType, Handler[]> = { update: [] }
+  listeners: Record<ServerResponseEvent, Handler[]> = {
+    playerId: [],
+    roomId: [],
+    tooManyPlayers: [],
+    unknownRoom: [],
+    update: []
+  }
   socketWrapper: SocketWrapper
 
   constructor() {
@@ -37,13 +44,32 @@ export class GameStateManager {
       this._state = data
       this.propagateUpdate(this._state)
     })
+
+    this.socketWrapper.onRoomId((roomId: string) => {
+      this.listeners['roomId'].forEach(fn => fn(roomId))
+    })
+
+    this.socketWrapper.onPlayerId((playerId: string) => {
+      this.listeners['playerId'].forEach(fn => fn(playerId))
+    })
+
+    this.socketWrapper.onTooManyPlayers(() => {
+      this.listeners['tooManyPlayers'].forEach(fn => fn())
+    })
+
+    this.socketWrapper.onUnknownRoom(() => {
+      this.listeners['unknownRoom'].forEach(fn => fn())
+    })
   }
 
-  addListener(event: EventType, handler: Handler) {
+  addListener(event: ServerResponseEvent, handler: Handler) {
     this.listeners[event].push(handler)
+    return () => {
+      this.removeListener(event, handler)
+    }
   }
 
-  removeListener(event: EventType, handler: Handler) {
+  removeListener(event: ServerResponseEvent, handler: Handler) {
     const index = this.listeners[event].indexOf(handler)
     this.listeners[event].splice(index, 1)
   }
@@ -136,4 +162,26 @@ export class GameStateManager {
     this.listeners.update.forEach(listener => listener(state))
   }
 
+
+  joinRoom(id: string) {
+    this.socketWrapper.emitJoinRoom({
+      type: 'room',
+      action: 'join',
+      data: {
+        roomId: id
+      }
+    })
+  }
+
+  createRoom() {
+    this.socketWrapper.emitCreateRoom()
+  }
+
+  startGame(data: PlayerData) {
+    this.socketWrapper.emitStartGame({
+      action: 'start',
+      type: 'room',
+      data
+    })
+  }
 }
