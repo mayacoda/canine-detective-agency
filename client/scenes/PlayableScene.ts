@@ -61,6 +61,10 @@ export class PlayableScene extends Scene {
 
     this.spawnPlayer(config)
 
+    this.events.on('shutdown', () => {
+      this.cleanUp()
+    })
+
     // workaround to get UI scene HTML to always render above PlayableScene HTML
     // this.scene.get('UI').scene.restart()
     // this.scene.setActive(true)
@@ -205,5 +209,11 @@ export class PlayableScene extends Scene {
     }
 
     this.player = new Player(this, x, y + 64)
+  }
+
+  cleanUp() {
+    this.NPCs = []
+    this.doors = []
+    this.items = []
   }
 }
