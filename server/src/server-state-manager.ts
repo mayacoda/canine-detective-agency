@@ -6,12 +6,10 @@ import { PlayerData } from '../../interface/socket-interfaces'
 export class ServerStateManager {
   private state: GameState
   private readonly stateUpdateCallback: (state: GameState) => void
-  private playerNameMap: Record<string, PlayerData> = {}
 
   constructor(state: GameState, stateUpdateCallback: (state: GameState) => void) {
     this.state = state
     this.stateUpdateCallback = stateUpdateCallback
-    // this.stateUpdateCallback(this.state)
   }
 
   updateState(newState: GameState) {
@@ -23,7 +21,17 @@ export class ServerStateManager {
   }
 
   setPlayerData(playerId: string, playerData: PlayerData) {
-    this.playerNameMap[playerId] = playerData
+    // default spawning point for the game right now, might reset to 0, 0
+    this.state.players[playerId] = {
+      ...playerData,
+      id: playerId,
+      pos: { x: 1208.24, y: 877.283 },
+      map: 'town'
+    }
+  }
+
+  setRoomId(roomId: string) {
+    this.state.roomId = roomId
   }
 
   updateInterviewRecord(dialogId: string,

@@ -86,7 +86,7 @@ export class StartContainer extends LitElement {
             <label for="name_field">
                 Enter your name
             </label>
-            <input type="text" id="name_field" @change="${ this.updateValue }"/>
+            <input type="text" id="name_field" @keyup="${ this.updateValue }"/>
 
             <p>Choose your detective</p>
             <div class="avatar-container">

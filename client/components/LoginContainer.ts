@@ -56,7 +56,7 @@ export class LoginContainer extends LitElement {
             <label for="room_id">
                 Enter room id
             </label id="room_id">
-            <input type="text" @change="${ this.updateValue }"/>
+            <input type="text" @keyup="${ this.updateValue }"/>
 
             <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId }">Join room
             </dog-button>

@@ -11,6 +11,7 @@ import { preloadFunctions } from './preload-functions'
 import { ObservationItem } from '../game-objects/ObservationItem'
 import { DocumentItem } from '../game-objects/DocumentItem'
 import { PhotoItem } from '../game-objects/PhotoItem'
+import { assert } from '../utils/assert'
 import Tilemap = Phaser.Tilemaps.Tilemap
 import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
@@ -152,7 +153,6 @@ export class PlayableScene extends Scene {
     this.tileMap.getObjectLayer('Characters')?.objects.map(object => {
       const { x, y } = getPosition(object)
 
-      // todo clean up the NPCs when moving between scenes
       this.NPCs.push(new NPC(this, object.name, x, y))
     })
   }
@@ -180,9 +180,14 @@ export class PlayableScene extends Scene {
   }
 
   private spawnPlayer(config: { fromDoor?: string }) {
+
     const spawnPoints = this.tileMap.getObjectLayer('Spawn Points').objects
-    let x = 400
-    let y = 300
+
+    const currentPlayer = this.gameStateManager.getPlayer()
+    assert(currentPlayer, 'Did not get current player from state manager')
+
+    let { x, y } = currentPlayer.pos
+
 
     if (config.fromDoor) {
       const point = spawnPoints.find(point => {
@@ -198,17 +203,7 @@ export class PlayableScene extends Scene {
       }
     }
 
-    let defaultPoint = spawnPoints.find(point => !getTiledProperty(
-      point,
-      'fromDoor'
-    )) ?? spawnPoints[0]
-
-    if (defaultPoint) {
-      x = defaultPoint.x ?? x
-      y = defaultPoint.y ?? y
-    }
-
-    this.player = new Player(this, x, y + 64)
+    this.player = new Player(this, x, y + 64, currentPlayer.avatar)
   }
 
   cleanUp() {

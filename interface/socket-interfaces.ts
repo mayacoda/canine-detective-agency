@@ -13,7 +13,7 @@ export type ClientRequestEvent =
 
 export type EvidenceType = 'interview' | 'document' | 'photo' | 'observation'
 
-export type PlayerData = { name: string, avatar: string }
+export type PlayerData = { name: string, avatar: string, id: string, }
 
 
 /**

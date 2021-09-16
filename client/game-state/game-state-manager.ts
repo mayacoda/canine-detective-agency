@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { ResolvedGameState } from '../../interface/game-state-interface'
+import { Player, ResolvedGameState } from '../../interface/game-state-interface'
 import { Dialog } from '../../interface/dialog-interface'
 import { getUUID } from '../utils/uuid'
 import { SocketWrapper } from './SocketWrapper'
@@ -16,6 +16,7 @@ import { Document, Photo } from '../../interface/game-data-interface'
 export type Handler = (data?: any) => void
 
 export class GameStateManager {
+
   listeners: Record<ServerResponseEvent, Handler[]> = {
     playerId: [],
     roomId: [],
@@ -25,6 +26,10 @@ export class GameStateManager {
   }
   socketWrapper: SocketWrapper
 
+  private _state: ResolvedGameState | null = null
+  private _playerId?: string
+
+
   constructor() {
     const socket = io(
       process.env.SERVER_URL ?? 'ws://localhost:3000',
@@ -33,7 +38,6 @@ export class GameStateManager {
     this.socketWrapper = new SocketWrapper(socket)
   }
 
-  private _state: ResolvedGameState | null = null
 
   get state() {
     return this._state
@@ -50,6 +54,7 @@ export class GameStateManager {
     })
 
     this.socketWrapper.onPlayerId((playerId: string) => {
+      this._playerId = playerId
       this.listeners['playerId'].forEach(fn => fn(playerId))
     })
 
@@ -183,5 +188,11 @@ export class GameStateManager {
       type: 'room',
       data
     })
+  }
+
+  getPlayer(): Player | undefined {
+    if (this.state && this._playerId) {
+      return this.state.players[this._playerId]
+    }
   }
 }

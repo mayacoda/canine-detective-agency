@@ -31,9 +31,9 @@ const playerRoomMap: Record<string, string> = {}
 
 function createDummyState(): GameState {
   return {
-    currentPlayer: '',
-    players: [],
-    gameData: demoGameData
+    players: {},
+    gameData: demoGameData,
+    roomId: ''
   }
 }
 
@@ -68,6 +68,8 @@ const createRoomHandler = (socket: Socket) => {
   const stateManager = new ServerStateManager(createDummyState(), (newState) => {
     io.sockets.in(roomId).emit('update', resolveGameState(newState))
   })
+
+  stateManager.setRoomId(roomId)
 
   globalStates[roomId] = stateManager
 
