@@ -1,5 +1,37 @@
 import { Dialog } from './dialog-interface'
 import { Document, Observation, Photo } from './game-data-interface'
+import { ResolvedGameState } from './game-state-interface'
+
+
+// todo properly populate the map of event -> payload so it reflects current reality (can refactor later)
+
+type ClientEmittedEventPayload = {
+  request: ClientDataRequest
+  updateState: ClientEvidenceUpdateRequest
+  createRoom: void
+  joinRoom: string
+  startGame: PlayerData
+}
+
+type ServerEmittedEventPayload = {
+  playerId: string
+  update: ResolvedGameState
+  unknownRoom: void
+  tooManyPlayers: void
+  response: ServerDataResponse
+}
+
+export type ServerOn = <T extends keyof ClientEmittedEventPayload>(event: T,
+                                                                   callback: (payload: ClientEmittedEventPayload[T]) => void) => void
+
+export type ClientEmit = <T extends keyof ClientEmittedEventPayload>(event: T,
+                                                                     payload: ClientEmittedEventPayload[T]) => void
+
+export type ClientOn = <T extends keyof ServerEmittedEventPayload>(event: T,
+                                                                   callback: (payload: ServerEmittedEventPayload[T]) => void) => void
+
+export type ServerEmit = <T extends keyof ServerEmittedEventPayload>(event: T,
+                                                                     ...payload: (ServerEmittedEventPayload[T] extends undefined ? [ undefined? ] : [ ServerEmittedEventPayload[T] ])) => void
 
 export type ServerResponseEvent =
   'update'
@@ -54,12 +86,15 @@ export type ClientDataRequest =
 /**
  * Requests sent from the client to the server to update the game state
  */
-interface ClientUpdateRequestBase {
+interface ClientEvidenceUpdateRequestBase {
+}
+
+interface ClientEvidenceUpdateRequestBase {
   type: 'update'
   evidenceType: EvidenceType
 }
 
-export interface InterviewUpdateRequest extends ClientUpdateRequestBase {
+export interface InterviewUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'interview',
   data: {
     dialogId: string,
@@ -67,24 +102,24 @@ export interface InterviewUpdateRequest extends ClientUpdateRequestBase {
   }
 }
 
-export interface DocumentUpdateRequest extends ClientUpdateRequestBase {
+export interface DocumentUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'document',
   data: any
 }
 
-export interface PhotoUpdateRequest extends ClientUpdateRequestBase {
+export interface PhotoUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'photo',
   data: any
 }
 
-export interface ObservationUpdateRequest extends ClientUpdateRequestBase {
+export interface ObservationUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'observation',
   data: {
     id: string
   }
 }
 
-export type ClientUpdateRequest =
+export type ClientEvidenceUpdateRequest =
   InterviewUpdateRequest
   | DocumentUpdateRequest
   | PhotoUpdateRequest

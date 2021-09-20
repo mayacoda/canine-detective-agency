@@ -14,9 +14,10 @@ import { getObservationById } from './game-data-managers/observation-manager'
 import { getDocumentById } from './game-data-managers/document-manager'
 import { getPhotoById } from './game-data-managers/photo-manager'
 import { getDialogById } from './game-data-managers/dialog-manager'
+import { TypedServerSocket } from './types'
 
 
-function emitDataResponse(socket: Socket, data: ServerDataResponse) {
+function emitDataResponse(socket: TypedServerSocket, data: ServerDataResponse) {
   socket.emit('response', data)
 }
 

@@ -2,17 +2,29 @@ import { Socket } from 'socket.io-client'
 import { ResolvedGameState } from '../../interface/game-state-interface'
 import {
   ClientDataRequest,
-  ClientUpdateRequest,
+  ClientEmit,
+  ClientEvidenceUpdateRequest,
+  ClientOn,
   JoinRoomRequest,
   ServerDataResponse,
   StartGameRequest,
 } from '../../interface/socket-interfaces'
 
+
+export type  TypedClientSocket = {
+  on: ClientOn
+  emit: ClientEmit
+}
+
 export class SocketWrapper {
-  private socket: Socket // todo add type for this that has only enumerated events in on and emit
+  private readonly socket: Socket // todo add type for this that has only enumerated events in on and emit
 
   constructor(socket: Socket) {
     this.socket = socket
+  }
+
+  getSocket(): TypedClientSocket {
+    return this.socket as TypedClientSocket
   }
 
   // backend updates the state
@@ -31,7 +43,7 @@ export class SocketWrapper {
   }
 
   // signal a state change to backend
-  emitStateUpdate(stateUpdate: ClientUpdateRequest) {
+  emitStateUpdate(stateUpdate: ClientEvidenceUpdateRequest) {
     this.socket.emit('updateState', stateUpdate)
   }
 
