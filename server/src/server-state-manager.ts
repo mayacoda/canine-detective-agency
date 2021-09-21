@@ -42,12 +42,22 @@ export class ServerStateManager {
     }
   }
 
-  updateObservation(id: string) {
-    if (!this.state.gameData.observations.includes(id)) {
-      this.state.gameData.observations.push(id)
+  private updateEvidence(evidenceType: 'documents' | 'observations' | 'photos', id: string) {
+    if (!this.state.gameData[evidenceType].includes(id)) {
+      this.state.gameData[evidenceType].push(id)
       this.stateUpdateCallback(this.state)
     }
   }
 
-  //todo add updating of photos and documents
+  updateObservation(id: string) {
+    this.updateEvidence('observations', id)
+  }
+
+  updatePhoto(id: string) {
+    this.updateEvidence('photos', id)
+  }
+
+  updateDocument(id: string) {
+    this.updateEvidence('documents', id)
+  }
 }

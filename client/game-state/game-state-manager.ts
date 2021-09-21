@@ -2,29 +2,18 @@ import io from 'socket.io-client'
 import { Player, ResolvedGameState } from '../../interface/game-state-interface'
 import { Dialog } from '../../interface/dialog-interface'
 import { getUUID } from '../utils/uuid'
-import { SocketWrapper } from './SocketWrapper'
+import { SocketWrapper, TypedClientSocket } from './SocketWrapper'
 import {
   ClientDataRequest,
   EvidenceType,
   PlayerData,
-  ServerDataResponse,
-  ServerResponseEvent
+  ServerDataResponse
 } from '../../interface/socket-interfaces'
 import { assert } from '../utils/assert'
 import { Document, Photo } from '../../interface/game-data-interface'
 
-export type Handler = (data?: any) => void
-
 export class GameStateManager {
-
-  listeners: Record<ServerResponseEvent, Handler[]> = {
-    playerId: [],
-    roomId: [],
-    tooManyPlayers: [],
-    unknownRoom: [],
-    update: []
-  }
-  socketWrapper: SocketWrapper
+  public socket: Readonly<TypedClientSocket>
 
   private _state: ResolvedGameState | null = null
   private _playerId?: string
@@ -35,7 +24,7 @@ export class GameStateManager {
       process.env.SERVER_URL ?? 'ws://localhost:3000',
       { transports: [ 'websocket' ] }
     )
-    this.socketWrapper = new SocketWrapper(socket)
+    this.socket = new SocketWrapper(socket).getSocket()
   }
 
 
@@ -44,52 +33,25 @@ export class GameStateManager {
   }
 
   listen() {
-    this.socketWrapper.onUpdate((data: ResolvedGameState) => {
+    this.socket.on('update', data => {
       this._state = data
-      this.propagateUpdate(this._state)
     })
 
-    this.socketWrapper.onRoomId((roomId: string) => {
-      this.listeners['roomId'].forEach(fn => fn(roomId))
-    })
-
-    this.socketWrapper.onPlayerId((playerId: string) => {
+    this.socket.on('playerId', playerId => {
       this._playerId = playerId
-      this.listeners['playerId'].forEach(fn => fn(playerId))
     })
-
-    this.socketWrapper.onTooManyPlayers(() => {
-      this.listeners['tooManyPlayers'].forEach(fn => fn())
-    })
-
-    this.socketWrapper.onUnknownRoom(() => {
-      this.listeners['unknownRoom'].forEach(fn => fn())
-    })
-  }
-
-  addListener(event: ServerResponseEvent, handler: Handler) {
-    this.listeners[event].push(handler)
-    return () => {
-      this.removeListener(event, handler)
-    }
-  }
-
-  removeListener(event: ServerResponseEvent, handler: Handler) {
-    const index = this.listeners[event].indexOf(handler)
-    this.listeners[event].splice(index, 1)
   }
 
   private async requestData(evidenceType: EvidenceType, id: string) {
     const request: ClientDataRequest = {
-      type: 'data',
       evidenceType,
       data: { id, uuid: getUUID() }
     }
 
     return await new Promise((resolve) => {
-      this.socketWrapper.emitRequest(request)
+      this.socket.emit('request', request)
 
-      this.socketWrapper.onResponse((response) => {
+      this.socket.on('response', (response) => {
         if (response.data.uuid === request.data.uuid) {
           resolve(response)
         }
@@ -106,8 +68,7 @@ export class GameStateManager {
   }
 
   updateDialog(dialogId: string, branchId: string) {
-    this.socketWrapper.emitStateUpdate({
-      type: 'update',
+    this.socket.emit('updateState', {
       evidenceType: 'interview',
       data: {
         dialogId, branchId
@@ -124,8 +85,7 @@ export class GameStateManager {
   }
 
   updateObservation(id: string) {
-    this.socketWrapper.emitStateUpdate({
-      type: 'update',
+    this.socket.emit('updateState', {
       evidenceType: 'observation',
       data: { id }
     })
@@ -140,8 +100,7 @@ export class GameStateManager {
   }
 
   updatePhoto(id: string) {
-    this.socketWrapper.emitStateUpdate({
-      type: 'update',
+    this.socket.emit('updateState', {
       evidenceType: 'photo',
       data: { id }
     })
@@ -156,43 +115,27 @@ export class GameStateManager {
   }
 
   updateDocument(id: string) {
-    this.socketWrapper.emitStateUpdate({
-      type: 'update',
+    this.socket.emit('updateState', {
       evidenceType: 'photo',
       data: { id }
     })
   }
-
-  private propagateUpdate(state: ResolvedGameState) {
-    this.listeners.update.forEach(listener => listener(state))
-  }
-
-
+  
   joinRoom(id: string) {
-    this.socketWrapper.emitJoinRoom({
-      type: 'room',
-      action: 'join',
-      data: {
-        roomId: id
-      }
-    })
+    this.socket.emit('joinRoom', id)
   }
 
   createRoom() {
-    this.socketWrapper.emitCreateRoom()
+    this.socket.emit('createRoom')
   }
 
   startGame(data: PlayerData) {
-    this.socketWrapper.emitStartGame({
-      action: 'start',
-      type: 'room',
-      data
-    })
+    this.socket.emit('startGame', data)
   }
 
   getPlayer(): Player | undefined {
-    if (this.state && this._playerId) {
-      return this.state.players[this._playerId]
+    if (this._state && this._playerId) {
+      return this._state.players[this._playerId]
     }
   }
 }

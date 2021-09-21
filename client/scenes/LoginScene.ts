@@ -31,24 +31,25 @@ export class LoginScene extends Scene {
       gameStateManager.createRoom()
     })
 
-    // todo scene should be able to directly communicate with the socket through a wrapper
-    gameStateManager.addListener('roomId', (roomId) => {
+    const socket = gameStateManager.socket
+
+    socket.on('roomId', roomId => {
       console.log('got room ID from server', roomId)
       this.scene.start('Start', { gameStateManager, roomId })
     })
 
-    gameStateManager.addListener('playerId', (playerId) => {
+    socket.on('playerId', playerId => {
       console.log('got player ID from server', playerId)
       if (this.roomId) {
         this.scene.start('Start', { gameStateManager, roomId: this.roomId })
       }
     })
 
-    gameStateManager.addListener('tooManyPlayers', () => {
+    socket.on('tooManyPlayers', () => {
       console.log('too many players')
     })
 
-    gameStateManager.addListener('unknownRoom', () => {
+    socket.on('unknownRoom', () => {
       console.log('unknown room')
     })
   }

@@ -23,7 +23,6 @@ function emitDataResponse(socket: TypedServerSocket, data: ServerDataResponse) {
 
 export function handleDialogRequest(socket: Socket, data: InterviewDataRequest['data']) {
   const response: InterviewDataResponse = {
-    type: 'data',
     evidenceType: 'interview',
     data: {
       id: data.id,
@@ -36,7 +35,6 @@ export function handleDialogRequest(socket: Socket, data: InterviewDataRequest['
 
 export function handleObservationRequest(socket: Socket, data: ObservationDataRequest['data']) {
   const response: ObservationDataResponse = {
-    type: 'data',
     evidenceType: 'observation',
     data: {
       id: data.id,
@@ -49,7 +47,6 @@ export function handleObservationRequest(socket: Socket, data: ObservationDataRe
 
 export function handleDocumentRequest(socket: Socket, data: DocumentDataRequest['data']) {
   const response: DocumentDataResponse = {
-    type: 'data',
     evidenceType: 'document',
     data: {
       id: data.id,
@@ -62,7 +59,6 @@ export function handleDocumentRequest(socket: Socket, data: DocumentDataRequest[
 
 export function handlePhotoRequest(socket: Socket, data: PhotoDataRequest['data']) {
   const response: PhotoDataResponse = {
-    type: 'data',
     evidenceType: 'photo',
     data: {
       id: data.id,

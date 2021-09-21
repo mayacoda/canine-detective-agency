@@ -2,9 +2,6 @@ import { Dialog } from './dialog-interface'
 import { Document, Observation, Photo } from './game-data-interface'
 import { ResolvedGameState } from './game-state-interface'
 
-
-// todo properly populate the map of event -> payload so it reflects current reality (can refactor later)
-
 type ClientEmittedEventPayload = {
   request: ClientDataRequest
   updateState: ClientEvidenceUpdateRequest
@@ -19,13 +16,14 @@ type ServerEmittedEventPayload = {
   unknownRoom: void
   tooManyPlayers: void
   response: ServerDataResponse
+  roomId: string
 }
 
 export type ServerOn = <T extends keyof ClientEmittedEventPayload>(event: T,
                                                                    callback: (payload: ClientEmittedEventPayload[T]) => void) => void
 
 export type ClientEmit = <T extends keyof ClientEmittedEventPayload>(event: T,
-                                                                     payload: ClientEmittedEventPayload[T]) => void
+                                                                     ...payload: ClientEmittedEventPayload[T] extends undefined ? [ undefined ] : [ ClientEmittedEventPayload[T] ]) => void
 
 export type ClientOn = <T extends keyof ServerEmittedEventPayload>(event: T,
                                                                    callback: (payload: ServerEmittedEventPayload[T]) => void) => void
@@ -33,26 +31,18 @@ export type ClientOn = <T extends keyof ServerEmittedEventPayload>(event: T,
 export type ServerEmit = <T extends keyof ServerEmittedEventPayload>(event: T,
                                                                      ...payload: (ServerEmittedEventPayload[T] extends undefined ? [ undefined? ] : [ ServerEmittedEventPayload[T] ])) => void
 
-export type ServerResponseEvent =
-  'update'
-  | 'playerId'
-  | 'roomId'
-  | 'unknownRoom'
-  | 'tooManyPlayers'
-
-export type ClientRequestEvent =
-  'request' | 'updateState' | 'joinRoom' | 'createRoom' | 'startGame'
-
 export type EvidenceType = 'interview' | 'document' | 'photo' | 'observation'
 
-export type PlayerData = { name: string, avatar: string, id: string, }
-
+export type PlayerData = {
+  name: string,
+  avatar: string,
+  id: string
+}
 
 /**
  * Requests sent from the client to the server for game data
  */
 interface ClientDataRequestBase {
-  type: 'data'
   evidenceType: EvidenceType
 }
 
@@ -86,11 +76,8 @@ export type ClientDataRequest =
 /**
  * Requests sent from the client to the server to update the game state
  */
-interface ClientEvidenceUpdateRequestBase {
-}
 
 interface ClientEvidenceUpdateRequestBase {
-  type: 'update'
   evidenceType: EvidenceType
 }
 
@@ -104,12 +91,12 @@ export interface InterviewUpdateRequest extends ClientEvidenceUpdateRequestBase 
 
 export interface DocumentUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'document',
-  data: any
+  data: { id: string }
 }
 
 export interface PhotoUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'photo',
-  data: any
+  data: { id: string }
 }
 
 export interface ObservationUpdateRequest extends ClientEvidenceUpdateRequestBase {
@@ -130,7 +117,6 @@ export type ClientEvidenceUpdateRequest =
  * Responses sent from the server to the client with game data
  */
 interface ServerDataResponseBase {
-  type: 'data'
   evidenceType: EvidenceType
 }
 
@@ -175,34 +161,4 @@ export type ServerDataResponse =
   | ObservationDataResponse
   | PhotoDataResponse
   | DocumentDataResponse
-
-
-/**
- * Requests sent from client to server to start a room
- */
-interface ClientRoomRequestBase {
-  type: 'room'
-  action: 'create' | 'join' | 'start'
-}
-
-// requests a new room be created
-export interface CreateRoomRequest extends ClientRoomRequestBase {
-  action: 'create'
-}
-
-// requests to join an existing room
-export interface JoinRoomRequest extends ClientRoomRequestBase {
-  action: 'join',
-  data: {
-    roomId: string
-  }
-}
-
-// requests to start the game after joining a room
-export interface StartGameRequest extends ClientRoomRequestBase {
-  action: 'start',
-  data: PlayerData
-}
-
-export type ClientRoomRequest = CreateRoomRequest | JoinRoomRequest | StartGameRequest
 

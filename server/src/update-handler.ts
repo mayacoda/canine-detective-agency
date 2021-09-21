@@ -19,16 +19,16 @@ export const handleInterviewUpdate = (stateManager: ServerStateManager,
 }
 
 export const handleDocumentUpdate = (stateManager: ServerStateManager,
-                                     data: any) => {
-//@todo handle updating document
+                                     data: { id: string }) => {
+  stateManager.updateDocument(data.id)
 }
 
-export const handlePhotoUpdate = (stateManager: ServerStateManager, data: any) => {
-//@todo handle updating photo
+export const handlePhotoUpdate = (stateManager: ServerStateManager, data: { id: string }) => {
+  stateManager.updatePhoto(data.id)
 }
 
 
 export const handleObservationUpdate = (stateManager: ServerStateManager,
-                                        data: any) => {
+                                        data: { id: string }) => {
   stateManager.updateObservation(data.id)
 }

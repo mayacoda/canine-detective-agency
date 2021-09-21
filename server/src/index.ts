@@ -2,8 +2,7 @@ import { GameState } from '../../interface/game-state-interface'
 import {
   ClientDataRequest,
   ClientEvidenceUpdateRequest,
-  JoinRoomRequest,
-  StartGameRequest
+  PlayerData
 } from '../../interface/socket-interfaces'
 import { Server, Socket } from 'socket.io'
 import {
@@ -80,20 +79,21 @@ const createRoomHandler = (socket: Socket) => {
 
 const startGameHandler = (socket: Socket,
                           stateManager: ServerStateManager,
-                          request: StartGameRequest) => {
+                          data: PlayerData) => {
   initPlayerGame(socket, stateManager)
 
-  stateManager.setPlayerData(socket.id, request.data)
+  stateManager.setPlayerData(socket.id, data)
 
+  const state = resolveGameState(stateManager.getState() as GameState)
+  console.log('emitting state update', state)
   ;(socket as TypedServerSocket).emit(
     'update',
-    resolveGameState(stateManager.getState() as GameState)
+    state
   )
 }
 
 
-const joinRoomHandler = (socket: Socket, request: JoinRoomRequest) => {
-  const { roomId } = request.data
+const joinRoomHandler = (socket: Socket, roomId: string) => {
   const room = io.sockets.adapter.rooms.get(roomId)
   const typedSocket = socket as TypedServerSocket
 
