@@ -1,11 +1,14 @@
 import { css, html, LitElement } from 'lit'
-import { customElement, state } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import './Button'
 
 @customElement('dog-login-container')
 export class LoginContainer extends LitElement {
   @state()
   roomId: string = ''
+
+  @property()
+  error: string = ''
 
   static get styles() {
     return css`
@@ -34,6 +37,11 @@ export class LoginContainer extends LitElement {
       label {
         margin-bottom: var(--spacer-4)
       }
+
+      .error {
+        color: var(--warning-color);
+        margin-top: 0;
+      }
     `
   }
 
@@ -47,6 +55,7 @@ export class LoginContainer extends LitElement {
   }
 
   updateValue(ev: Event) {
+    this.error = ''
     this.roomId = (ev.target as HTMLInputElement).value
   }
 
@@ -57,6 +66,10 @@ export class LoginContainer extends LitElement {
                 Enter room id
             </label id="room_id">
             <input type="text" @keyup="${ this.updateValue }"/>
+
+            ${ this.error ? html`
+                <p class="error">${ this.error }</p>
+            ` : '' }
 
             <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId }">Join room
             </dog-button>

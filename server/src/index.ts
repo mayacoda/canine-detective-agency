@@ -98,6 +98,9 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
 
   playerRoomMap[socket.id] = roomId
   socket.join(roomId)
+  
+  console.log('emitting roomId', roomId)
+  socket.emit('roomId', roomId)
   typedSocket.emit('playerId', socket.id)
 
   const stateManager = globalStates[roomId]

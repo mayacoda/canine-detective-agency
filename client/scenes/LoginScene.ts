@@ -23,8 +23,8 @@ export class LoginScene extends Scene {
     )
 
     loginContainer.addEventListener('join-room', (ev) => {
-      this.roomId = (ev as CustomEvent).detail as string
-      gameStateManager.joinRoom(this.roomId)
+      const roomId = (ev as CustomEvent).detail as string
+      gameStateManager.joinRoom(roomId)
     })
 
     loginContainer.addEventListener('create-room', () => {
@@ -34,6 +34,7 @@ export class LoginScene extends Scene {
     const socket = gameStateManager.socket
 
     socket.on('roomId', roomId => {
+      this.roomId = roomId
       console.log('got room ID from server', roomId)
       this.scene.start('Start', { gameStateManager, roomId })
     })
@@ -46,11 +47,11 @@ export class LoginScene extends Scene {
     })
 
     socket.on('tooManyPlayers', () => {
-      console.log('too many players')
+      loginContainer.error = 'Room has too many players </3'
     })
 
     socket.on('unknownRoom', () => {
-      console.log('unknown room')
+      loginContainer.error = 'Room does not exist :('
     })
   }
 }
