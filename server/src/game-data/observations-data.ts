@@ -3,7 +3,8 @@ import { Observation } from '../../../interface/game-data-interface'
 export const observationsData: Record<string, Observation> = {
   example: {
     description: 'this is a mysterious ball in the middle of the square',
-    location: 'middle of the square'
+    location: 'middle of the square',
+    imageUrl: 'images/player-temp.png'
   },
   'will-update': {
     location: 'Raven Manor - Office',

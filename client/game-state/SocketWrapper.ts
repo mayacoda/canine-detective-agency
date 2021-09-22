@@ -1,36 +1,20 @@
 import { Socket } from 'socket.io-client'
-import { ResolvedGameState } from '../../interface/game-state-interface'
-import {
-  ClientDataRequest,
-  ClientUpdateRequest,
-  ServerDataResponse,
-} from '../../interface/socket-interfaces'
+import { ClientEmit, ClientOn, } from '../../interface/socket-interfaces'
+
+
+export type  TypedClientSocket = {
+  on: ClientOn
+  emit: ClientEmit
+}
 
 export class SocketWrapper {
-  private socket: Socket
+  private readonly socket: Socket // todo add type for this that has only enumerated events in on and emit
 
   constructor(socket: Socket) {
     this.socket = socket
   }
 
-  // backend updates the state
-  onUpdate(callback: (data: ResolvedGameState) => void) {
-    this.socket.on('update', callback)
+  getSocket(): TypedClientSocket {
+    return this.socket as TypedClientSocket
   }
-
-  // backend returns a response to a request
-  onResponse(callback: (data: ServerDataResponse) => void) {
-    this.socket.on('response', callback)
-  }
-
-  // request data from backend
-  emitRequest(socketRequest: ClientDataRequest) {
-    this.socket.emit('request', socketRequest)
-  }
-
-  // signal a state change to backend
-  emitStateUpdate(stateUpdate: ClientUpdateRequest) {
-    this.socket.emit('updateState', stateUpdate)
-  }
-
 }

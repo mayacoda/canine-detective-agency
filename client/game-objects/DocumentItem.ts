@@ -4,7 +4,7 @@ import { PlayableScene } from '../scenes/PlayableScene'
 export class DocumentItem extends InteractiveItem {
   constructor(scene: PlayableScene, x: number, y: number, id: string, image: string) {
     super(scene, x, y, id, image)
-    this.registerListeners(() => {
+    this.registerOnOpenListeners(() => {
       this.scene.gameStateManager.requestDocument(id).then(observation => {
         console.log('got observation from backend', observation)
 

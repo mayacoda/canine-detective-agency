@@ -1,7 +1,12 @@
 import { PlayableScene } from '../scenes/PlayableScene'
+import { InteractiveItemOverlay } from '../components/interactive-item/InteractiveItemOverlay'
+import { getTextBlockPosition } from '../utils/geometry-utils'
+import GameObject = Phaser.GameObjects.GameObject
 
 export class InteractiveItem extends Phaser.GameObjects.Sprite {
   scene!: PlayableScene
+  overlayGameObject?: GameObject
+  overlay?: InteractiveItemOverlay
   id: string
 
   constructor(scene: PlayableScene, x: number, y: number, id: string, image: string) {
@@ -11,10 +16,28 @@ export class InteractiveItem extends Phaser.GameObjects.Sprite {
     this.setInteractive()
   }
 
-  protected registerListeners(callback: () => void) {
+  protected registerOnOpenListeners(callback: () => void) {
     this.on('pointerup', () => {
-      console.log('clicking on the thing')
-      callback()
+      if (!this.overlayGameObject) {
+        this.overlay = new InteractiveItemOverlay()
+
+        const { x, y } = getTextBlockPosition(this, this.overlay)
+        this.overlay.addEventListener('close', () => {
+          this.removeOverlayGameObject()
+        })
+
+        callback()
+
+        this.overlayGameObject = this.scene.add.dom(x, y, this.overlay)
+      }
     })
+  }
+
+  protected removeOverlayGameObject() {
+    if (this.overlayGameObject) {
+      this.overlayGameObject.destroy(true)
+      this.overlayGameObject = undefined
+      this.overlay?.remove()
+    }
   }
 }

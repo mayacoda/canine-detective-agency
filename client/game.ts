@@ -1,12 +1,14 @@
 import { Game } from 'phaser'
-import { SceneName } from './scenes/scene-name'
-import { ShopScene } from './scenes/ShopScene'
 import SimpleControlsPlugin from './plugins/SimpleControlsPlugin'
-import { TownScene } from './scenes/TownScene'
-import { ResidenceScene } from './scenes/ResidenceScene'
-import { UIScene } from './scenes/UIScene'
 import { GameStateManager } from './game-state/game-state-manager'
 import dotenv from 'dotenv'
+import { LoginScene } from './scenes/LoginScene'
+import { StartScene } from './scenes/StartScene'
+import { UIScene } from './scenes/UIScene'
+import { TownScene } from './scenes/TownScene'
+import { SceneName } from './scenes/scene-name'
+import { ShopScene } from './scenes/ShopScene'
+import { ResidenceScene } from './scenes/ResidenceScene'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 dotenv.config()
@@ -45,10 +47,13 @@ function initGame() {
   const game = new Game(config)
   const gameStateManager = new GameStateManager()
 
-  game.scene.add('UI', UIScene, true, { gameStateManager })
+  game.scene.add('Login', LoginScene, true, { gameStateManager })
+
+  game.scene.add('Start', StartScene, false, { gameStateManager })
+  game.scene.add('UI', UIScene, false, { gameStateManager })
 
   // game scenes
-  game.scene.add(SceneName.Town, TownScene, true, { gameStateManager })
+  game.scene.add(SceneName.Town, TownScene, false, { gameStateManager })
   game.scene.add(SceneName.Shop, ShopScene, false, { gameStateManager })
   game.scene.add(SceneName.Residence, ResidenceScene, false, { gameStateManager })
 

@@ -3,18 +3,20 @@ import { Vec2 } from './geometry-interface'
 
 export type Player = {
   pos: Vec2
+  map: string
   name: string
+  avatar: string
   id: string
 }
 
 export interface GameState {
   gameData: ServerSideGameData
-  players: Player[]
-  currentPlayer: string // todo will probably not be part of the backend's game state, but will be filled in by socket
+  players: Record<string, Player>
+  roomId: string
 }
 
 export interface ResolvedGameState {
+  roomId: string
   gameData: ClientSideGameData
-  players: Player[]
-  currentPlayer: string
+  players: Record<string, Player>
 }

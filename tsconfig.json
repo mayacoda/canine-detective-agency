@@ -20,7 +20,10 @@
         "jsx": "react",
         "downlevelIteration": true,
         "experimentalDecorators": true,
-        "strictPropertyInitialization": true
+        "strictPropertyInitialization": true,
+        "typeRoots": [
+            "server/types/*"
+        ]
     },
     "include": [
         "client"

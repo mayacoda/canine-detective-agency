@@ -16,12 +16,12 @@ export class LinkButton extends LitElement {
       }
 
       button:hover {
-        color: var(--primary)
+        color: var(--primary-color)
       }
 
       :host(.active) button {
         text-decoration: underline;
-        text-decoration-color: var(--primary);
+        text-decoration-color: var(--primary-color);
         text-decoration-style: double;
       }
 

@@ -1,13 +1,53 @@
 import { Dialog } from './dialog-interface'
 import { Document, Observation, Photo } from './game-data-interface'
+import { Player, ResolvedGameState } from './game-state-interface'
+import { Vec2 } from './geometry-interface'
+
+type ClientEmittedEventPayload = {
+  request: ClientDataRequest
+  updateState: ClientEvidenceUpdateRequest
+  createRoom: void
+  joinRoom: string
+  startGame: PlayerData
+  move: Vec2
+  changeMap: string
+  leave: void
+}
+
+type ServerEmittedEventPayload = {
+  playerId: string
+  update: ResolvedGameState
+  unknownRoom: void
+  tooManyPlayers: void
+  response: ServerDataResponse
+  roomId: string
+  playersUpdate: Record<string, Player>
+}
+
+export type ServerOn = <T extends keyof ClientEmittedEventPayload>(event: T,
+                                                                   callback: (payload: ClientEmittedEventPayload[T]) => void) => void
+
+export type ClientEmit = <T extends keyof ClientEmittedEventPayload>(event: T,
+                                                                     ...payload: ClientEmittedEventPayload[T] extends undefined ? [ undefined ] : [ ClientEmittedEventPayload[T] ]) => void
+
+export type ClientOn = <T extends keyof ServerEmittedEventPayload>(event: T,
+                                                                   callback: (payload: ServerEmittedEventPayload[T]) => void) => void
+
+export type ServerEmit = <T extends keyof ServerEmittedEventPayload>(event: T,
+                                                                     ...payload: (ServerEmittedEventPayload[T] extends undefined ? [ undefined? ] : [ ServerEmittedEventPayload[T] ])) => void
 
 export type EvidenceType = 'interview' | 'document' | 'photo' | 'observation'
 
+export type PlayerData = {
+  name: string,
+  avatar: string,
+  id: string
+}
+
 /**
- * Requests sent from the client to the server
+ * Requests sent from the client to the server for game data
  */
 interface ClientDataRequestBase {
-  type: 'data'
   evidenceType: EvidenceType
 }
 
@@ -38,12 +78,15 @@ export type ClientDataRequest =
   | ObservationDataRequest
 
 
-interface ClientUpdateRequestBase {
-  type: 'update'
+/**
+ * Requests sent from the client to the server to update the game state
+ */
+
+interface ClientEvidenceUpdateRequestBase {
   evidenceType: EvidenceType
 }
 
-export interface InterviewUpdateRequest extends ClientUpdateRequestBase {
+export interface InterviewUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'interview',
   data: {
     dialogId: string,
@@ -51,32 +94,34 @@ export interface InterviewUpdateRequest extends ClientUpdateRequestBase {
   }
 }
 
-export interface DocumentUpdateRequest extends ClientUpdateRequestBase {
+export interface DocumentUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'document',
-  data: any
+  data: { id: string }
 }
 
-export interface PhotoUpdateRequest extends ClientUpdateRequestBase {
+export interface PhotoUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'photo',
-  data: any
+  data: { id: string }
 }
 
-export interface ObservationUpdateRequest extends ClientUpdateRequestBase {
+export interface ObservationUpdateRequest extends ClientEvidenceUpdateRequestBase {
   evidenceType: 'observation',
   data: {
     id: string
   }
 }
 
-export type ClientUpdateRequest =
+export type ClientEvidenceUpdateRequest =
   InterviewUpdateRequest
   | DocumentUpdateRequest
   | PhotoUpdateRequest
   | ObservationUpdateRequest
 
 
+/**
+ * Responses sent from the server to the client with game data
+ */
 interface ServerDataResponseBase {
-  type: 'data'
   evidenceType: EvidenceType
 }
 
@@ -121,3 +166,4 @@ export type ServerDataResponse =
   | ObservationDataResponse
   | PhotoDataResponse
   | DocumentDataResponse
+

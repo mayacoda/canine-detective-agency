@@ -31,9 +31,8 @@ export class DialogBox extends LitElement {
       }
 
       .next-button {
-        position: absolute;
-        bottom: var(--spacer-4);
-        right: var(--spacer-4);
+        flex-grow: 1;
+        text-align: right;
       }
 
       dog-link-button span {

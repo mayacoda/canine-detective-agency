@@ -1,18 +1,18 @@
 import { PlayableScene } from '../scenes/PlayableScene'
 import { Scene } from 'phaser'
 import { DialogBox } from '../components/dialog/DialogBox'
+import { getTextBlockPosition } from '../utils/geometry-utils'
 import GameObject = Phaser.GameObjects.GameObject
 
 export class NPC extends Phaser.Physics.Matter.Image {
   scene!: PlayableScene
   npcName: string
-  dialogBoxGameObject: GameObject | null = null
+  dialogBoxGameObject?: GameObject
 
   constructor(scene: PlayableScene,
               name: string,
               posX: number,
-              posY: number,
-              dialogPosition: string) {
+              posY: number) {
     super(scene.matter.world, posX, posY, name)
     this.npcName = name
     this.setStatic(true)
@@ -30,11 +30,9 @@ export class NPC extends Phaser.Physics.Matter.Image {
 
   private registerListeners() {
     this.on('pointerup', () => {
-      if (this.isPlayerNear()) {
-        let x = this.x - 250
-        let y = this.y + (this.width / 2) + 24
-
+      if (this.isPlayerNear() && !this.dialogBoxGameObject) {
         const dialogBox = new DialogBox()
+        const { x, y } = getTextBlockPosition(this, dialogBox)
         this.dialogBoxGameObject = this.scene.add.dom(x, y, dialogBox)
         this.scene.gameStateManager.requestDialog(this.npcName).then(dialog => {
           if (dialog) {
@@ -56,9 +54,9 @@ export class NPC extends Phaser.Physics.Matter.Image {
   }
 
   private removeDialogBoxGameObject() {
-    if (this.dialogBoxGameObject !== null) {
+    if (this.dialogBoxGameObject) {
       this.dialogBoxGameObject.destroy(true)
-      this.dialogBoxGameObject = null
+      this.dialogBoxGameObject = undefined
     }
   }
 
