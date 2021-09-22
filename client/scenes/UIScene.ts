@@ -23,11 +23,13 @@ export class UIScene extends Scene {
     )
 
     const gameStateManager = config.gameStateManager
+    console.log('state manager state', config.gameStateManager.state)
     this.uiContainer.gameData = gameStateManager.state?.gameData
     this.uiContainer.roomId = gameStateManager.state?.roomId
-    
+
     gameStateManager.socket.on('update', state => {
       this.uiContainer.gameData = state.gameData
+      this.uiContainer.roomId = state.roomId
     })
   }
 }

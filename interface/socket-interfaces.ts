@@ -1,6 +1,7 @@
 import { Dialog } from './dialog-interface'
 import { Document, Observation, Photo } from './game-data-interface'
-import { ResolvedGameState } from './game-state-interface'
+import { Player, ResolvedGameState } from './game-state-interface'
+import { Vec2 } from './geometry-interface'
 
 type ClientEmittedEventPayload = {
   request: ClientDataRequest
@@ -8,6 +9,8 @@ type ClientEmittedEventPayload = {
   createRoom: void
   joinRoom: string
   startGame: PlayerData
+  move: Vec2
+  changeMap: string
 }
 
 type ServerEmittedEventPayload = {
@@ -17,6 +20,7 @@ type ServerEmittedEventPayload = {
   tooManyPlayers: void
   response: ServerDataResponse
   roomId: string
+  playersUpdate: Record<string, Player>
 }
 
 export type ServerOn = <T extends keyof ClientEmittedEventPayload>(event: T,

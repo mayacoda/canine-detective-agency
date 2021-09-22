@@ -1,28 +1,13 @@
 import { GameState } from '../../interface/game-state-interface'
-import {
-  ClientDataRequest,
-  ClientEvidenceUpdateRequest,
-  PlayerData
-} from '../../interface/socket-interfaces'
+import { PlayerData } from '../../interface/socket-interfaces'
 import { Server, Socket } from 'socket.io'
-import {
-  handleDialogRequest,
-  handleDocumentRequest,
-  handleObservationRequest,
-  handlePhotoRequest
-} from './request-handlers'
 import { ServerStateManager } from './server-state-manager'
-import {
-  handleDocumentUpdate,
-  handleInterviewUpdate,
-  handleObservationUpdate,
-  handlePhotoUpdate
-} from './update-handler'
 import { demoGameData } from './game-data/demo-game-data'
 import { resolveGameState } from './game-data/resolve-game-state'
 
 import { hri } from 'human-readable-ids'
 import { TypedServerSocket } from './types'
+import { dataRequestHandler, gameStateUpdateHandler } from './game-state-handlers'
 
 const io = new Server(parseInt(process.env.PORT) || 3000)
 
@@ -38,13 +23,19 @@ function createDummyState(): GameState {
 }
 
 io.on('connection', (socket: Socket) => {
-  console.log('initializing player communication')
   initPlayerCommunication(socket)
 })
 
+// todo: revisit the use of bind because it always returns `any` and these callback params are strongly typed
 const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
   socket.on('request', dataRequestHandler.bind(null, socket))
   socket.on('updateState', gameStateUpdateHandler.bind(null, stateManager))
+  socket.on('move', pos => {
+    stateManager.updatePosition((socket as Socket).id, pos)
+  })
+  socket.on('changeMap', map => {
+    stateManager.updateMap((socket as Socket).id, map)
+  })
 }
 
 const initPlayerCommunication = (socket: TypedServerSocket) => {
@@ -67,6 +58,8 @@ const createRoomHandler = (socket: Socket) => {
 
   const stateManager = new ServerStateManager(createDummyState(), (newState) => {
     io.sockets.in(roomId).emit('update', resolveGameState(newState))
+  }, (players) => {
+    io.sockets.in(roomId).emit('playersUpdate', players)
   })
 
   stateManager.setRoomId(roomId)
@@ -80,6 +73,7 @@ const createRoomHandler = (socket: Socket) => {
 const startGameHandler = (socket: Socket,
                           stateManager: ServerStateManager,
                           data: PlayerData) => {
+  console.log(`${ socket.id } is starting game in room`)
   initPlayerGame(socket, stateManager)
 
   stateManager.setPlayerData(socket.id, data)
@@ -97,7 +91,7 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
   const room = io.sockets.adapter.rooms.get(roomId)
   const typedSocket = socket as TypedServerSocket
 
-  console.log('requesting to join roomId', roomId)
+  console.log(`${ socket.id } is requesting to join roomId ${ roomId }`)
   if (!room || room.size === 0) return typedSocket.emit('unknownRoom')
 
   if (room.size >= 4) return typedSocket.emit('tooManyPlayers')
@@ -108,41 +102,8 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
 
   const stateManager = globalStates[roomId]
 
-  initPlayerGame(socket, stateManager)
+  typedSocket.on('startGame', data => {
+    startGameHandler(socket, stateManager, data)
+  })
 }
 
-const dataRequestHandler = (socket: Socket, request: ClientDataRequest) => {
-  switch (request.evidenceType) {
-    case 'interview':
-      handleDialogRequest(socket, request.data)
-      break
-    case 'observation':
-      handleObservationRequest(socket, request.data)
-      break
-    case 'document':
-      handleDocumentRequest(socket, request.data)
-      break
-    case 'photo':
-      handlePhotoRequest(socket, request.data)
-      break
-  }
-}
-
-const gameStateUpdateHandler = (stateManager: ServerStateManager,
-                                update: ClientEvidenceUpdateRequest) => {
-  switch (update.evidenceType) {
-    case 'interview':
-      handleInterviewUpdate(stateManager, update.data)
-      break
-    case 'document':
-      handleDocumentUpdate(stateManager, update.data)
-      break
-    case 'photo':
-      handlePhotoUpdate(stateManager, update.data)
-      break
-    case 'observation':
-      handleObservationUpdate(stateManager, update.data)
-      break
-
-  }
-}

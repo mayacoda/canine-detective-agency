@@ -1,15 +1,20 @@
-import { GameState } from '../../interface/game-state-interface'
+import { GameState, Player } from '../../interface/game-state-interface'
 import { Immutable } from '../../interface/types'
 import { PlayerData } from '../../interface/socket-interfaces'
+import { Vec2 } from '../../interface/geometry-interface'
 
 
 export class ServerStateManager {
   private state: GameState
   private readonly stateUpdateCallback: (state: GameState) => void
+  private readonly playerUpdateCallback: (players: Record<string, Player>) => void
 
-  constructor(state: GameState, stateUpdateCallback: (state: GameState) => void) {
+  constructor(state: GameState,
+              stateUpdateCallback: (state: GameState) => void,
+              playerUpdateCallback: (players: Record<string, Player>) => void) {
     this.state = state
     this.stateUpdateCallback = stateUpdateCallback
+    this.playerUpdateCallback = playerUpdateCallback
   }
 
   updateState(newState: GameState) {
@@ -28,6 +33,8 @@ export class ServerStateManager {
       pos: { x: 1208.24, y: 877.283 },
       map: 'town'
     }
+
+    this.playerUpdateCallback(this.state.players)
   }
 
   setRoomId(roomId: string) {
@@ -59,5 +66,15 @@ export class ServerStateManager {
 
   updateDocument(id: string) {
     this.updateEvidence('documents', id)
+  }
+
+  updatePosition(playerId: string, pos: Vec2) {
+    this.state.players[playerId].pos = pos
+    this.playerUpdateCallback(this.state.players)
+  }
+
+  updateMap(playerId: string, map: string) {
+    this.state.players[playerId].map = map
+    this.playerUpdateCallback(this.state.players)
   }
 }

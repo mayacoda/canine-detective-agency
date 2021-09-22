@@ -2,7 +2,7 @@ import { Scene } from 'phaser'
 import { PlayableScene } from '../scenes/PlayableScene'
 import SimpleControlsPlugin from '../plugins/SimpleControlsPlugin'
 
-export class Player extends Phaser.Physics.Matter.Image {
+export class PlayerObject extends Phaser.Physics.Matter.Image {
   scene!: PlayableScene
   speed: number = 10
 
@@ -24,6 +24,8 @@ export class Player extends Phaser.Physics.Matter.Image {
     } else if (controls.right) {
       this.x += this.speed
     }
+
+    this.scene.gameStateManager.socket.emit('move', { x: this.x, y: this.y })
   }
 }
 

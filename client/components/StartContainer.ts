@@ -59,14 +59,11 @@ export class StartContainer extends LitElement {
   }
 
   startGame() {
+    if (!this.playerAvatar || !this.playerName) return
     this.dispatchEvent(new CustomEvent(
       'start-game',
       { detail: { name: this.playerName, avatar: this.playerAvatar } }
     ))
-  }
-
-  createRoom() {
-    this.dispatchEvent(new CustomEvent('create-room'))
   }
 
   updateValue(ev: Event) {

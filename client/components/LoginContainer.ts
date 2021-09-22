@@ -38,6 +38,7 @@ export class LoginContainer extends LitElement {
   }
 
   joinRoom() {
+    if (!this.roomId) return
     this.dispatchEvent(new CustomEvent('join-room', { detail: this.roomId }))
   }
 
@@ -48,7 +49,6 @@ export class LoginContainer extends LitElement {
   updateValue(ev: Event) {
     this.roomId = (ev.target as HTMLInputElement).value
   }
-
 
   render() {
     return html`
