@@ -77,4 +77,9 @@ export class ServerStateManager {
     this.state.players[playerId].map = map
     this.playerUpdateCallback(this.state.players)
   }
+
+  removePlayer(playerId: string) {
+    delete this.state.players[playerId]
+    this.playerUpdateCallback(this.state.players)
+  }
 }

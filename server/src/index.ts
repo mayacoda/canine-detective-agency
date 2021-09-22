@@ -36,6 +36,9 @@ const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateMana
   socket.on('changeMap', map => {
     stateManager.updateMap((socket as Socket).id, map)
   })
+  socket.on('leave', () => {
+    stateManager.removePlayer((socket as Socket).id)
+  })
 }
 
 const initPlayerCommunication = (socket: TypedServerSocket) => {
@@ -98,7 +101,7 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
 
   playerRoomMap[socket.id] = roomId
   socket.join(roomId)
-  
+
   console.log('emitting roomId', roomId)
   socket.emit('roomId', roomId)
   typedSocket.emit('playerId', socket.id)

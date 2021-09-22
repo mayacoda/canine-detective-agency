@@ -11,6 +11,7 @@ type ClientEmittedEventPayload = {
   startGame: PlayerData
   move: Vec2
   changeMap: string
+  leave: void
 }
 
 type ServerEmittedEventPayload = {
