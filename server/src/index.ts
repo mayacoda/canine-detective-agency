@@ -26,7 +26,7 @@ io.on('connection', (socket: Socket) => {
   initPlayerCommunication(socket)
 })
 
-const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
+const initClientSocketListeners = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
   socket.on('request', (request) => {
     dataRequestHandler(socket, request)
   })
@@ -82,23 +82,6 @@ const createRoomHandler = (socket: Socket) => {
 
 }
 
-const startGameHandler = (socket: Socket,
-                          stateManager: ServerStateManager,
-                          data: PlayerData) => {
-  console.log(`${ socket.id } is starting game in room`)
-  initPlayerGame(socket, stateManager)
-
-  stateManager.setPlayerData(socket.id, data)
-
-  const state = resolveGameState(stateManager.getState() as GameState)
-  console.log('emitting state update', state)
-  ;(socket as TypedServerSocket).emit(
-    'update',
-    state
-  )
-}
-
-
 const joinRoomHandler = (socket: Socket, roomId: string) => {
   const room = io.sockets.adapter.rooms.get(roomId)
   const typedSocket = socket as TypedServerSocket
@@ -122,3 +105,19 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
   })
 }
 
+const startGameHandler = (socket: Socket,
+                          stateManager: ServerStateManager,
+                          data: PlayerData) => {
+  console.log(`${ socket.id } is starting game in room`)
+  initClientSocketListeners(socket, stateManager)
+
+  stateManager.setPlayerData(socket.id, data)
+
+  const state = resolveGameState(stateManager.getState() as GameState)
+  console.log('emitting state update', state)
+
+  ;(socket as TypedServerSocket).emit(
+    'update',
+    state
+  )
+}

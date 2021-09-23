@@ -137,9 +137,11 @@ export class GameStateManager {
     this.socket.emit('startGame', data)
   }
 
-  getPlayer(): Player | undefined {
-    if (this._state && this._playerId) {
-      return this._state.players[this._playerId]
-    }
+  getPlayer(): Player {
+    assert(
+      this._state && this._playerId,
+      'Calling GameStateManager.getPlayer before state was initialized'
+    )
+    return this._state.players[this._playerId]
   }
 }
