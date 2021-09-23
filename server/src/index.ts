@@ -26,10 +26,13 @@ io.on('connection', (socket: Socket) => {
   initPlayerCommunication(socket)
 })
 
-// todo: revisit the use of bind because it always returns `any` and these callback params are strongly typed
 const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
-  socket.on('request', dataRequestHandler.bind(null, socket))
-  socket.on('updateState', gameStateUpdateHandler.bind(null, stateManager))
+  socket.on('request', (request) => {
+    dataRequestHandler(socket, request)
+  })
+  socket.on('updateState', (update) => {
+    gameStateUpdateHandler(stateManager, update)
+  })
   socket.on('move', pos => {
     stateManager.updatePosition((socket as Socket).id, pos)
   })
@@ -42,8 +45,12 @@ const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateMana
 }
 
 const initPlayerCommunication = (socket: TypedServerSocket) => {
-  socket.on('createRoom', createRoomHandler.bind(null, socket))
-  socket.on('joinRoom', joinRoomHandler.bind(null, socket))
+  socket.on('createRoom', () => {
+    createRoomHandler(socket as Socket)
+  })
+  socket.on('joinRoom', (roomId) => {
+    joinRoomHandler(socket as Socket, roomId)
+  })
 }
 
 const createRoomHandler = (socket: Socket) => {
@@ -69,7 +76,9 @@ const createRoomHandler = (socket: Socket) => {
 
   globalStates[roomId] = stateManager
 
-  ;(socket as TypedServerSocket).on('startGame', startGameHandler.bind(null, socket, stateManager))
+  ;(socket as TypedServerSocket).on('startGame', (data) => {
+    startGameHandler(socket, stateManager, data)
+  })
 
 }
 

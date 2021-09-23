@@ -1,4 +1,3 @@
-import { Socket } from 'socket.io'
 import {
   DocumentDataRequest,
   DocumentDataResponse,
@@ -21,7 +20,7 @@ function emitDataResponse(socket: TypedServerSocket, data: ServerDataResponse) {
   socket.emit('response', data)
 }
 
-export function handleDialogRequest(socket: Socket, data: InterviewDataRequest['data']) {
+export function handleDialogRequest(socket: TypedServerSocket, data: InterviewDataRequest['data']) {
   const response: InterviewDataResponse = {
     evidenceType: 'interview',
     data: {
@@ -33,7 +32,8 @@ export function handleDialogRequest(socket: Socket, data: InterviewDataRequest['
   emitDataResponse(socket, response)
 }
 
-export function handleObservationRequest(socket: Socket, data: ObservationDataRequest['data']) {
+export function handleObservationRequest(socket: TypedServerSocket,
+                                         data: ObservationDataRequest['data']) {
   const response: ObservationDataResponse = {
     evidenceType: 'observation',
     data: {
@@ -45,7 +45,8 @@ export function handleObservationRequest(socket: Socket, data: ObservationDataRe
   emitDataResponse(socket, response)
 }
 
-export function handleDocumentRequest(socket: Socket, data: DocumentDataRequest['data']) {
+export function handleDocumentRequest(socket: TypedServerSocket,
+                                      data: DocumentDataRequest['data']) {
   const response: DocumentDataResponse = {
     evidenceType: 'document',
     data: {
@@ -57,7 +58,7 @@ export function handleDocumentRequest(socket: Socket, data: DocumentDataRequest[
   emitDataResponse(socket, response)
 }
 
-export function handlePhotoRequest(socket: Socket, data: PhotoDataRequest['data']) {
+export function handlePhotoRequest(socket: TypedServerSocket, data: PhotoDataRequest['data']) {
   const response: PhotoDataResponse = {
     evidenceType: 'photo',
     data: {
