@@ -27,8 +27,7 @@ export class StartScene extends Scene {
       gameStateManager.startGame(playerData)
 
       // wait for the first update event so the client always has correct starting state
-      gameStateManager.socket.on('update', () => {
-        // todo does this socket.on depend on call order? Is it certain that gameStateManager is already initialized at this point?
+      gameStateManager.onInitialize(() => {
         this.scene.start('UI', { gameStateManager })
         const map = gameStateManager.getPlayer().map
         assert(
