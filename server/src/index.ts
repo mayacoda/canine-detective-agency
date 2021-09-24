@@ -39,7 +39,8 @@ const initClientSocketListeners = (socket: TypedServerSocket, stateManager: Serv
   socket.on('changeMap', map => {
     stateManager.updateMap((socket as Socket).id, map)
   })
-  socket.on('leave', () => {
+
+  ;(socket as Socket).on('disconnect', () => {
     stateManager.removePlayer((socket as Socket).id)
   })
 }

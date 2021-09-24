@@ -47,10 +47,6 @@ export class GameStateManager {
     this.socket.on('playerId', playerId => {
       this._playerId = playerId
     })
-
-    window.addEventListener('beforeunload', () => {
-      this.socket.emit('leave')
-    })
   }
 
   private async requestData(evidenceType: EvidenceType, id: string) {
