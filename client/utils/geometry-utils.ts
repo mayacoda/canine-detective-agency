@@ -47,8 +47,8 @@ export function getPhaserCentroid(vertices: Vec2[]) {
   return div(centre, 6 * area)
 }
 
-export function getTextBlockPosition(obj: Phaser.GameObjects.Image, htmlElement: HTMLElement) {
-  const x = obj.x - ((htmlElement.clientWidth || 500) / 2)
+export function getTextBlockPosition(obj: Phaser.GameObjects.Image, width?: number) {
+  const x = obj.x - ((width ?? 500) / 2)
   const y = obj.y + (obj.width / 2) + 24
   return { x, y }
 }

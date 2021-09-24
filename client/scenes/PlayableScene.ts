@@ -234,7 +234,6 @@ export class PlayableScene extends Scene {
     const playersOnServer = Object.values(players).filter(player => player.id !== currentPlayer?.id)
     const playersOnServerKeys = playersOnServer.map(player => player.id)
 
-    console.log('getting player update data', players)
     for (const player of playersOnServer) {
       // check if player exists in current client game
       const otherPlayer = this.otherPlayers[player.id]
@@ -251,12 +250,7 @@ export class PlayableScene extends Scene {
         }
       } else if (player.map === this.scene.key) {
         // if no, and player is on the same map, add player
-        this.otherPlayers[player.id] = new OtherPlayerObject(
-          this,
-          player.pos.x,
-          player.pos.y,
-          player.avatar
-        )
+        this.otherPlayers[player.id] = new OtherPlayerObject(this, player)
       }
     }
 

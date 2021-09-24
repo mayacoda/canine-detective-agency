@@ -52,14 +52,13 @@ export class StartContainer extends LitElement {
       .highlight {
         color: var(--background-color);
         background-color: var(--primary-color);
-        border-radius: 4px;
-        padding: 0 12px;
+        border-radius: var(--spacer-3);
+        padding: var(--spacer-3) var(--spacer-4)
       }
     `
   }
 
   startGame() {
-    if (!this.playerAvatar || !this.playerName) return
     this.dispatchEvent(new CustomEvent(
       'start-game',
       { detail: { name: this.playerName, avatar: this.playerAvatar } }
@@ -83,7 +82,8 @@ export class StartContainer extends LitElement {
             <label for="name_field">
                 Enter your name
             </label>
-            <input type="text" id="name_field" @keyup="${ this.updateValue }"/>
+            <input type="text" id="name_field" @keyup="${ this.updateValue }"
+                   value="${ this.playerName }"/>
 
             <p>Choose your detective</p>
             <div class="avatar-container">

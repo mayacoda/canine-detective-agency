@@ -38,6 +38,7 @@ export class UIContainer extends LitElement {
       }
 
       .actions {
+        pointer-events: all;
         padding: 20px;
         grid-column-end: end;
         grid-row-end: end;
@@ -53,10 +54,11 @@ export class UIContainer extends LitElement {
       }
 
       .highlight {
+        pointer-events: all;
         color: var(--background-color);
         background-color: var(--primary-color);
-        border-radius: 4px;
-        padding: 0 12px;
+        border-radius: var(--spacer-3);
+        padding: var(--spacer-3) var(--spacer-4)
       }
     `
   }

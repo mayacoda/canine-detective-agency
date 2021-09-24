@@ -45,7 +45,7 @@ html {
   --warning-color: #b33939;
   --background-color: #fff;
 
-  
+
   --font-family: 'Open Sans', sans-serif;
   --heading-font-family: 'Special Elite', cursive;
 
@@ -71,3 +71,7 @@ html {
 //dog-ui-container {
 //  z-index: 10 !important;
 //}
+
+.pointer-events-none {
+  pointer-events: none !important;
+}
