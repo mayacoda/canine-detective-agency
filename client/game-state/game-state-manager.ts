@@ -17,7 +17,10 @@ export class GameStateManager {
 
   private _state: ResolvedGameState | null = null
   private _playerId?: string
+  private _initialized: boolean = false
 
+  private _initializedCallback: () => void = () => {
+  }
 
   constructor() {
     const socket = io(
@@ -35,14 +38,14 @@ export class GameStateManager {
   listen() {
     this.socket.on('update', data => {
       this._state = data
+      if (!this._initialized) {
+        this._initialized = true
+        this._initializedCallback()
+      }
     })
 
     this.socket.on('playerId', playerId => {
       this._playerId = playerId
-    })
-
-    window.addEventListener('beforeunload', () => {
-      this.socket.emit('leave')
     })
   }
 
@@ -137,9 +140,15 @@ export class GameStateManager {
     this.socket.emit('startGame', data)
   }
 
-  getPlayer(): Player | undefined {
-    if (this._state && this._playerId) {
-      return this._state.players[this._playerId]
-    }
+  getPlayer(): Player {
+    assert(
+      this._state && this._playerId,
+      'Calling GameStateManager.getPlayer before state was initialized'
+    )
+    return this._state.players[this._playerId]
+  }
+
+  onInitialize(callback: () => void) {
+    this._initializedCallback = callback
   }
 }

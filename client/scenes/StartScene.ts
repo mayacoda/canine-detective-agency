@@ -2,6 +2,7 @@ import { Scene } from 'phaser'
 import { GameStateManager } from '../game-state/game-state-manager'
 import { StartContainer } from '../components/StartContainer'
 import { SceneName } from './scene-name'
+import { assert } from '../utils/assert'
 
 export class StartScene extends Scene {
   constructor() {
@@ -25,13 +26,16 @@ export class StartScene extends Scene {
       let playerData = (ev as CustomEvent).detail
       gameStateManager.startGame(playerData)
 
-      this.scene.start('UI', { gameStateManager })
-      this.scene.start(SceneName.Town, { gameStateManager })
-      // todo server should send a start location of the player. e.g. what map and their location
-      // todo start scene should send to the initializing scene the player data
-      // gameStateManager.addListener('update', (gameData) => {
-      //   console.log('getting this new game data', gameData)
-      // })
+      // wait for the first update event so the client always has correct starting state
+      gameStateManager.onInitialize(() => {
+        this.scene.start('UI', { gameStateManager })
+        const map = gameStateManager.getPlayer().map
+        assert(
+          Object.values(SceneName).includes(map as SceneName),
+          `Player map ${ map } does not exist in the game`
+        )
+        this.scene.start(map, { gameStateManager })
+      })
     })
 
     startContainer.roomId = config.roomId

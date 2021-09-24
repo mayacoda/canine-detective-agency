@@ -1,4 +1,3 @@
-import { Socket } from 'socket.io'
 import { ClientDataRequest, ClientEvidenceUpdateRequest } from '../../interface/socket-interfaces'
 import {
   handleDialogRequest,
@@ -13,8 +12,9 @@ import {
   handleObservationUpdate,
   handlePhotoUpdate
 } from './update-handler'
+import { TypedServerSocket } from './types'
 
-export const dataRequestHandler = (socket: Socket, request: ClientDataRequest) => {
+export const dataRequestHandler = (socket: TypedServerSocket, request: ClientDataRequest) => {
   switch (request.evidenceType) {
     case 'interview':
       handleDialogRequest(socket, request.data)

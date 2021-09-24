@@ -26,24 +26,32 @@ io.on('connection', (socket: Socket) => {
   initPlayerCommunication(socket)
 })
 
-// todo: revisit the use of bind because it always returns `any` and these callback params are strongly typed
-const initPlayerGame = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
-  socket.on('request', dataRequestHandler.bind(null, socket))
-  socket.on('updateState', gameStateUpdateHandler.bind(null, stateManager))
+const initClientSocketListeners = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
+  socket.on('request', (request) => {
+    dataRequestHandler(socket, request)
+  })
+  socket.on('updateState', (update) => {
+    gameStateUpdateHandler(stateManager, update)
+  })
   socket.on('move', pos => {
     stateManager.updatePosition((socket as Socket).id, pos)
   })
   socket.on('changeMap', map => {
     stateManager.updateMap((socket as Socket).id, map)
   })
-  socket.on('leave', () => {
+
+  ;(socket as Socket).on('disconnect', () => {
     stateManager.removePlayer((socket as Socket).id)
   })
 }
 
 const initPlayerCommunication = (socket: TypedServerSocket) => {
-  socket.on('createRoom', createRoomHandler.bind(null, socket))
-  socket.on('joinRoom', joinRoomHandler.bind(null, socket))
+  socket.on('createRoom', () => {
+    createRoomHandler(socket as Socket)
+  })
+  socket.on('joinRoom', (roomId) => {
+    joinRoomHandler(socket as Socket, roomId)
+  })
 }
 
 const createRoomHandler = (socket: Socket) => {
@@ -69,26 +77,11 @@ const createRoomHandler = (socket: Socket) => {
 
   globalStates[roomId] = stateManager
 
-  ;(socket as TypedServerSocket).on('startGame', startGameHandler.bind(null, socket, stateManager))
+  ;(socket as TypedServerSocket).on('startGame', (data) => {
+    startGameHandler(socket, stateManager, data)
+  })
 
 }
-
-const startGameHandler = (socket: Socket,
-                          stateManager: ServerStateManager,
-                          data: PlayerData) => {
-  console.log(`${ socket.id } is starting game in room`)
-  initPlayerGame(socket, stateManager)
-
-  stateManager.setPlayerData(socket.id, data)
-
-  const state = resolveGameState(stateManager.getState() as GameState)
-  console.log('emitting state update', state)
-  ;(socket as TypedServerSocket).emit(
-    'update',
-    state
-  )
-}
-
 
 const joinRoomHandler = (socket: Socket, roomId: string) => {
   const room = io.sockets.adapter.rooms.get(roomId)
@@ -113,3 +106,19 @@ const joinRoomHandler = (socket: Socket, roomId: string) => {
   })
 }
 
+const startGameHandler = (socket: Socket,
+                          stateManager: ServerStateManager,
+                          data: PlayerData) => {
+  console.log(`${ socket.id } is starting game in room`)
+  initClientSocketListeners(socket, stateManager)
+
+  stateManager.setPlayerData(socket.id, data)
+
+  const state = resolveGameState(stateManager.getState() as GameState)
+  console.log('emitting state update', state)
+
+  ;(socket as TypedServerSocket).emit(
+    'update',
+    state
+  )
+}
