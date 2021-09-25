@@ -30,7 +30,7 @@ export class ServerStateManager {
     }
     this.playerUpdateCallback = (players) => {
       // set this up so that it doesn't send the entire game state to the DB each time a player moves
-      this.docRef.set(this.state).then(() => {
+      this.docRef.update({ players }).then(() => {
           playerUpdateCallback(players)
         }, (err) => {
           // todo throw error to frontend about state not syncing

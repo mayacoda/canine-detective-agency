@@ -69,10 +69,6 @@ export class PlayableScene extends Scene {
     this.events.on('shutdown', () => {
       this.cleanUp()
     })
-
-    // workaround to get UI scene HTML to always render above PlayableScene HTML
-    // this.scene.get('UI').scene.restart()
-    // this.scene.setActive(true)
   }
 
   update(time: number, delta: number) {

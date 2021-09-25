@@ -16,6 +16,8 @@ export class UIScene extends Scene {
 
     this.uiContainer = new UIContainer()
     this.uiContainer.classList.add('pointer-events-none')
+    this.uiContainer.classList.add('z-index-10')
+    
     this.uiContainerGameObject = this.add.dom(
       x,
       y,

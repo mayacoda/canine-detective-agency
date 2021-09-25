@@ -68,9 +68,9 @@ html {
   font-family: var(--font-family);
 }
 
-//dog-ui-container {
-//  z-index: 10 !important;
-//}
+.z-index-10 {
+  z-index: 10 !important;
+}
 
 .pointer-events-none {
   pointer-events: none !important;
