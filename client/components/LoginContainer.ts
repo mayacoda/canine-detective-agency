@@ -46,7 +46,6 @@ export class LoginContainer extends LitElement {
   }
 
   joinRoom() {
-    if (!this.roomId) return
     this.dispatchEvent(new CustomEvent('join-room', { detail: this.roomId }))
   }
 
@@ -65,7 +64,7 @@ export class LoginContainer extends LitElement {
             <label for="room_id">
                 Enter room id
             </label id="room_id">
-            <input type="text" @keyup="${ this.updateValue }"/>
+            <input type="text" @keyup="${ this.updateValue }" value="${ this.roomId }"/>
 
             ${ this.error ? html`
                 <p class="error">${ this.error }</p>

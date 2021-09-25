@@ -3,18 +3,45 @@ import { Immutable } from '../../interface/types'
 import { PlayerData } from '../../interface/socket-interfaces'
 import { Vec2 } from '../../interface/geometry-interface'
 
+import { firestore } from 'firebase-admin'
+import DocumentReference = firestore.DocumentReference
+import Firestore = firestore.Firestore
+
 
 export class ServerStateManager {
   private state: GameState
   private readonly stateUpdateCallback: (state: GameState) => void
   private readonly playerUpdateCallback: (players: Record<string, Player>) => void
+  private readonly docRef: DocumentReference
 
   constructor(state: GameState,
+              db: Firestore,
               stateUpdateCallback: (state: GameState) => void,
               playerUpdateCallback: (players: Record<string, Player>) => void) {
     this.state = state
-    this.stateUpdateCallback = stateUpdateCallback
-    this.playerUpdateCallback = playerUpdateCallback
+    this.stateUpdateCallback = (state) => {
+      this.docRef.set(state).then(() => {
+          stateUpdateCallback(state)
+        }, (err) => {
+          // todo throw error to frontend about state not syncing
+          console.error('could not update game state in database', err)
+        }
+      )
+    }
+    this.playerUpdateCallback = (players) => {
+      // set this up so that it doesn't send the entire game state to the DB each time a player moves
+      this.docRef.update({ players }).then(() => {
+          playerUpdateCallback(players)
+        }, (err) => {
+          // todo throw error to frontend about state not syncing
+          console.error('could not update game state in database', err)
+        }
+      )
+    }
+
+    this.docRef = db.collection('rooms').doc(this.state.roomId)
+    //todo figure out how to handle the return of this promise
+    this.docRef.set(this.state).then(console.log)
   }
 
   updateState(newState: GameState) {

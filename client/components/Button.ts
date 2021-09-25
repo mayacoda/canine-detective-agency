@@ -6,6 +6,22 @@ export class Button extends LitElement {
   @property()
   disabled: boolean = false
 
+  constructor() {
+    super()
+    this.addEventListener('click', this.handleClick, {
+      capture: true,
+    })
+  }
+
+  private handleClick(event: Event): void | boolean {
+    if (this.disabled) {
+      event.preventDefault()
+      event.stopImmediatePropagation()
+      event.stopPropagation()
+      return false
+    }
+  }
+
   static get styles() {
     return css`
       button {
@@ -59,8 +75,10 @@ export class Button extends LitElement {
 
   render() {
     return html`
-        <button class="${ this.disabled ? 'disabled' : '' }" disabled="${ this.disabled }">
-            <slot></slot>
+        <button part="button" class="${ this.disabled ? 'disabled' : '' }">
+            <span part="content">
+                <slot></slot>
+            </span>
         </button>
     `
   }

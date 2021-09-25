@@ -36,6 +36,7 @@ export class UIEvidence extends LitElement {
         position: relative;
         display: flex;
         flex-direction: row;
+        pointer-events: all !important;
       }
 
       .close-button {

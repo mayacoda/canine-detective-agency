@@ -32,7 +32,7 @@ export class NPC extends Phaser.Physics.Matter.Image {
     this.on('pointerup', () => {
       if (this.isPlayerNear() && !this.dialogBoxGameObject) {
         const dialogBox = new DialogBox()
-        const { x, y } = getTextBlockPosition(this, dialogBox)
+        const { x, y } = getTextBlockPosition(this)
         this.dialogBoxGameObject = this.scene.add.dom(x, y, dialogBox)
         this.scene.gameStateManager.requestDialog(this.npcName).then(dialog => {
           if (dialog) {

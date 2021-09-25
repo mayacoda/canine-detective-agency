@@ -21,7 +21,7 @@ export class InteractiveItem extends Phaser.GameObjects.Sprite {
       if (!this.overlayGameObject) {
         this.overlay = new InteractiveItemOverlay()
 
-        const { x, y } = getTextBlockPosition(this, this.overlay)
+        const { x, y } = getTextBlockPosition(this)
         this.overlay.addEventListener('close', () => {
           this.removeOverlayGameObject()
         })
