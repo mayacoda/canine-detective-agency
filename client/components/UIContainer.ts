@@ -1,6 +1,8 @@
 import { css, html, LitElement } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import './UIEvidence'
+import './UIIntro'
+import './UISolve'
 import { ClientSideGameData } from '../../interface/game-data-interface'
 
 @customElement('dog-ui-container')
@@ -12,9 +14,11 @@ export class UIContainer extends LitElement {
   roomId?: string
 
   @state()
-  private _evidenceVisible = false
-  @state()
-  private _settingsVisible = false
+  private _activeState?: 'evidence' | 'solve' | 'intro' = 'intro'
+
+  _close() {
+    this._activeState = undefined
+  }
 
   static get styles() {
     return css`
@@ -65,15 +69,21 @@ export class UIContainer extends LitElement {
 
   render() {
     return html`
-        ${ this._evidenceVisible ? html`
-            <dog-ui-evidence class="overlay" @close="${ () => this._evidenceVisible = false }"
+        ${ this._activeState === 'evidence' ? html`
+            <dog-ui-evidence class="overlay"
+                             @close="${ this._close }"
                              .gameData=${ this.gameData }></dog-ui-evidence>` : '' }
-        ${ this._settingsVisible ? html`
-            <dog-ui-settings class="overlay"></dog-ui-settings>` : '' }
+
+        ${ this._activeState === 'solve' ? html`
+            <dog-ui-solve class="overlay" @close="${ this._close }"></dog-ui-solve>` : '' }
+
+        ${ this._activeState === 'intro' ? html`
+            <dog-ui-intro class="overlay" @close="${ this._close }"></dog-ui-intro>` : '' }
+
         <div class="container">
             <div class="actions">
-                <dog-button @click="${ () => this._evidenceVisible = true }">Evidence</dog-button>
-                <dog-button>Solve</dog-button>
+                <dog-button @click="${ () => this._activeState = 'evidence' }">Evidence</dog-button>
+                <dog-button @click="${ () => this._activeState = 'solve' }">Solve</dog-button>
             </div>
             <div class="header">
                 <h3>Room: <span class="highlight">${ this.roomId }</span></h3>

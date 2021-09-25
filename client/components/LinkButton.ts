@@ -58,7 +58,9 @@ export class LinkButton extends LitElement {
   render() {
     return html`
         <button>
-            <slot></slot>
+            <span part="content">
+                <slot></slot>    
+            </span>
         </button>
     `
   }

@@ -64,7 +64,7 @@ export class UIEvidence extends LitElement {
         font-family: var(--heading-font-family);
       }
 
-      .close-button span {
+      .close-button::part(content) {
         font-family: var(--heading-font-family);
       }
 

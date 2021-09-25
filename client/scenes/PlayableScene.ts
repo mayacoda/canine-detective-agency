@@ -51,7 +51,6 @@ export class PlayableScene extends Scene {
   }
 
   create(config: { fromDoor?: string, gameStateManager: GameStateManager }) {
-    console.log('creating a playable scene')
     this.gameStateManager = config.gameStateManager
     this.controls.start()
 
@@ -193,8 +192,6 @@ export class PlayableScene extends Scene {
 
     const currentPlayer = this.gameStateManager.getPlayer()
     assert(currentPlayer, 'Did not get current player from state manager')
-
-    console.log('spawning new player and he looks like', currentPlayer)
 
     let { x, y } = currentPlayer.pos
 
