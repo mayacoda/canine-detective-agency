@@ -14,7 +14,7 @@ export class UIContainer extends LitElement {
   roomId?: string
 
   @state()
-  private _activeState?: 'evidence' | 'solve' | 'intro' = 'intro'
+  private _activeState?: 'evidence' | 'solve' | 'intro' = undefined
 
   _close() {
     this._activeState = undefined

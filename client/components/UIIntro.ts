@@ -35,6 +35,7 @@ export class UIIntro extends LitElement {
   render() {
     return html`
         <div class="container">
+            <h3>Hello dog detective!</h3>
             <dog-link-button class="close-button outline" @click="${ this._close }">x
             </dog-link-button>
         </div>
