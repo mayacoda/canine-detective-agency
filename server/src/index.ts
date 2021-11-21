@@ -10,6 +10,7 @@ import { TypedServerSocket } from './types'
 import { dataRequestHandler, gameStateUpdateHandler } from './game-state-handlers'
 import admin from 'firebase-admin'
 import { COLLECTION_NAME } from './constants'
+import { congratulatoryMessage, validateSolution } from './game-data/finished-game'
 
 const io = new Server(parseInt(process.env.PORT) || 3000)
 
@@ -50,6 +51,15 @@ const initClientSocketListeners = (socket: TypedServerSocket, stateManager: Serv
   })
   socket.on('changeMap', map => {
     stateManager.updateMap((socket as Socket).id, map)
+  })
+
+  socket.on('solve', ({ culprit, reason }) => {
+    console.log('got solve request from client', culprit, reason)
+    if (validateSolution(culprit, reason)) {
+      io.sockets.in(stateManager.getState().roomId).emit('murderSolved', congratulatoryMessage)
+    } else {
+      socket.emit('wrongSolution')
+    }
   })
 
   ;(socket as Socket).on('disconnect', () => {

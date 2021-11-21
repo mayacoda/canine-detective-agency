@@ -77,13 +77,6 @@ export class ServerStateManager {
     }
   }
 
-  private updateEvidence(evidenceType: 'documents' | 'observations' | 'photos', id: string) {
-    if (!this.state.gameData[evidenceType].includes(id)) {
-      this.state.gameData[evidenceType].push(id)
-      this.stateUpdateCallback(this.state)
-    }
-  }
-
   updateObservation(id: string) {
     this.updateEvidence('observations', id)
   }
@@ -109,5 +102,12 @@ export class ServerStateManager {
   removePlayer(playerId: string) {
     delete this.state.players[playerId]
     this.playerUpdateCallback(this.state.players)
+  }
+
+  private updateEvidence(evidenceType: 'documents' | 'observations' | 'photos', id: string) {
+    if (!this.state.gameData[evidenceType].includes(id)) {
+      this.state.gameData[evidenceType].push(id)
+      this.stateUpdateCallback(this.state)
+    }
   }
 }

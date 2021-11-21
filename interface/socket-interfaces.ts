@@ -11,6 +11,7 @@ type ClientEmittedEventPayload = {
   startGame: PlayerData
   move: Vec2
   changeMap: string
+  solve: { culprit: string, reason: string }
 }
 
 type ServerEmittedEventPayload = {
@@ -21,6 +22,8 @@ type ServerEmittedEventPayload = {
   response: ServerDataResponse
   roomId: string
   playersUpdate: Record<string, Player>
+  murderSolved: string
+  wrongSolution: void
 }
 
 export type ServerOn = <T extends keyof ClientEmittedEventPayload>(event: T,

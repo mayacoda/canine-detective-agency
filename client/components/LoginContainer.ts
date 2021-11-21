@@ -31,6 +31,7 @@ export class LoginContainer extends LitElement {
         border: 2px solid var(--primary-color);
         background-image: none;
         background-color: transparent;
+        width: 14em;
         box-shadow: none;
         padding: var(--spacer-4) 24px;
         font-size: var(--font-size-medium);

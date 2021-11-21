@@ -3,7 +3,10 @@ import { customElement, property, state } from 'lit/decorators.js'
 import './UIEvidence'
 import './UIIntro'
 import './UISolve'
+import './UIFinished'
 import { ClientSideGameData } from '../../interface/game-data-interface'
+
+type ActiveState = 'evidence' | 'solve' | 'intro' | 'finished'
 
 @customElement('dog-ui-container')
 export class UIContainer extends LitElement {
@@ -14,10 +17,33 @@ export class UIContainer extends LitElement {
   roomId?: string
 
   @state()
-  private _activeState?: 'evidence' | 'solve' | 'intro' = undefined
+  private activeState?: ActiveState = undefined
 
-  _close() {
-    this._activeState = undefined
+  @state()
+  private solutionHasErrors: boolean = false
+
+  @state()
+  private message: string = ''
+
+  solve(ev: CustomEvent) {
+    this.dispatchEvent(new CustomEvent(
+      'solve',
+      { detail: { culprit: ev.detail?.culprit, reason: ev.detail?.reason } }
+    ))
+    this.solutionHasErrors = false
+  }
+
+  wrongSolution() {
+    this.solutionHasErrors = true
+  }
+
+  setMessage(message: string) {
+    this.message = message
+  }
+
+  setActiveState(state?: ActiveState) {
+    this.activeState = state
+    this.dispatchEvent(new CustomEvent('switchState', { detail: state }))
   }
 
   static get styles() {
@@ -69,21 +95,29 @@ export class UIContainer extends LitElement {
 
   render() {
     return html`
-        ${ this._activeState === 'evidence' ? html`
+        ${ this.activeState === 'evidence' ? html`
             <dog-ui-evidence class="overlay"
-                             @close="${ this._close }"
+                             @close="${ () => this.setActiveState(undefined) }"
                              .gameData=${ this.gameData }></dog-ui-evidence>` : '' }
 
-        ${ this._activeState === 'solve' ? html`
-            <dog-ui-solve class="overlay" @close="${ this._close }"></dog-ui-solve>` : '' }
+        ${ this.activeState === 'solve' ? html`
+            <dog-ui-solve class="overlay" @close="${ () => this.setActiveState(undefined) }"
+                          @solve="${ this.solve }"
+                          .solutionHasErrors="${ this.solutionHasErrors }"></dog-ui-solve>` : '' }
 
-        ${ this._activeState === 'intro' ? html`
-            <dog-ui-intro class="overlay" @close="${ this._close }"></dog-ui-intro>` : '' }
+        ${ this.activeState === 'intro' ? html`
+            <dog-ui-intro class="overlay"
+                          @close="${ () => this.setActiveState(undefined) }"></dog-ui-intro>` : '' }
+
+        ${ this.activeState === 'finished' ? html`
+            <dog-ui-finished class="overlay" .message="${ this.message }"
+                             @close="${ () => this.setActiveState(undefined) }"></dog-ui-finished>` : '' }
 
         <div class="container">
             <div class="actions">
-                <dog-button @click="${ () => this._activeState = 'evidence' }">Evidence</dog-button>
-                <dog-button @click="${ () => this._activeState = 'solve' }">Solve</dog-button>
+                <dog-button @click="${ () => this.setActiveState('evidence') }">Evidence
+                </dog-button>
+                <dog-button @click="${ () => this.setActiveState('solve') }">Solve</dog-button>
             </div>
             <div class="header">
                 <h3>Room: <span class="highlight">${ this.roomId }</span></h3>

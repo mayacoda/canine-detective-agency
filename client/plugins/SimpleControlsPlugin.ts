@@ -2,55 +2,59 @@ import { Scene } from 'phaser'
 import PluginManager = Phaser.Plugins.PluginManager
 
 class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
-  up: boolean
-  right: boolean
-  down: boolean
-  left: boolean
-  hasInput: boolean
+  up: boolean = false
+  right: boolean = false
+  down: boolean = false
+  left: boolean = false
+  hasInput: boolean = false
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-  // private cursors?: object
-  private events: Phaser.Events.EventEmitter
-  private input?: Phaser.Input.InputPlugin
 
   constructor(scene: Scene, pluginManager: PluginManager) {
     super(scene, pluginManager, 'simple-controls')
-    this.up = false
-    this.right = false
-    this.down = false
-    this.left = false
-    this.hasInput = false
-    this.events = new Phaser.Events.EventEmitter()
   }
 
   start() {
+    this.setUpCursors()
 
-    if (!this.input) {
-      this.input = this.scene.input
-    }
+    this.scene.events.on('preupdate', this.preUpdate, this)
+    this.scene.events.on('shutdown', this.shutdown, this)
 
-    this.cursors = this.input.keyboard.addKeys({
+    this.scene.scene.get('UI').events.on('ui-closed', this.uiClosed, this)
+    this.scene.scene.get('UI').events.on('ui-opened', this.uiOpened, this)
+  }
+
+  uiClosed() {
+    this.setUpCursors()
+  }
+
+  uiOpened() {
+    this.tearDownCursors()
+  }
+
+  private setUpCursors() {
+    this.scene.input.keyboard.addCapture([ 'W', 'S', 'A', 'D' ])
+
+    this.cursors = this.scene.input.keyboard.addKeys({
       up: Phaser.Input.Keyboard.KeyCodes.W,
       down: Phaser.Input.Keyboard.KeyCodes.S,
       left: Phaser.Input.Keyboard.KeyCodes.A,
       right: Phaser.Input.Keyboard.KeyCodes.D
     }) as Phaser.Types.Input.Keyboard.CursorKeys
-    
-    // reset!
-    this.up = false
-    this.right = false
-    this.down = false
-    this.left = false
+
     this.cursors.up.isDown = false
     this.cursors.right.isDown = false
     this.cursors.down.isDown = false
     this.cursors.left.isDown = false
+  }
 
-    this.scene.events.on('preupdate', this.preUpdate, this)
-    this.scene.events.on('shutdown', this.shutdown, this)
+  tearDownCursors() {
+    this.scene.input.keyboard.removeAllKeys()
+    this.scene.input.keyboard.clearCaptures()
+    this.cursors = undefined
   }
 
   preUpdate() {
-    const input = this.input
+    const input = this.scene.input
     const cursors = this.cursors
     if (!input || !cursors) return
 
@@ -65,6 +69,8 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
   shutdown() {
     this.scene.events.off('preupdate', this.preUpdate)
     this.scene.events.off('shutdown', this.shutdown)
+    this.scene.scene.get('UI').events.off('ui-closed', this.uiClosed)
+    this.scene.scene.get('UI').events.off('ui-opened', this.uiOpened)
   }
 }
 

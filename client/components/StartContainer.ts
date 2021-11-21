@@ -38,6 +38,7 @@ export class StartContainer extends LitElement {
         background-image: none;
         background-color: transparent;
         box-shadow: none;
+        width: 14em;
         padding: var(--spacer-4) 24px;
         font-size: var(--font-size-medium)
       }

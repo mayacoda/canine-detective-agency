@@ -17,7 +17,7 @@ export class UIScene extends Scene {
     this.uiContainer = new UIContainer()
     this.uiContainer.classList.add('pointer-events-none')
     this.uiContainer.classList.add('z-index-10')
-    
+
     this.uiContainerGameObject = this.add.dom(
       x,
       y,
@@ -33,6 +33,34 @@ export class UIScene extends Scene {
     gameStateManager.socket.on('update', state => {
       this.uiContainer.gameData = state.gameData
       this.uiContainer.roomId = state.roomId
+    })
+
+    this.uiContainer.addEventListener('solve', (ev) => {
+      const event = ev as CustomEvent
+      gameStateManager.socket.emit('solve', {
+        culprit: event?.detail?.culprit ?? '',
+        reason: event?.detail?.reason ?? ''
+      })
+
+      gameStateManager.socket.on('wrongSolution', () => {
+        this.uiContainer.wrongSolution()
+      })
+
+      gameStateManager.socket.on('murderSolved', message => {
+        this.uiContainer.setMessage(message)
+        this.uiContainer.setActiveState('finished')
+      })
+    })
+
+    this.uiContainer.addEventListener('switchState', ev => {
+      const event = ev as CustomEvent
+      if (event.detail) {
+        this.scene.scene.events.emit('ui-opened')
+        this.input.keyboard.enableGlobalCapture()
+      } else {
+        this.scene.scene.events.emit('ui-closed')
+        this.input.keyboard.disableGlobalCapture()
+      }
     })
   }
 }
