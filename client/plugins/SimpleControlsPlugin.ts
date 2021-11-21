@@ -2,12 +2,13 @@ import { Scene } from 'phaser'
 import PluginManager = Phaser.Plugins.PluginManager
 
 class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
-  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
   up: boolean
   right: boolean
   down: boolean
   left: boolean
   hasInput: boolean
+  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+  // private cursors?: object
   private events: Phaser.Events.EventEmitter
   private input?: Phaser.Input.InputPlugin
 
@@ -27,8 +28,13 @@ class SimpleControlsPlugin extends Phaser.Plugins.ScenePlugin {
       this.input = this.scene.input
     }
 
-    this.cursors = this.input.keyboard.createCursorKeys()
-
+    this.cursors = this.input.keyboard.addKeys({
+      up: Phaser.Input.Keyboard.KeyCodes.W,
+      down: Phaser.Input.Keyboard.KeyCodes.S,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
+      right: Phaser.Input.Keyboard.KeyCodes.D
+    }) as Phaser.Types.Input.Keyboard.CursorKeys
+    
     // reset!
     this.up = false
     this.right = false

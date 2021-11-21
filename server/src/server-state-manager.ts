@@ -39,7 +39,7 @@ export class ServerStateManager {
       )
     }
 
-    this.docRef = db.collection('rooms').doc(this.state.roomId)
+    this.docRef = db.collection(process.env.COLLECTION_NAME ?? 'rooms').doc(this.state.roomId)
     //todo figure out how to handle the return of this promise
     this.docRef.set(this.state).then(console.log)
   }
