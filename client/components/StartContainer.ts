@@ -8,6 +8,9 @@ export class StartContainer extends LitElement {
   @property()
   roomId!: string
 
+  @property()
+  isLoading: boolean = false
+
   @state()
   playerName: string = ''
 
@@ -96,7 +99,7 @@ export class StartContainer extends LitElement {
                 }) }
             </div>
             <dog-button @click="${ this.startGame }"
-                        .disabled="${ !this.playerAvatar || !this.playerName }">Start investigating!
+                        .disabled="${ !this.playerAvatar || !this.playerName || this.isLoading }">Start investigating!
             </dog-button>
         </div>
     `

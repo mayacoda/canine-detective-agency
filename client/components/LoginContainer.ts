@@ -10,6 +10,9 @@ export class LoginContainer extends LitElement {
   @property()
   error: string = ''
 
+  @property()
+  isLoading: boolean = false
+
   static get styles() {
     return css`
       .container, .overlay {
@@ -70,10 +73,10 @@ export class LoginContainer extends LitElement {
                 <p class="error">${ this.error }</p>
             ` : '' }
 
-            <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId }">Join room
+            <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId || this.isLoading }">Join room
             </dog-button>
             <p>OR</p>
-            <dog-button @click="${ this.createRoom }">Create room</dog-button>
+            <dog-button @click="${ this.createRoom }" .disabled="${this.isLoading}">Create room</dog-button>
         </div>
     `
   }
