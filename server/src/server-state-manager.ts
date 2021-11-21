@@ -4,6 +4,7 @@ import { PlayerData } from '../../interface/socket-interfaces'
 import { Vec2 } from '../../interface/geometry-interface'
 
 import { firestore } from 'firebase-admin'
+import { COLLECTION_NAME } from './constants'
 import DocumentReference = firestore.DocumentReference
 import Firestore = firestore.Firestore
 
@@ -39,7 +40,7 @@ export class ServerStateManager {
       )
     }
 
-    this.docRef = db.collection(process.env.COLLECTION_NAME ?? 'rooms').doc(this.state.roomId)
+    this.docRef = db.collection(COLLECTION_NAME).doc(this.state.roomId)
     //todo figure out how to handle the return of this promise
     this.docRef.set(this.state).then(console.log)
   }

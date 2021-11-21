@@ -9,6 +9,7 @@ import { hri } from 'human-readable-ids'
 import { TypedServerSocket } from './types'
 import { dataRequestHandler, gameStateUpdateHandler } from './game-state-handlers'
 import admin from 'firebase-admin'
+import { COLLECTION_NAME } from './constants'
 
 const io = new Server(parseInt(process.env.PORT) || 3000)
 
@@ -102,7 +103,7 @@ const joinRoomHandler = async (socket: Socket, roomId: string) => {
 
   if (!room || room.size === 0) {
     // if the room isn't open yet, check if it exists in the DB
-    const cachedRoomState = await db.collection('rooms').doc(roomId).get()
+    const cachedRoomState = await db.collection(COLLECTION_NAME).doc(roomId).get()
     if (cachedRoomState.exists) {
       // if it does, initialize it instead of throwing an error
       return initRoom(socket, roomId, cachedRoomState.data() as GameState)
