@@ -13,17 +13,26 @@ describe('each tile map Doors layer', () => {
     for (const map of tileMaps) {
       const doors = (map.layers.find(layer => layer.name === 'Doors') as TiledObjectLayer)!.objects
       for (const door of doors) {
-        const doorToProperty = getTiledPropertyValue(door, 'doorTo')
+        const doorName = getTiledPropertyValue(door, 'doorName')
+        const scene = getTiledPropertyValue(door, 'scene')
         assert(
-          doorToProperty,
-          `${ map.tileMapName } has a door "${ door.name }" which is missing a doorTo property`
+          doorName,
+          `${ map.tileMapName } has a door "${ door.name }" which is missing a doorName property`
         )
         assert(
-          typeof doorToProperty.value === 'string' && doorToProperty.value !== '',
-          `${ map.tileMapName } has a door "${ door.name }" with a doorTo property that is the wrong type or empty`
+          scene,
+          `${ map.tileMapName } has a door "${ door.name }" which is missing a scene property`
         )
         assert(
-          tileMapNames.includes(doorToProperty.value),
+          typeof doorName === 'string' && doorName !== '',
+          `${ map.tileMapName } has a door "${ door.name }" with a doorName property that is the wrong type or empty`
+        )
+        assert(
+          typeof scene === 'string' && scene !== '',
+          `${ map.tileMapName } has a door "${ door.name }" with a scene property that is the wrong type or empty`
+        )
+        assert(
+          tileMapNames.includes(scene),
           `${ map.tileMapName } has a door "${ door.name }" which leads to a nonexistent map`
         )
       }
@@ -34,14 +43,15 @@ describe('each tile map Doors layer', () => {
     for (const map of tileMaps) {
       const doors = (map.layers.find(layer => layer.name === 'Doors') as TiledObjectLayer)!.objects
       for (const door of doors) {
-        const doorTo = getTiledPropertyValue(door, 'doorTo')
-        let spawnPointsNames: string[] = (tileMaps.find(map => map.tileMapName === doorTo + '.json')!.layers.find(
+        const doorName = getTiledPropertyValue(door, 'doorName')
+        const scene = getTiledPropertyValue(door, 'scene')
+        let spawnPointsNames: string[] = (tileMaps.find(map => map.tileMapName === scene + '.json')!.layers.find(
           layer => layer.name === 'Spawn Points') as TiledObjectLayer).objects.map(
           object => object.properties?.find(prop => prop.name === 'fromDoor')?.value).filter(val => !!val)
 
         assert(
-          spawnPointsNames.includes(doorTo),
-          `${ map.tileMapName } has a door with doorTo "${ doorTo }" which does not have a spawn point in the target map`
+          spawnPointsNames.includes(doorName),
+          `"${ map.tileMapName }" has a door with doorName "${ doorName }" which does not have a spawn point in the target map "${ scene }"`
         )
       }
     }

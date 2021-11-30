@@ -8,14 +8,15 @@ import { UIScene } from './scenes/UIScene'
 import { TownScene } from './scenes/TownScene'
 import { SceneName } from './scenes/scene-name'
 import { ShopScene } from './scenes/ShopScene'
-import { ResidenceScene } from './scenes/ResidenceScene'
+import { ManorScene } from './scenes/ManorScene'
+import { ManorUpstairs } from './scenes/ManorUpstairs'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 dotenv.config()
 
 const config: GameConfig = {
   type: Phaser.AUTO,
-  backgroundColor: '#ffffff',
+  backgroundColor: '#000000',
   scale: {
     mode: Phaser.Scale.FIT,
     parent: 'canine_detective_agency',
@@ -55,7 +56,8 @@ function initGame() {
   // game scenes
   game.scene.add(SceneName.Town, TownScene, false, { gameStateManager })
   game.scene.add(SceneName.Shop, ShopScene, false, { gameStateManager })
-  game.scene.add(SceneName.Residence, ResidenceScene, false, { gameStateManager })
+  game.scene.add(SceneName.Manor, ManorScene, false, { gameStateManager })
+  game.scene.add(SceneName.ManorUpstairs, ManorUpstairs, false, { gameStateManager })
 
   gameStateManager.listen()
 }

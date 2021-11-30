@@ -15,7 +15,6 @@ import { assert } from '../utils/assert'
 import { OtherPlayerObject } from '../game-objects/OtherPlayerObject'
 import { Player } from '../../interface/game-state-interface'
 import Tilemap = Phaser.Tilemaps.Tilemap
-import TilemapLayer = Phaser.Tilemaps.TilemapLayer
 import MatterBody = Phaser.Types.Physics.Matter.MatterBody
 import TiledObject = Phaser.Types.Tilemaps.TiledObject
 
@@ -35,7 +34,6 @@ export class PlayableScene extends Scene {
   gameStateManager!: GameStateManager
   protected tileMap!: Tilemap
 
-  private groundLayer!: TilemapLayer
   private otherPlayers: Record<string, OtherPlayerObject> = {}
   private doors: MatterBody[] = []
   private NPCs: NPC[] = []
@@ -56,7 +54,7 @@ export class PlayableScene extends Scene {
 
     this.tileMap = this.make.tilemap({ key: this.scene.key })
     const tileset = this.tileMap.addTilesetImage('procreate-test-2', 'isometric-grid')
-    this.setUpGroundLayer(tileset)
+    this.setUpGroundLayers(tileset)
     this.setUpDoors()
     this.setUpObjects()
     this.setUpNPCs()
@@ -77,12 +75,13 @@ export class PlayableScene extends Scene {
       this.player.update(this.controls)
 
       this.matter.overlap(this.player, this.doors, (a: MatterBody, b: MatterBody) => {
-        const door = 'gameObject' in b && b.gameObject.getData('doorTo')
-        if (door) {
-          this.gameStateManager.socket.emit('changeMap', door)
+        const doorName = 'gameObject' in b && b.gameObject.getData('doorName')
+        const scene = ('gameObject' in b && b.gameObject.getData('scene'))
+        if (scene) {
+          this.gameStateManager.socket.emit('changeMap', scene)
           this.scene.start(
-            door,
-            { fromDoor: this.scene.key, gameStateManager: this.gameStateManager }
+            scene,
+            { fromDoor: doorName, gameStateManager: this.gameStateManager }
           )
         } else {
           console.warn('Door is missing "doorTo" property!')
@@ -105,8 +104,10 @@ export class PlayableScene extends Scene {
   private setUpDoors() {
     this.doors = this.tileMap.getObjectLayer('Doors').objects.map(doorObj => {
       let { data, gameObject } = this.createPolygon(doorObj)
-      const doorTo = getTiledProperty(doorObj, 'doorTo')
-      gameObject.setData('doorTo', doorTo)
+      const doorName = getTiledProperty(doorObj, 'doorName')
+      const scene = getTiledProperty(doorObj, 'scene')
+      gameObject.setData('doorName', doorName)
+      gameObject.setData('scene', scene)
       return this.matter.add.gameObject(
         gameObject,
         {
@@ -129,31 +130,38 @@ export class PlayableScene extends Scene {
 
   private setUpObjects() {
     this.tileMap.getObjectLayer('Colliders')?.objects.forEach(object => {
-      if (object.type === 'collider') {
-        let { data, gameObject } = this.createPolygon(object)
-        this.matter.add.gameObject(
-          gameObject,
-          {
-            shape: { type: 'fromVerts', verts: data },
-            isStatic: true
-          }
-        )
-      }
+      let { data, gameObject } = this.createPolygon(object)
+      this.matter.add.gameObject(
+        gameObject,
+        {
+          shape: { type: 'fromVerts', verts: data },
+          isStatic: true
+        }
+      )
     })
 
-    this.tileMap.getObjectLayer('Images')?.objects.map(object => {
+    this.setUpImages('Images')
+  }
+
+  private setUpImages(layerName: string, setDepth: boolean = true) {
+    this.tileMap.getObjectLayer(layerName)?.objects.map(object => {
       const { x, y } = getPosition(object)
       const image = this.add.image(x, y, object.name)
-      image.setDepth(image.y)
+      if (setDepth) image.setDepth(image.y)
     })
   }
 
-  private setUpGroundLayer(tileset: Phaser.Tilemaps.Tileset) {
-    const ground = this.tileMap.createLayer('Ground', tileset)
-    ground.setCollisionByProperty({ collides: true })
+  private setUpGroundLayers(tileset: Phaser.Tilemaps.Tileset) {
+    this.tileMap.layers.forEach(layerData => {
+      if (layerData.name === 'Walls') {
+        this.setUpImages('Lower Images', false)
+      }
 
-    this.groundLayer = ground
-    this.matter.world.convertTilemapLayer(ground)
+      const layer = this.tileMap.createLayer(layerData.name, tileset)
+      layer.setCollisionByProperty({ collides: true })
+      layer.setCullPadding(128, 128)
+      this.matter.world.convertTilemapLayer(layer)
+    })
   }
 
   private setUpNPCs() {

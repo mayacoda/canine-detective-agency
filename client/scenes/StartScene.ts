@@ -34,7 +34,7 @@ export class StartScene extends Scene {
           Object.values(SceneName).includes(map as SceneName),
           `Player map ${ map } does not exist in the game`
         )
-        this.scene.start(map, { gameStateManager })
+        this.scene.start(map, { gameStateManager, fromDoor: 'start' })
       })
     })
 

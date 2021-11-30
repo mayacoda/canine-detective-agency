@@ -26,6 +26,7 @@
         ]
     },
     "include": [
-        "client"
+        "client",
+        "node_modules/@types"
     ]
 }

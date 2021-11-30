@@ -9,13 +9,9 @@ export class TownScene extends PlayableScene {
 
   preload() {
     super.preload()
-
-    this.load.image('house', 'images/house.png')
   }
 
   create(config: { fromDoor?: string; gameStateManager: GameStateManager }) {
     super.create(config)
-
-    console.log('created the town scene')
   }
 }

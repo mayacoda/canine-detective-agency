@@ -5,7 +5,7 @@ import './Button'
 @customElement('dog-login-container')
 export class LoginContainer extends LitElement {
   @state()
-  roomId: string = ''
+  roomId: string = 'neat-duck-28'
 
   @property()
   error: string = ''
@@ -16,6 +16,7 @@ export class LoginContainer extends LitElement {
   static get styles() {
     return css`
       .container, .overlay {
+        background: #fff;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -74,10 +75,12 @@ export class LoginContainer extends LitElement {
                 <p class="error">${ this.error }</p>
             ` : '' }
 
-            <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId || this.isLoading }">Join room
+            <dog-button @click="${ this.joinRoom }" .disabled="${ !this.roomId || this.isLoading }">
+                Join room
             </dog-button>
             <p>OR</p>
-            <dog-button @click="${ this.createRoom }" .disabled="${this.isLoading}">Create room</dog-button>
+            <dog-button @click="${ this.createRoom }" .disabled="${ this.isLoading }">Create room
+            </dog-button>
         </div>
     `
   }

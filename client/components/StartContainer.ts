@@ -12,16 +12,17 @@ export class StartContainer extends LitElement {
   isLoading: boolean = false
 
   @state()
-  playerName: string = ''
+  playerName: string = 'api'
 
   @state()
-  playerAvatar: string = ''
+  playerAvatar: string = 'shepherd'
 
   avatars = [ 'pug', 'shepherd', 'poodle', 'stafford' ]
 
   static get styles() {
     return css`
       .container, .overlay {
+        background: #fff;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -100,7 +101,8 @@ export class StartContainer extends LitElement {
                 }) }
             </div>
             <dog-button @click="${ this.startGame }"
-                        .disabled="${ !this.playerAvatar || !this.playerName || this.isLoading }">Start investigating!
+                        .disabled="${ !this.playerAvatar || !this.playerName || this.isLoading }">
+                Start investigating!
             </dog-button>
         </div>
     `

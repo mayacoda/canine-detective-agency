@@ -1,10 +1,4 @@
-import {
-  getExistingImagesAsPathsFromTilemapsDir,
-  getTiledPropertyValue,
-  getTileMaps,
-  TiledObjectLayer,
-  TiledTileMap
-} from './test-utils'
+import { getExistingImagesAsPathsFromTilemapsDir, getTileMaps, TiledTileMap } from './test-utils'
 import { assert } from '../utils/assert'
 
 describe('each tile map Images layer', () => {
@@ -18,18 +12,29 @@ describe('each tile map Images layer', () => {
 
   it('has an image property that corresponds to an actual file', () => {
     for (const map of tileMaps) {
-      const images = (map.layers.find(layer => layer.name === 'Images') as TiledObjectLayer).objects
+      let imagesLayer = map.layers.find(layer => layer.name === 'Images')
+      let lowerImagesLayer = map.layers.find(layer => layer.name === 'Lower Images')
+
+      assert(
+        imagesLayer && 'objects' in imagesLayer,
+        `${ map.tileMapName } does not have an Images object layer`
+      )
+
+      const images = imagesLayer.objects
+
+      if (lowerImagesLayer && 'objects' in lowerImagesLayer) {
+        images.push(...lowerImagesLayer.objects)
+      }
 
       for (const image of images) {
-        const imageProperty = getTiledPropertyValue(image, 'image')
         assert(
-          imageProperty,
-          `${ map.tileMapName } has image "${ image.name }" with missing image property`
+          image.name,
+          `${ map.tileMapName } has image "${ image.name }" with missing name property`
         )
 
         assert(
-          imagePaths.includes('../images/' + imageProperty + '.png'),
-          `${ map.tileMapName } has image "${ image.name }" with image property ${ imageProperty } which is missing a corresponding file`
+          imagePaths.includes('../images/' + image.name + '.png'),
+          `${ map.tileMapName } has image "${ image.name }" which is missing a corresponding file`
         )
       }
     }
