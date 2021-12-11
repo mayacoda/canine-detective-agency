@@ -1,4 +1,4 @@
-import { getTileMaps, TiledObjectLayer, TiledTileMap } from './test-utils'
+import { getTileMaps, TiledObjectLayer, TiledTileMap } from '../utils/test-utils'
 import { assert } from '../utils/assert'
 
 describe('each tile map Spawn Points layer', () => {
@@ -10,7 +10,8 @@ describe('each tile map Spawn Points layer', () => {
   })
 
   // todo: spawn points should correspond to a door, not just a map. Multiple doors should be able to lead to the same map, just in different locations
-  it('has a "fromDoor" property that corresponds to another tileMap', () => {
+  // would be easier to test that each door has a spawn point than to guess from where characters can appear at the door
+  it.skip('has a "fromDoor" property that corresponds to another tileMap', () => {
     for (const map of tileMaps) {
       const spawnPoints = (map.layers.find(layer => layer.name === 'Spawn Points') as TiledObjectLayer)!.objects
       for (const spawnPoint of spawnPoints) {

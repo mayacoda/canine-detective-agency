@@ -27,6 +27,7 @@
     },
     "include": [
         "client",
-        "node_modules/@types"
+        "node_modules/@types",
+        "node_modules/@types/jest/index.d.ts"
     ]
 }

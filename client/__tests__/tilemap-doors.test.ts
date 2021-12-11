@@ -1,4 +1,9 @@
-import { getTiledPropertyValue, getTileMaps, TiledObjectLayer, TiledTileMap } from './test-utils'
+import {
+  getTiledPropertyValue,
+  getTileMaps,
+  TiledObjectLayer,
+  TiledTileMap
+} from '../utils/test-utils'
 import { assert } from '../utils/assert'
 
 describe('each tile map Doors layer', () => {

@@ -1,4 +1,8 @@
-import { getExistingImagesAsPathsFromTilemapsDir, getTileMaps, TiledTileMap } from './test-utils'
+import {
+  getExistingImagesAsPathsFromTilemapsDir,
+  getTileMaps,
+  TiledTileMap
+} from '../utils/test-utils'
 import { assert } from '../utils/assert'
 
 describe('each tile map Images layer', () => {

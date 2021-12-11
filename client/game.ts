@@ -9,7 +9,10 @@ import { TownScene } from './scenes/TownScene'
 import { SceneName } from './scenes/scene-name'
 import { ShopScene } from './scenes/ShopScene'
 import { ManorScene } from './scenes/ManorScene'
-import { ManorUpstairs } from './scenes/ManorUpstairs'
+import { ManorUpstairsScene } from './scenes/ManorUpstairsScene'
+import { PharmacyScene } from './scenes/PharmacyScene'
+import { PharmacyUpstairsScene } from './scenes/PharmacyUpstairsScene'
+import { ClinicScene } from './scenes/ClinicScene'
 import GameConfig = Phaser.Types.Core.GameConfig
 
 dotenv.config()
@@ -57,7 +60,10 @@ function initGame() {
   game.scene.add(SceneName.Town, TownScene, false, { gameStateManager })
   game.scene.add(SceneName.Shop, ShopScene, false, { gameStateManager })
   game.scene.add(SceneName.Manor, ManorScene, false, { gameStateManager })
-  game.scene.add(SceneName.ManorUpstairs, ManorUpstairs, false, { gameStateManager })
+  game.scene.add(SceneName.ManorUpstairs, ManorUpstairsScene, false, { gameStateManager })
+  game.scene.add(SceneName.Pharmacy, PharmacyScene, false, { gameStateManager })
+  game.scene.add(SceneName.PharmacyUpstairs, PharmacyUpstairsScene, false, { gameStateManager })
+  game.scene.add(SceneName.Clinic, ClinicScene, false, { gameStateManager })
 
   gameStateManager.listen()
 }

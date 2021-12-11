@@ -41,7 +41,7 @@ io.on('connection', (socket: Socket) => {
 
 const initClientSocketListeners = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
   socket.on('request', (request) => {
-    dataRequestHandler(socket, request)
+    dataRequestHandler(socket, request, stateManager.getState().gameData)
   })
   socket.on('updateState', (update) => {
     gameStateUpdateHandler(stateManager, update)

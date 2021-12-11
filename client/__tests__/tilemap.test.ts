@@ -3,7 +3,7 @@ import {
   getImagesUsedByTileMap,
   getTileMaps,
   TiledTileMap
-} from './test-utils'
+} from '../utils/test-utils'
 import { assert } from '../utils/assert'
 
 describe('each tile map', () => {
@@ -60,7 +60,7 @@ describe('each tile map', () => {
 /*
   This is how it should work once https://github.com/kulshekhar/ts-jest/issues/2057 is resolved
  */
-// import { getTileMaps } from './test-utils'
+// import { getTileMaps } from '../utils/test-utils'
 //
 // const tileMaps = await getTileMaps()
 //

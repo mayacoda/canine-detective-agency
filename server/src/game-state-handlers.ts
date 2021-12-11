@@ -13,11 +13,15 @@ import {
   handlePhotoUpdate
 } from './update-handler'
 import { TypedServerSocket } from './types'
+import { ServerSideGameData } from '../../interface/game-data-interface'
+import { Immutable } from '../../interface/types'
 
-export const dataRequestHandler = (socket: TypedServerSocket, request: ClientDataRequest) => {
+export const dataRequestHandler = (socket: TypedServerSocket,
+                                   request: ClientDataRequest,
+                                   gameData: Immutable<ServerSideGameData>) => {
   switch (request.evidenceType) {
     case 'interview':
-      handleDialogRequest(socket, request.data)
+      handleDialogRequest(socket, request.data, gameData)
       break
     case 'observation':
       handleObservationRequest(socket, request.data)

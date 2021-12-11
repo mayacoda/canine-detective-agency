@@ -4,7 +4,7 @@ import {
   getTileMaps,
   TiledObjectLayer,
   TiledTileMap
-} from './test-utils'
+} from '../utils/test-utils'
 import { assert } from '../utils/assert'
 import { photosData } from '../../server/src/game-data/photos-data'
 import { documentsData } from '../../server/src/game-data/documents-data'

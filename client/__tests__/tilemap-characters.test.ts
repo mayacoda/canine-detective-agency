@@ -4,7 +4,7 @@ import {
   getTileMaps,
   TiledObjectLayer,
   TiledTileMap
-} from './test-utils'
+} from '../utils/test-utils'
 import { assert } from '../utils/assert'
 import { dialogData } from '../../server/src/game-data/dialog-data'
 

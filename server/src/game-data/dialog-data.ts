@@ -32,7 +32,7 @@ export const dialogData: Record<string, Dialog> = {
       }
     ],
     start: 'first',
-    speaker: 'Dr. Charlie'
+    speaker: 'Dr. Charlie, the doctor'
   },
   maria: {
     branches: [
@@ -52,6 +52,31 @@ export const dialogData: Record<string, Dialog> = {
       }
     ],
     start: 'first',
-    speaker: 'Maria'
+    speaker: 'Maria, the housemouse'
+  },
+  larry: {
+    start: 'first',
+    branches: [],
+    speaker: 'Lawrence "Larry" Judge, the lawyer'
+  },
+  richard: {
+    start: 'first',
+    branches: [],
+    speaker: 'Richard Robinson, the husband'
+  },
+  candice: {
+    start: 'first',
+    branches: [],
+    speaker: 'Candice Raven, the niece'
+  },
+  ginger: {
+    start: 'first',
+    branches: [],
+    speaker: 'Ginger, the shopkeep'
+  },
+  ranger: {
+    start: 'first',
+    branches: [],
+    speaker: 'Ranger Caw, the pharmacist'
   }
 }

@@ -1,4 +1,6 @@
 import { NPCName } from './game-data-interface'
+import { GameState } from './game-state-interface'
+import { Immutable } from './types'
 
 type BranchId = string
 
@@ -16,5 +18,6 @@ export interface DialogBranch {
 
 export interface Question {
   to: BranchId
-  text: string
+  text: string,
+  condition?: (gameData: Immutable<GameState['gameData']>) => boolean
 }

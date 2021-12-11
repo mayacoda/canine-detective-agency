@@ -8,7 +8,7 @@ export class PlayerObject extends Phaser.Physics.Matter.Image {
 
   constructor(scene: PlayableScene, x: number, y: number, avatar: string = 'shepherd') {
     super(scene.matter.world, x, y, avatar)
-    this.setCircle(this.width / 3)
+    this.setCircle(this.width / 4)
     scene.add.existing(this)
     this.scene.cameras.main.startFollow(this, true)
   }

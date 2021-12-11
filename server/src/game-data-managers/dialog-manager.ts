@@ -1,9 +1,39 @@
 import { dialogData } from '../game-data/dialog-data'
-import { Dialog } from '../../../interface/dialog-interface'
-import { Statement } from '../../../interface/game-data-interface'
+import { Dialog, Question } from '../../../interface/dialog-interface'
+import { ServerSideGameData, Statement } from '../../../interface/game-data-interface'
+import { Immutable } from '../../../interface/types'
+
+export const getDialogByIdApplyingConditions = (id: string,
+                                                gameData: Immutable<ServerSideGameData>,
+                                                dialogRecord: Record<string, Dialog> = dialogData): Dialog | undefined => {
+
+  const dialog = dialogRecord[id]
+  if (!dialog) return undefined
+
+  const allForks: Question [] = dialog.branches
+    .map(branch => branch.fork)
+    .filter((fork): fork is Question[] => !!fork)
+    .flat()
+
+
+  const validForks = allForks
+    .filter((fork: Question) => (!fork.condition || fork.condition(gameData)))
+    .map(fork => fork.to)
+    .concat([ dialog.start ])
+
+  return {
+    speaker: dialog.speaker,
+    start: dialog.start,
+    branches: dialog.branches.map(branch => {
+      return {
+        ...branch,
+        fork: branch.fork && branch.fork.filter(fork => validForks.includes(fork.to))
+      }
+    }).filter(branch => validForks.includes(branch.id))
+  }
+}
 
 export const getDialogById = (id: string): Dialog => {
-  // todo temporarily returning demo dialog, should return actual game dialog
   return dialogData[id]
 }
 
@@ -26,7 +56,7 @@ export const resolveInterviewByBranchId = (dialogId: string, branchId: string): 
 
   if (branchStatements === null) throw new Error(`could not find dialog branchId "${ branchId }"`)
 
-  // todo: when multiplayer, make sure this is the player's name instead
+  // todo: when multiplayer, make sure this is the player's name instead?
   const question = branchQuestion ? { text: branchQuestion, speaker: 'Detective' } : undefined
   const answers = branchStatements.map(text => ({ text, speaker: dialog.speaker }))
 

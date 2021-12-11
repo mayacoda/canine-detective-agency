@@ -4,6 +4,8 @@ export enum SceneName {
   Manor = 'manor',
   ManorUpstairs = 'manor-upstairs',
   Shop = 'shop',
-  Pharmacy = 'pharmacy'
+  Pharmacy = 'pharmacy',
+  PharmacyUpstairs = 'pharmacy-upstairs',
+  Clinic = 'clinic'
 }
 

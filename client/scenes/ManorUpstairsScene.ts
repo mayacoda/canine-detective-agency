@@ -2,7 +2,7 @@
 import { PlayableScene } from './PlayableScene'
 import { SceneName } from './scene-name'
 
-export class ManorUpstairs extends PlayableScene {
+export class ManorUpstairsScene extends PlayableScene {
   constructor() {
     super(SceneName.ManorUpstairs)
   }

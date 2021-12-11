@@ -12,20 +12,24 @@ import {
 import { getObservationById } from './game-data-managers/observation-manager'
 import { getDocumentById } from './game-data-managers/document-manager'
 import { getPhotoById } from './game-data-managers/photo-manager'
-import { getDialogById } from './game-data-managers/dialog-manager'
+import { getDialogByIdApplyingConditions } from './game-data-managers/dialog-manager'
 import { TypedServerSocket } from './types'
+import { Immutable } from '../../interface/types'
+import { ServerSideGameData } from '../../interface/game-data-interface'
 
 
 function emitDataResponse(socket: TypedServerSocket, data: ServerDataResponse) {
   socket.emit('response', data)
 }
 
-export function handleDialogRequest(socket: TypedServerSocket, data: InterviewDataRequest['data']) {
+export function handleDialogRequest(socket: TypedServerSocket,
+                                    data: InterviewDataRequest['data'],
+                                    gameData: Immutable<ServerSideGameData>) {
   const response: InterviewDataResponse = {
     evidenceType: 'interview',
     data: {
       id: data.id,
-      dialog: getDialogById(data.id),
+      dialog: getDialogByIdApplyingConditions(data.id, gameData),
       uuid: data.uuid
     }
   }

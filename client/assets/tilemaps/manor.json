@@ -173,7 +173,7 @@
                  "y":32
                 }, 
                 {
-                 "data":[2147483674, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2147483674, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                 "data":[2147483674, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2147483674, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                  "height":16,
                  "width":16,
                  "x":16,
@@ -197,7 +197,7 @@
          "name":"Images",
          "objects":[
                 {
-                 "gid":1073741865,
+                 "gid":1073741873,
                  "height":168,
                  "id":8,
                  "name":"plant1",
@@ -209,7 +209,7 @@
                  "y":123.715
                 }, 
                 {
-                 "gid":41,
+                 "gid":49,
                  "height":168,
                  "id":9,
                  "name":"plant1",
@@ -221,7 +221,7 @@
                  "y":313.296
                 }, 
                 {
-                 "gid":40,
+                 "gid":48,
                  "height":234,
                  "id":10,
                  "name":"plant2",
@@ -233,7 +233,7 @@
                  "y":401.848
                 }, 
                 {
-                 "gid":40,
+                 "gid":48,
                  "height":234,
                  "id":11,
                  "name":"plant2",
@@ -245,7 +245,7 @@
                  "y":650.333
                 }, 
                 {
-                 "gid":45,
+                 "gid":53,
                  "height":533,
                  "id":18,
                  "name":"stairs",
@@ -395,7 +395,7 @@
                         {
                          "name":"doorName",
                          "type":"string",
-                         "value":"front-door"
+                         "value":"manor-door"
                         }, 
                         {
                          "name":"scene",
@@ -447,6 +447,45 @@
                  "width":0,
                  "x":352,
                  "y":755.333
+                }, 
+                {
+                 "height":0,
+                 "id":29,
+                 "name":"manor-back",
+                 "polygon":[
+                        {
+                         "x":0,
+                         "y":0
+                        }, 
+                        {
+                         "x":-54.666666666667,
+                         "y":-32
+                        }, 
+                        {
+                         "x":-180,
+                         "y":30.6666666666667
+                        }, 
+                        {
+                         "x":-117.333333333333,
+                         "y":65.3333333333333
+                        }],
+                 "properties":[
+                        {
+                         "name":"doorName",
+                         "type":"string",
+                         "value":"manor-back"
+                        }, 
+                        {
+                         "name":"scene",
+                         "type":"string",
+                         "value":"town"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2196,
+                 "y":1134.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -458,7 +497,53 @@
          "draworder":"topdown",
          "id":6,
          "name":"Characters",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":67,
+                 "height":140,
+                 "id":28,
+                 "name":"maria",
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"string",
+                         "value":"maria"
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"maria"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":121,
+                 "x":1433.33333333333,
+                 "y":920.666666666667
+                }, 
+                {
+                 "gid":68,
+                 "height":128,
+                 "id":31,
+                 "name":"richard",
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"string",
+                         "value":"richard"
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"richard"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":130,
+                 "x":-251.666666666667,
+                 "y":461.333333333333
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -484,13 +569,13 @@
                 {
                  "height":0,
                  "id":1,
-                 "name":"from town",
+                 "name":"manor-door",
                  "point":true,
                  "properties":[
                         {
                          "name":"fromDoor",
                          "type":"string",
-                         "value":"front-door"
+                         "value":"manor-door"
                         }],
                  "rotation":0,
                  "type":"",
@@ -528,6 +613,24 @@
                  "width":0,
                  "x":1002.67,
                  "y":592
+                }, 
+                {
+                 "height":0,
+                 "id":30,
+                 "name":"manor-back",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"fromDoor",
+                         "type":"string",
+                         "value":"manor-back"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1986.66666666667,
+                 "y":1086.66666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -536,7 +639,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":28,
+ "nextobjectid":32,
  "orientation":"staggered",
  "renderorder":"right-down",
  "staggeraxis":"y",
@@ -548,12 +651,12 @@
          "columns":8,
          "firstgid":1,
          "image":"isometric-grid.png",
-         "imageheight":512,
+         "imageheight":640,
          "imagewidth":1024,
          "margin":0,
          "name":"procreate-test-2",
          "spacing":0,
-         "tilecount":32,
+         "tilecount":40,
          "tileheight":128,
          "tiles":[
                 {
@@ -739,12 +842,138 @@
                      "x":0,
                      "y":0
                     }
+                }, 
+                {
+                 "id":31,
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "id":2,
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":0,
+                             "id":1,
+                             "name":"",
+                             "polygon":[
+                                    {
+                                     "x":0,
+                                     "y":0
+                                    }, 
+                                    {
+                                     "x":9,
+                                     "y":2
+                                    }, 
+                                    {
+                                     "x":67,
+                                     "y":-30
+                                    }, 
+                                    {
+                                     "x":59,
+                                     "y":-35
+                                    }],
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":0,
+                             "x":2,
+                             "y":95
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    },
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
+                }, 
+                {
+                 "id":32,
+                 "objectgroup":
+                    {
+                     "draworder":"index",
+                     "id":2,
+                     "name":"",
+                     "objects":[
+                            {
+                             "height":0,
+                             "id":2,
+                             "name":"",
+                             "polygon":[
+                                    {
+                                     "x":0,
+                                     "y":0
+                                    }, 
+                                    {
+                                     "x":7,
+                                     "y":4
+                                    }, 
+                                    {
+                                     "x":67,
+                                     "y":-28
+                                    }, 
+                                    {
+                                     "x":56,
+                                     "y":-32
+                                    }],
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":0,
+                             "x":3,
+                             "y":94
+                            }, 
+                            {
+                             "height":0,
+                             "id":3,
+                             "name":"",
+                             "polygon":[
+                                    {
+                                     "x":0,
+                                     "y":0
+                                    }, 
+                                    {
+                                     "x":63,
+                                     "y":30
+                                    }, 
+                                    {
+                                     "x":69,
+                                     "y":26
+                                    }, 
+                                    {
+                                     "x":10,
+                                     "y":-7
+                                    }],
+                             "rotation":0,
+                             "type":"",
+                             "visible":true,
+                             "width":0,
+                             "x":59,
+                             "y":68
+                            }],
+                     "opacity":1,
+                     "type":"objectgroup",
+                     "visible":true,
+                     "x":0,
+                     "y":0
+                    },
+                 "properties":[
+                        {
+                         "name":"collides",
+                         "type":"bool",
+                         "value":true
+                        }]
                 }],
          "tilewidth":128
         }, 
         {
          "columns":0,
-         "firstgid":33,
+         "firstgid":41,
          "grid":
             {
              "height":1,
@@ -754,7 +983,7 @@
          "margin":0,
          "name":"collection-of-images",
          "spacing":0,
-         "tilecount":7,
+         "tilecount":15,
          "tileheight":944,
          "tiles":[
                 {
@@ -798,6 +1027,54 @@
                  "image":"..\/images\/desc-stairs.png",
                  "imageheight":533,
                  "imagewidth":516
+                }, 
+                {
+                 "id":19,
+                 "image":"..\/images\/stairs-narrow.png",
+                 "imageheight":375,
+                 "imagewidth":401
+                }, 
+                {
+                 "id":21,
+                 "image":"..\/images\/desc-stairs-narrow.png",
+                 "imageheight":174,
+                 "imagewidth":323
+                }, 
+                {
+                 "id":22,
+                 "image":"..\/images\/larry.png",
+                 "imageheight":105,
+                 "imagewidth":140
+                }, 
+                {
+                 "id":23,
+                 "image":"..\/images\/ginger.png",
+                 "imageheight":140,
+                 "imagewidth":146
+                }, 
+                {
+                 "id":24,
+                 "image":"..\/images\/candice.png",
+                 "imageheight":140,
+                 "imagewidth":92
+                }, 
+                {
+                 "id":25,
+                 "image":"..\/images\/ranger.png",
+                 "imageheight":160,
+                 "imagewidth":85
+                }, 
+                {
+                 "id":26,
+                 "image":"..\/images\/maria.png",
+                 "imageheight":140,
+                 "imagewidth":121
+                }, 
+                {
+                 "id":27,
+                 "image":"..\/images\/richard.png",
+                 "imageheight":128,
+                 "imagewidth":130
                 }],
          "tilewidth":968
         }],
