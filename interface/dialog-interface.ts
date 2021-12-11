@@ -14,6 +14,7 @@ export interface DialogBranch {
   id: BranchId
   dialog: string[]
   fork?: Question[]
+  afterLast?: string
 }
 
 export interface Question {

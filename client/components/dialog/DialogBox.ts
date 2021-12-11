@@ -58,7 +58,7 @@ export class DialogBox extends LitElement {
   }
 
   get _nextButtonText() {
-    return this._isLastDialogIndex ? 'x' : '>>'
+    return this._isLastDialogIndex && !this._branch?.afterLast ? 'x' : '>>'
   }
 
   get _showFork() {
@@ -88,6 +88,10 @@ export class DialogBox extends LitElement {
     if (!this.dialog) return
     if (this._branch && this._dialogIndex !== this._branch.dialog.length - 1) {
       return this._dialogIndex++
+    }
+    if (this._branch && this._branch.afterLast) {
+      this._switchToBranch(this._branch.afterLast)
+      return
     }
 
     this.dispatchEvent(new CustomEvent('close'))

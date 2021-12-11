@@ -15,11 +15,15 @@ export const getDialogByIdApplyingConditions = (id: string,
     .filter((fork): fork is Question[] => !!fork)
     .flat()
 
-
+  const afterLast: string [] = dialog.branches
+    .map(branch => branch.afterLast)
+    .filter((fork): fork is string => !!fork)
+  
   const validForks = allForks
     .filter((fork: Question) => (!fork.condition || fork.condition(gameData)))
     .map(fork => fork.to)
     .concat([ dialog.start ])
+    .concat(afterLast)
 
   return {
     speaker: dialog.speaker,
