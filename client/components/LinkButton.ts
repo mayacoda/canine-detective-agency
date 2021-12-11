@@ -10,6 +10,7 @@ export class LinkButton extends LitElement {
         border: none;
         background: none;
         outline: none;
+        text-align: left;
         font-size: var(--font-size-medium);
         cursor: pointer;
         display: inline-block;
