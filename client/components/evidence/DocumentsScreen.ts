@@ -20,7 +20,6 @@ export class DocumentsScreen extends EvidenceScreen {
                 <ul class="list">
                     ${ this.documents.map(document => html`
                         <li class="card" @click="${ () => this.activeDocument = document }">
-                            <div class="image"></div>
                             <h4>${ document.name }</h4>
                         </li>`) }
                 </ul>
@@ -28,8 +27,10 @@ export class DocumentsScreen extends EvidenceScreen {
                 <div class="detail-view">
                     <h1>${ this.activeDocument.name }</h1>
                     <div class="scroll-zone">
-                        ${ this.activeDocument.description ? html`${ this.activeDocument.description }` : '' }
-                        ${ unsafeHTML(this.activeDocument.content) }
+                        <div class="document">
+                            ${ this.activeDocument.description ? html`${ this.activeDocument.description }` : '' }
+                            ${ unsafeHTML(this.activeDocument.content) }
+                        </div>
                     </div>
                     <dog-button class="outline back-button"
                                 @click="${ () => this.activeDocument = null }"><-

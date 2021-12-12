@@ -2,6 +2,7 @@ import { Dialog } from '../../../interface/dialog-interface'
 
 export const dialogData: Record<string, Dialog> = {
   charlie: {
+    imageUrl: 'images/charlie.png',
     branches: [
       {
         id: 'first',
@@ -36,8 +37,8 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'What can you tell me about pesticides and their effects on the body?',
             to: 'pesticides',
-            condition: gameData => gameData.observations.includes('manor-pesticide-bottle') || gameData.observations.includes(
-              'shop-pesticide-bottle')
+            condition: gameData => gameData.observations.includes('manorPesticideBottle') || gameData.observations.includes(
+              'shopPesticideBottle')
           }
         ]
       },
@@ -89,6 +90,7 @@ export const dialogData: Record<string, Dialog> = {
     speaker: 'Dr. Charlie, the doctor'
   },
   maria: {
+    imageUrl: 'images/maria.png',
     branches: [
       {
         id: 'first',
@@ -144,8 +146,8 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'Ginger, the shopkeeper',
             to: 'ginger',
-            condition: gameData => gameData.observations.includes('bnt-closed-signs') && gameData.observations.includes(
-              'richard-calendar')
+            condition: gameData => gameData.observations.includes('shopClosedSigns') && gameData.observations.includes(
+              'richardCalendar')
           }
         ]
       },
@@ -260,12 +262,12 @@ export const dialogData: Record<string, Dialog> = {
           'It\'s quite a pain to clean.'
         ],
       },
-
     ],
     start: 'first',
     speaker: 'Maria, the mousemaid'
   },
   larry: {
+    imageUrl: 'images/larry.png',
     start: 'first',
     branches: [
       {
@@ -283,12 +285,12 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'Did Jane change her will recently?',
             to: 'will',
-            condition: gameData => gameData.documents.includes('jane-journal')
+            condition: gameData => gameData.documents.includes('janeJournal')
           },
           {
             text: 'Had Jane scheduled an appointment with you?',
             to: 'appointment',
-            condition: gameData => gameData.observations.includes('jane-note')
+            condition: gameData => gameData.observations.includes('janeNote')
           }
         ]
       },
@@ -329,6 +331,7 @@ export const dialogData: Record<string, Dialog> = {
     speaker: 'Lawrence "Larry" Judge, the lawyer'
   },
   richard: {
+    imageUrl: 'images/richard.png',
     start: 'first',
     branches: [
       {
@@ -355,7 +358,7 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'Tell me about those pesticides in the kitchen.',
             to: 'pesticides',
-            condition: gameData => gameData.observations.includes('manor-pesticide-bottle')
+            condition: gameData => gameData.observations.includes('manorPesticideBottle')
           },
           {
             text: 'Why did your Candice and Jane have a fight?',
@@ -420,6 +423,7 @@ export const dialogData: Record<string, Dialog> = {
     speaker: 'Richard Robinson, the husband'
   },
   candice: {
+    imageUrl: 'images/candice.png',
     start: 'first',
     branches: [
       {
@@ -450,12 +454,12 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'Did you invite your aunt and uncle to your wedding? We found an invitation at Dr. Charlie\'s clinic.',
             to: 'wedding',
-            condition: gameData => gameData.observations.includes('wedding-invite')
+            condition: gameData => gameData.observations.includes('weddingInvite')
           },
           {
             text: 'Did you know about Ranger\'s financial problems?',
             to: 'finance',
-            condition: gameData => gameData.observations.includes('ranger-accounts')
+            condition: gameData => gameData.observations.includes('rangerAccounts')
           },
         ]
       },
@@ -500,6 +504,7 @@ export const dialogData: Record<string, Dialog> = {
     speaker: 'Candice Raven, the niece'
   },
   ginger: {
+    imageUrl: 'images/ginger.png',
     start: 'first',
     branches: [
       {
@@ -531,7 +536,7 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'Why do you stock so much pesticide?',
             to: 'pesticide',
-            condition: gameData => gameData.observations.includes('shop-pesticide-bottle')
+            condition: gameData => gameData.observations.includes('shopPesticideBottle')
           },
         ]
       },
@@ -588,6 +593,7 @@ export const dialogData: Record<string, Dialog> = {
     speaker: 'Ginger, the shopkeeper'
   },
   ranger: {
+    imageUrl: 'images/ranger.png',
     start: 'first',
     branches: [
       {
@@ -612,7 +618,7 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'I see from your books that you\'re having financial problems...',
             to: 'finance',
-            condition: gameData => gameData.observations.includes('ranger-accounts')
+            condition: gameData => gameData.observations.includes('rangerAccounts')
           },
           {
             text: 'Do you know why Candice and Jane had a fight two weeks ago?',

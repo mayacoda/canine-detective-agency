@@ -8,9 +8,9 @@ import { GameState, ResolvedGameState } from '../../../interface/game-state-inte
 export const resolveGameData = (data: ServerSideGameData): ClientSideGameData => {
   return {
     interviews: Object.entries(data.interviews).map(([ id, branches ]) => {
-      const speaker = getDialogById(id).speaker
+      const { speaker, imageUrl } = getDialogById(id)
       const statements = branches.map(branchId => resolveInterviewByBranchId(id, branchId)).flat()
-      return { speaker, statements }
+      return { speaker, statements, imageUrl }
     }),
     documents: data.documents.map(id => getDocumentById(id)),
     photos: data.photos.map(id => getPhotoById(id)),

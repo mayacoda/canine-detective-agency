@@ -5,11 +5,10 @@ import './LinkButton'
 import './Button'
 import './evidence/InterviewsScreen'
 import './evidence/ObservationsScreen'
-import './evidence/PhotosScreen'
 import './evidence/DocumentsScreen'
 import { ClientSideGameData } from '../../interface/game-data-interface'
 
-type EvidenceScreen = 'interviews' | 'observations' | 'photos' | 'documents'
+type EvidenceScreen = 'interviews' | 'observations' | 'documents'
 
 @customElement('dog-ui-evidence')
 export class UIEvidence extends LitElement {
@@ -19,7 +18,7 @@ export class UIEvidence extends LitElement {
   @state()
   _activeScreen!: EvidenceScreen
 
-  _screens: EvidenceScreen[] = [ 'interviews', 'documents', 'photos', 'observations' ]
+  _screens: EvidenceScreen[] = [ 'interviews', 'documents', 'observations' ]
 
   constructor() {
     super()
@@ -104,10 +103,6 @@ export class UIEvidence extends LitElement {
         evidenceScreen = html`
             <dog-observations-screen
                     .observations="${ this.gameData.observations }"></dog-observations-screen>`
-        break
-      case 'photos':
-        evidenceScreen = html`
-            <dog-photos-screen .photos="${ this.gameData.photos }"></dog-photos-screen>`
         break
       case 'documents':
         evidenceScreen = html`

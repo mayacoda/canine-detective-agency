@@ -32,7 +32,10 @@ export class InterviewsScreen extends EvidenceScreen {
                                     interview.statements
                             ) }"
                                 class="card">
-                                <div class="image"></div>
+                                <div class="image">
+                                    <img src="${ interview.imageUrl }"
+                                         alt="${ interview.speaker }">
+                                </div>
                                 <h4>${ interview.speaker }</h4>
                             </li>`
                     }) }

@@ -29,8 +29,10 @@ export class ObservationsScreen extends EvidenceScreen {
                 <ul class="list">
                     ${ this.observations.map(observation => html`
                         <li class="card" @click="${ () => this.activeObservation = observation }">
-                            <img class="image" src="${ observation.imageUrl }"
-                                 alt="${ observation.description }"/>
+                            <div class="image">
+                                <img src="${ observation.imageUrl }"
+                                     alt="${ observation.description }"/>
+                            </div>
                             <h4>${ observation.description }</h4>
                         </li>`) }
                 </ul>

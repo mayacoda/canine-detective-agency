@@ -28,6 +28,7 @@ export const getDialogByIdApplyingConditions = (id: string,
   return {
     speaker: dialog.speaker,
     start: dialog.start,
+    imageUrl: dialog.imageUrl,
     branches: dialog.branches.map(branch => {
       return {
         ...branch,
@@ -58,7 +59,7 @@ export const resolveInterviewByBranchId = (dialogId: string, branchId: string): 
     }
   }
 
-  if (branchStatements === null) throw new Error(`could not find dialog branchId "${ branchId }"`)
+  if (branchStatements === null) throw new Error(`could not find dialog branchId "${ branchId }" in dialog ${ dialogId }`)
 
   // todo: when multiplayer, make sure this is the player's name instead?
   const question = branchQuestion ? { text: branchQuestion, speaker: 'Detective' } : undefined

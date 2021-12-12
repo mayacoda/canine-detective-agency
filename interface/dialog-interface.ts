@@ -6,6 +6,7 @@ type BranchId = string
 
 export interface Dialog {
   speaker: NPCName
+  imageUrl: string,
   start: BranchId
   branches: DialogBranch[]
 }

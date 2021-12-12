@@ -22,13 +22,8 @@ export interface ServerSideGameData {
 
 export interface Interview {
   speaker: string
-  location?: string // todo NPCs will probably not move locations
   statements: Statement[]
-}
-
-export interface InterviewRecord {
-  dialog: Statement[],
-  location?: string, //todo do I really need this right now?
+  imageUrl: string
 }
 
 export interface Statement {
