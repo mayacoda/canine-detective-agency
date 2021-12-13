@@ -4,5 +4,5 @@ export const emptyGameData: ServerSideGameData = {
   interviews: {},
   observations: [],
   photos: [],
-  documents: []
+  documents: [ 'janeLetter', 'toxicology', 'autopsy' ]
 }

@@ -2,7 +2,6 @@ import { GameState } from '../../interface/game-state-interface'
 import { PlayerData } from '../../interface/socket-interfaces'
 import { Server, Socket } from 'socket.io'
 import { ServerStateManager } from './server-state-manager'
-import { demoGameData } from './game-data/demo-game-data'
 import { resolveGameState } from './game-data/resolve-game-state'
 
 import { hri } from 'human-readable-ids'
@@ -11,6 +10,7 @@ import { dataRequestHandler, gameStateUpdateHandler } from './game-state-handler
 import admin from 'firebase-admin'
 import { COLLECTION_NAME } from './constants'
 import { congratulatoryMessage, validateSolution } from './game-data/finished-game'
+import { emptyGameData } from './game-data/empty-game-data'
 
 const io = new Server(parseInt(process.env.PORT) || 3000)
 
@@ -30,7 +30,7 @@ const db = admin.firestore()
 function createDummyState(): GameState {
   return {
     players: {},
-    gameData: demoGameData,
+    gameData: emptyGameData,
     roomId: ''
   }
 }
