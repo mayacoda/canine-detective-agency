@@ -14,7 +14,7 @@ export class ObservationItem extends InteractiveItem {
         await this.scene.gameStateManager.updateObservation(this.id)
       }
 
-      if (this.overlay?.childElementCount === 0) {
+      if (this.overlay?.childElementCount === 0 && this.observation) {
         const card = new ObservationItemCard()
         card.observation = this.observation
         this.overlay?.appendChild(card)
