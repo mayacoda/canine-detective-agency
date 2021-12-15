@@ -5,7 +5,8 @@ import { Immutable } from '../../../interface/types'
 
 export const getDialogByIdApplyingConditions = (id: string,
                                                 gameData: Immutable<ServerSideGameData>,
-                                                dialogRecord: Record<string, Dialog> = dialogData): Dialog | undefined => {
+                                                dialogRecord: Record<string, Dialog> = dialogData)
+  : Dialog | undefined => {
 
   const dialog = dialogRecord[id]
   if (!dialog) return undefined

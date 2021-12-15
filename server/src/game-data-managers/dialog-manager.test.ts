@@ -6,6 +6,7 @@ import { ServerSideGameData } from '../../../interface/game-data-interface'
 const mockDialogData: Record<string, Dialog> = {
   withoutConditions: {
     start: 'first',
+    imageUrl: '',
     branches: [
       {
         id: 'first',
@@ -23,6 +24,7 @@ const mockDialogData: Record<string, Dialog> = {
   },
   withConditions: {
     start: 'first',
+    imageUrl: '',
     branches: [
       {
         id: 'first',
@@ -59,6 +61,7 @@ const mockDialogData: Record<string, Dialog> = {
   },
   afterLast: {
     start: 'first',
+    imageUrl: '',
     branches: [
       {
         id: 'first',

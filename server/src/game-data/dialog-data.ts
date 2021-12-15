@@ -37,8 +37,8 @@ export const dialogData: Record<string, Dialog> = {
           {
             text: 'What can you tell me about pesticides and their effects on the body?',
             to: 'pesticides',
-            condition: gameData => gameData.observations.includes('manorPesticideBottle') || gameData.observations.includes(
-              'shopPesticideBottle')
+            condition: gameData => gameData.observations.includes('manorPesticideBottle')
+              || gameData.observations.includes('shopPesticideBottle')
           }
         ]
       },
@@ -153,12 +153,12 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'alibi',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [ 'Here, at the manor, of course. I was serving Mr. Richard and Candice biscuits and tea after lunch.' ],
       },
       {
         id: 'body',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'It was sometime after lunch, I think. Probably around 2pm?',
           'I had just finished cleaning the kitchen, and was about to leave. I have Sunday afternoons off.',
@@ -167,7 +167,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'scene',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Jane, rest her soul, was on the floor in the foyer.',
           'There was nothing broken or anything like that, just her poor self laying there by the front door.'
@@ -175,7 +175,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'work',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'They\'re great, really. Both Jane and Mr. Richard are very reasonable people. I mean--were. <she lets out another solemn tear>',
           'Lately they hadn\'t been getting along all that well, maybe it was just old age.',
@@ -194,7 +194,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'getting-along',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Oh just the occasional fight here and there, though they were becoming more frequent.',
           'They were also spending less time together, more time by themselves and other people. <she emphasizes the last two words>'
@@ -202,7 +202,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'special-rapport',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Well... it\'s not quite my place to say... but...',
           'I have been noticing Mr. Ranger, the pharmacist, Candice\'s man, hanging around here a bit more than usual.',
@@ -212,7 +212,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'jane',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Mrs. Jane was always the life of the party. A true it-girl, back in the day. I\'ve seen pictures!',
           'Her family always had lots of money. This entire manor is her property, inherited it from her grandfather when she was young.',
@@ -221,7 +221,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'richard',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Mr. Richard is a steady family man, just without the family. He has his own business and everything.',
           'He owns a pest control company, spends a lot of time in the field taking care of problems for people.',
@@ -230,7 +230,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'ranger',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'What\'s there to say? Ranger is a dreamboat.',
           'He came to town many years ago and started working in the pharmacy. Even took over when the old owner passed away.',
@@ -241,7 +241,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'candice',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'Candice is Mrs. Jane\'s niece, but she was basically more of a daughter.',
           'She\'s quite a lot like her aunt, you know. Expensive jewelry, fancy parties, loves living the good life.',
@@ -253,7 +253,7 @@ export const dialogData: Record<string, Dialog> = {
       },
       {
         id: 'ginger',
-        afterLast: 'questions',
+        afterLast: 'first',
         dialog: [
           'The shopkeeper? Oh I don\'t know her that well...',
           'Except--she\'s been awfully nice to me whenever I do the shopping for Richard, buying his tools and whatnot.',
