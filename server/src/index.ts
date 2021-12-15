@@ -39,6 +39,16 @@ io.on('connection', (socket: Socket) => {
   initPlayerCommunication(socket)
 })
 
+const initPlayerCommunication = (socket: TypedServerSocket) => {
+  socket.on('createRoom', () => {
+    createRoomHandler(socket as Socket)
+  })
+  socket.on('joinRoom', (roomId) => {
+    joinRoomHandler(socket as Socket, roomId).then(console.log)
+  })
+}
+
+
 const initClientSocketListeners = (socket: TypedServerSocket, stateManager: ServerStateManager) => {
   socket.on('request', (request) => {
     dataRequestHandler(socket, request, stateManager.getState().gameData)
@@ -67,14 +77,6 @@ const initClientSocketListeners = (socket: TypedServerSocket, stateManager: Serv
   })
 }
 
-const initPlayerCommunication = (socket: TypedServerSocket) => {
-  socket.on('createRoom', () => {
-    createRoomHandler(socket as Socket)
-  })
-  socket.on('joinRoom', (roomId) => {
-    joinRoomHandler(socket as Socket, roomId).then(console.log)
-  })
-}
 
 const createRoomHandler = (socket: Socket) => {
   const roomId = hri.random()
