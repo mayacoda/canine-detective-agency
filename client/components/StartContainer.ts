@@ -12,10 +12,10 @@ export class StartContainer extends LitElement {
   isLoading: boolean = false
 
   @state()
-  playerName: string = 'api'
+  playerName: string = ''
 
   @state()
-  playerAvatar: string = 'shepherd'
+  playerAvatar: string = ''
 
   avatars = [ 'pug', 'shepherd', 'poodle', 'stafford' ]
 
