@@ -16,7 +16,7 @@ export const observationsData: Record<string, Observation> = {
     location: 'Raven Manor kitchen',
     imageUrl: 'images/manor-pesticide-bottle.png'
   },
-  candiceJewelery: {
+  candiceJewelry: {
     description: 'An expensive neckless in Candice\'s room in Raven Manor',
     location: 'Candice\'s room',
     imageUrl: 'images/candice-jewelry.png'

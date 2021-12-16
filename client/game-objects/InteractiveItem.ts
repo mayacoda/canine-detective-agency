@@ -14,6 +14,7 @@ export class InteractiveItem extends Phaser.GameObjects.Sprite {
     this.id = id
     scene.add.existing(this)
     this.setInteractive()
+    this.setDepth(10000)
   }
 
   protected registerOnOpenListeners(callback: () => void) {

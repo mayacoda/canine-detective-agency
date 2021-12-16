@@ -12,11 +12,13 @@ export class ObservationItemCard extends LitElement {
       div {
         display: flex;
         flex-direction: row;
+        align-items: center;
       }
 
       img {
-        margin-right: var(--spacer-4);
+        margin-right: var(--spacer-6);
         max-width: 250px;
+        max-height: 250px;
       }
     `
   }

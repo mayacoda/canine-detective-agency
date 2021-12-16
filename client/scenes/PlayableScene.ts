@@ -10,7 +10,6 @@ import { InteractiveItem } from '../game-objects/InteractiveItem'
 import { preloadFunctions } from './preload-functions'
 import { ObservationItem } from '../game-objects/ObservationItem'
 import { DocumentItem } from '../game-objects/DocumentItem'
-import { PhotoItem } from '../game-objects/PhotoItem'
 import { assert } from '../utils/assert'
 import { OtherPlayerObject } from '../game-objects/OtherPlayerObject'
 import { Player } from '../../interface/game-state-interface'
@@ -184,9 +183,6 @@ export class PlayableScene extends Scene {
           break
         case 'document':
           this.items.push(new DocumentItem(this, x, y, id, image))
-          break
-        case 'photo':
-          this.items.push(new PhotoItem(this, x, y, id, image))
           break
         default:
           this.items.push(new InteractiveItem(this, x, y, id, image))

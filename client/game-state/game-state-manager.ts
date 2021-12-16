@@ -123,7 +123,7 @@ export class GameStateManager {
 
   updateDocument(id: string) {
     this.socket.emit('updateState', {
-      evidenceType: 'photo',
+      evidenceType: 'document',
       data: { id }
     })
   }

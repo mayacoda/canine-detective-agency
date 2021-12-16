@@ -30,6 +30,7 @@ export class EvidenceScreen extends LitElement {
       div.container {
         padding: var(--spacer-6) var(--spacer-4) 0;
         box-sizing: border-box;
+        overflow: auto;
         height: 100%;
       }
 
