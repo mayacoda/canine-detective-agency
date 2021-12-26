@@ -62,7 +62,7 @@ export class NPC extends Phaser.Physics.Matter.Image {
 
   private isPlayerNear() {
     const { x, y } = this.scene.player
-    let minDistance = this.width * 2
+    let minDistance = 400
     return Phaser.Math.Distance.Between(x, y, this.x, this.y) < minDistance
   }
 }

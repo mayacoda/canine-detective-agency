@@ -7,12 +7,20 @@ function add(vectorA: Vec2, vectorB: Vec2, output?: Vec2) {
   return output
 }
 
-function mult(vector: Vec2, scalar: number) {
+export function multiply(vector: Vec2, scalar: number) {
   return { x: vector.x * scalar, y: vector.y * scalar }
 }
 
-function div(vector: Vec2, scalar: number) {
+function divide(vector: Vec2, scalar: number) {
   return { x: vector.x / scalar, y: vector.y / scalar }
+}
+
+function magnitude({ x, y }: Vec2) {
+  return Math.sqrt((x * x) + (y * y))
+}
+
+export function normalize(vec: Vec2) {
+  return divide(vec, magnitude(vec))
 }
 
 function calcArea(vertices: Vec2[], signed: boolean) {
@@ -40,11 +48,11 @@ export function getPhaserCentroid(vertices: Vec2[]) {
   for (let i = 0; i < vertices.length; i++) {
     j = (i + 1) % vertices.length
     cross = (vertices[i].x * vertices[j].y) - (vertices[i].y * vertices[j].x)
-    temp = mult(add(vertices[i], vertices[j]), cross)
+    temp = multiply(add(vertices[i], vertices[j]), cross)
     centre = add(centre, temp)
   }
 
-  return div(centre, 6 * area)
+  return divide(centre, 6 * area)
 }
 
 export function getTextBlockPosition(obj: Phaser.GameObjects.Image, width?: number) {
