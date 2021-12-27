@@ -6,7 +6,7 @@ import { multiply, normalize } from '../utils/geometry-utils'
 
 export class PlayerObject extends Phaser.Physics.Matter.Image {
   scene!: PlayableScene
-  speed: number = 7
+  speed: number = 10
 
   constructor(scene: PlayableScene, x: number, y: number, avatar: string = 'shepherd') {
     super(scene.matter.world, x, y, avatar)
