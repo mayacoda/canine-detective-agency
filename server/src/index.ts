@@ -127,6 +127,7 @@ const joinRoomHandler = async (socket: Socket, roomId: string) => {
   if (room.size >= 4) return typedSocket.emit('tooManyPlayers')
 
   playerRoomMap[socket.id] = roomId
+  socket.join(roomId)
 
   typedSocket.emit('roomId', roomId)
   typedSocket.emit('playerId', socket.id)

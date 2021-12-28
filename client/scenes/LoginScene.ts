@@ -24,7 +24,7 @@ export class LoginScene extends Scene {
 
     loginContainer.addEventListener('join-room', (ev) => {
       const roomId = (ev as CustomEvent).detail as string
-      gameStateManager.joinRoom(roomId)
+      gameStateManager.joinRoom(roomId.trim())
       loginContainer.isLoading = true
     })
 
