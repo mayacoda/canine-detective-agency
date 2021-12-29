@@ -45,11 +45,11 @@ export class UIScene extends Scene {
       gameStateManager.socket.on('wrongSolution', () => {
         this.uiContainer.wrongSolution()
       })
+    })
 
-      gameStateManager.socket.on('murderSolved', message => {
-        this.uiContainer.setMessage(message)
-        this.uiContainer.setActiveState('finished')
-      })
+    gameStateManager.socket.on('murderSolved', message => {
+      this.uiContainer.setMessage(message)
+      this.uiContainer.setActiveState('finished')
     })
 
     this.uiContainer.addEventListener('switchState', ev => {
