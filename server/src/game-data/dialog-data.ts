@@ -537,7 +537,7 @@ export const dialogData: Record<string, Dialog> = {
             text: 'Why do you stock so much pesticide?',
             to: 'pesticide',
             condition: gameData => gameData.observations.includes('shopPesticideBottle')
-          },
+          }
         ]
       },
       {
@@ -582,7 +582,7 @@ export const dialogData: Record<string, Dialog> = {
         ],
       },
       {
-        id: 'pesticides',
+        id: 'pesticide',
         afterLast: 'first',
         dialog: [
           'They\'re just the regular stock. The local pest control man, Richard, uses quite a lot of that stuff. He says it\'s easier for him to buy it from me than to order it wholesale.',
